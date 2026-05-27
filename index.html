@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KALOPSIA Service Management System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam:wght@400;500;700&family=Manjari:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js">
     </script>
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js">
@@ -46,7 +49,7 @@
             --transition: 0.2s cubic-bezier(.4, 0, .2, 1);
             --font: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
             --font-doc: Arial, Helvetica, 'Segoe UI', sans-serif;
-            --font-ml: 'Noto Sans Malayalam', 'Manjari', 'Segoe UI', Arial, sans-serif;
+            --font-ml: 'Noto Sans Malayalam', 'Manjari', 'Kartika', 'Nirmala UI', sans-serif;
         }
         * {
             margin: 0;
@@ -600,6 +603,15 @@
         }
         .a4-preview.lang-ml {
             font-family: var(--font-ml);
+            font-feature-settings: "liga" 1, "clig" 1;
+            text-rendering: optimizeLegibility;
+        }
+        .a4-preview.lang-ml .doc-header,
+        .a4-preview.lang-ml .doc-header-left .brand-text h3,
+        .a4-preview.lang-ml .doc-header-left .brand-text .tagline,
+        .a4-preview.lang-ml .doc-header-right,
+        .a4-preview.lang-ml .val {
+            font-family: var(--font-doc) !important;
         }
         .a4-preview .doc-header {
             display: flex;
@@ -951,17 +963,24 @@
                 page-break-inside: avoid !important;
                 display: block !important;
                 visibility: visible !important;
-                font-family: Arial, Helvetica, sans-serif !important;
                 box-sizing: border-box !important;
                 flex-shrink: 0 !important;
             }
-            .a4-preview.lang-ml {
-                font-family: 'Noto Sans Malayalam', 'Manjari', Arial, sans-serif !important;
+            .a4-preview.lang-ml,
+            .a4-preview.lang-ml * {
+                font-family: "Noto Sans Malayalam", "Manjari", "Kartika", "Nirmala UI", sans-serif !important;
+                font-feature-settings: "liga" 1, "clig" 1 !important;
+                text-rendering: optimizeLegibility !important;
             }
-            .a4-preview * {
-                visibility: visible !important;
-                page-break-inside: avoid !important;
-                break-inside: avoid !important;
+            .a4-preview.lang-ml .doc-header,
+            .a4-preview.lang-ml .doc-header-left .brand-text h3,
+            .a4-preview.lang-ml .doc-header-left .brand-text .tagline,
+            .a4-preview.lang-ml .doc-header-right,
+            .a4-preview.lang-ml .val {
+                font-family: Arial, Helvetica, sans-serif !important;
+            }
+            .a4-preview {
+                font-family: Arial, Helvetica, sans-serif !important;
             }
         }
     </style>
@@ -1065,7 +1084,7 @@
                                     <div class="brand-text"><h3>KALOPSIA</h3><div class="tagline">ALL ESSENTIAL SERVICES UNDER ONE ROOF</div></div>
                                 </div>
                                 <div class="doc-header-right">
-                                    <strong>KALOPSIA</strong><br>Chullikkara – Kuttikkol Road<br>Chullikkara, Kerala – 671532<br>📞 9497321453 | 9961921453<br>✉️ kalopsia0404@gmail.com
+                                    <strong>KALOPSIA</strong><br>Chullikkara – Kuttikkol Road<br>Chullikkara, Kerala – 671532<br>India<br>📞 9497321453 | 9961921453<br>✉️ kalopsia0404@gmail.com
                                 </div>
                             </div>
                             <div class="doc-title-box" data-key="docTitle">SERVICE DEPLOYMENT DECLARATION &amp; AGREEMENT</div>
@@ -1121,7 +1140,7 @@
             </div>
             <div class="page" id="page-settings">
                 <div class="page-top"><h1>Settings</h1><p class="subtitle">Configure system preferences</p></div>
-                <div class="card"><h3>Company Details</h3><div class="form-row form-row-3"><div class="form-group"><label>Office Address</label><textarea id="setOfficeAddr" rows="2">Chullikkara – Kuttikkol Road, Chullikkara, Kerala – 671532</textarea></div><div class="form-group"><label>Phone 1</label><input type="text" id="setPhone1" value="9497321453"></div><div class="form-group"><label>Phone 2</label><input type="text" id="setPhone2" value="9961921453"></div></div><div class="form-group"><label>Email</label><input type="email" id="setEmail" value="kalopsia0404@gmail.com"></div><div class="form-group"><label>Logo URL (optional)</label><input type="text" id="setLogoUrl" placeholder="https://..."></div><button class="btn btn-primary" onclick="saveSettings()">💾 Save Settings</button></div>
+                <div class="card"><h3>Company Details</h3><div class="form-row form-row-3"><div class="form-group"><label>Office Address</label><textarea id="setOfficeAddr" rows="2">Chullikkara – Kuttikkol Road, Chullikkara, Kerala – 671532, India</textarea></div><div class="form-group"><label>Phone 1</label><input type="text" id="setPhone1" value="9497321453"></div><div class="form-group"><label>Phone 2</label><input type="text" id="setPhone2" value="9961921453"></div></div><div class="form-group"><label>Email</label><input type="email" id="setEmail" value="kalopsia0404@gmail.com"></div><div class="form-group"><label>Logo URL (optional)</label><input type="text" id="setLogoUrl" placeholder="https://..."></div><button class="btn btn-primary" onclick="saveSettings()">💾 Save Settings</button></div>
             </div>
         </main>
     </div>
@@ -1140,7 +1159,7 @@
     <script>
         (function() {
             const firebaseConfig = { apiKey: "AIzaSyDOS4GRe58LsQLkcSuM8enXkzrpnta36ME", authDomain: "paliative-c77f3.firebaseapp.com", projectId: "paliative-c77f3", storageBucket: "paliative-c77f3.firebasestorage.app",
-                messagingSenderId: "", appId: "1:310033694821:web:02c210ecbcfdf0858b868c" };
+                messagingSenderId: "310033694821", appId: "1:310033694821:web:02c210ecbcfdf0858b868c" };
             let fbReady = false;
             let db = null;
             let auth = null;
@@ -1150,11 +1169,11 @@
             let allDecls = [];
             let currentDeclId = null;
             let isMalayalam = false;
-            let appSettings = { officeAddress: 'Chullikkara – Kuttikkol Road, Chullikkara, Kerala – 671532',
+            let appSettings = { officeAddress: 'Chullikkara – Kuttikkol Road, Chullikkara, Kerala – 671532, India',
                 phone1: '9497321453', phone2: '9961921453', email: 'kalopsia0404@gmail.com', logoUrl: '' };
             const mlTranslations = {
                 docTitle: 'സേവന വിന്യാസ പ്രഖ്യാപനവും കരാറും',
-                declNo: 'ഡോക്യുമെന്റ് നമ്പർ:',
+                declNo: 'പ്രഖ്യാപന നമ്പർ:',
                 date: 'തീയതി:',
                 secClient: 'ക്ലയന്റ് / വീട് വിവരങ്ങൾ',
                 lblClientName: 'ക്ലയന്റ് / ബന്ധപ്പെടേണ്ട വ്യക്തി',
@@ -1163,7 +1182,7 @@
                 lblEmail: 'ഇമെയിൽ',
                 lblHouse: 'വീടിന്റെ പേര്',
                 lblAddress: 'പൂർണ വിലാസം',
-                lblLandmark: 'വീടിന്റെ അടയാളം',
+                lblLandmark: 'അടയാളം',
                 lblDistPin: 'ജില്ല / പിൻ',
                 secRecipient: 'സേവന സ്വീകർത്താവ്',
                 lblRecName: 'പേര്',
@@ -1209,8 +1228,8 @@
             };
             const enDefaults = {};
             document.addEventListener('DOMContentLoaded', () => {
-                document.querySelectorAll('[data-key]').forEach(el => { const k = el.getAttribute('data-key'); if (
-                        k && !enDefaults[k]) enDefaults[k] = el.textContent.trim(); });
+                document.querySelectorAll('#a4Preview [data-key]').forEach(el => { const k = el.getAttribute(
+                        'data-key'); if (k && !enDefaults[k]) enDefaults[k] = el.textContent.trim(); });
                 initFirebase();
                 initSigPads();
                 loadLocalData();
