@@ -9,11 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam:wght@400;500;700&family=Manjari:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js">
     </script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js">
-    </script>
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js">
-    </script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js">
     </script>
     <style>
         :root {
@@ -36,952 +32,144 @@
             --success: #16a34a;
             --danger: #dc2626;
             --info: #2563eb;
-            --shadow-xs: 0 1px 2px rgba(0, 0, 0, .03);
-            --shadow-sm: 0 2px 8px rgba(0, 0, 0, .05);
-            --shadow: 0 4px 18px rgba(0, 0, 0, .06);
-            --shadow-lg: 0 14px 40px rgba(0, 0, 0, .09);
-            --shadow-xl: 0 20px 60px rgba(0, 0, 0, .12);
+            --shadow-xs: 0 1px 2px rgba(0,0,0,.03);
+            --shadow-sm: 0 2px 8px rgba(0,0,0,.05);
+            --shadow: 0 4px 18px rgba(0,0,0,.06);
+            --shadow-lg: 0 14px 40px rgba(0,0,0,.09);
+            --shadow-xl: 0 20px 60px rgba(0,0,0,.12);
             --radius-xs: 5px;
             --radius-sm: 9px;
             --radius: 13px;
             --radius-lg: 17px;
             --radius-xl: 22px;
-            --transition: 0.2s cubic-bezier(.4, 0, .2, 1);
+            --transition: 0.2s cubic-bezier(.4,0,.2,1);
             --font: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
             --font-doc: Arial, Helvetica, 'Segoe UI', sans-serif;
             --font-ml: 'Noto Sans Malayalam', 'Manjari', 'Kartika', 'Nirmala UI', sans-serif;
         }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        html {
-            font-size: 14.5px;
-            scroll-behavior: smooth;
-            -webkit-font-smoothing: antialiased;
-        }
-        body {
-            font-family: var(--font);
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            line-height: 1.55;
-        }
-        .app-shell {
-            display: flex;
-            min-height: 100vh;
-        }
-        .sidebar {
-            width: 260px;
-            background: linear-gradient(180deg, #0d1135 0%, #151a44 100%);
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            position: fixed;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            z-index: 120;
-            transition: transform var(--transition);
-            box-shadow: 4px 0 28px rgba(0, 0, 0, .16);
-            overflow: hidden;
-        }
-        .sidebar::after {
-            content: '';
-            position: absolute;
-            top: -70px;
-            right: -70px;
-            width: 180px;
-            height: 180px;
-            background: radial-gradient(circle, rgba(255, 255, 255, .02) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-        }
-        .sidebar-brand {
-            padding: 20px 16px 16px;
-            text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, .07);
-            position: relative;
-            z-index: 1;
-        }
-        .sidebar-brand .logo-img {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid rgba(255, 255, 255, .18);
-            margin-bottom: 7px;
-            background: #fff;
-        }
-        .sidebar-brand h2 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            letter-spacing: 1.3px;
-            color: #fff;
-            margin: 0;
-        }
-        .sidebar-brand .tagline {
-            font-size: .58rem;
-            color: var(--gold);
-            letter-spacing: 1.8px;
-            text-transform: uppercase;
-            margin-top: 2px;
-            font-weight: 500;
-        }
-        .sidebar-nav {
-            flex: 1;
-            padding: 8px 0;
-            overflow-y: auto;
-            position: relative;
-            z-index: 1;
-        }
-        .sidebar-nav .nav-section-label {
-            padding: 9px 18px 3px;
-            font-size: .6rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: rgba(255, 255, 255, .32);
-            font-weight: 600;
-        }
-        .sidebar-nav button {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: 100%;
-            padding: 10px 18px;
-            border: none;
-            background: transparent;
-            color: rgba(255, 255, 255, .68);
-            cursor: pointer;
-            font-size: .82rem;
-            transition: all var(--transition);
-            text-align: left;
-            font-family: var(--font);
-            border-left: 3px solid transparent;
-        }
-        .sidebar-nav button:hover {
-            background: rgba(255, 255, 255, .04);
-            color: #fff;
-            border-left-color: rgba(255, 255, 255, .25);
-        }
-        .sidebar-nav button.active {
-            background: rgba(255, 255, 255, .08);
-            color: #fff;
-            border-left-color: var(--gold);
-            font-weight: 600;
-        }
-        .sidebar-nav button .nav-icon {
-            font-size: 1.1rem;
-            width: 22px;
-            text-align: center;
-            flex-shrink: 0;
-        }
-        .sidebar-footer {
-            padding: 12px 16px;
-            border-top: 1px solid rgba(255, 255, 255, .07);
-            font-size: .7rem;
-            color: rgba(255, 255, 255, .45);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 6px;
-            position: relative;
-            z-index: 1;
-            flex-wrap: wrap;
-        }
-        .sidebar-footer .user-info {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            flex: 1;
-            min-width: 0;
-        }
-        .sidebar-footer button {
-            background: rgba(255, 255, 255, .09);
-            border: 1px solid rgba(255, 255, 255, .13);
-            color: #fff;
-            padding: 5px 12px;
-            border-radius: 18px;
-            cursor: pointer;
-            font-size: .68rem;
-            transition: all var(--transition);
-            font-family: var(--font);
-            white-space: nowrap;
-        }
-        .sidebar-footer button:hover {
-            background: rgba(255, 255, 255, .18);
-            border-color: rgba(255, 255, 255, .25);
-        }
-        .main-area {
-            flex: 1;
-            margin-left: 260px;
-            padding: 24px 28px;
-            min-height: 100vh;
-            transition: margin var(--transition);
-        }
-        .page {
-            display: none;
-            animation: pageIn .35s ease;
-        }
-        .page.active {
-            display: block;
-        }
-        @keyframes pageIn {
-            from {
-                opacity: 0;
-                transform: translateY(14px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        .page-top {
-            margin-bottom: 20px;
-        }
-        .page-top h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 2px;
-        }
-        .page-top .subtitle {
-            font-size: .76rem;
-            color: var(--text3);
-            font-weight: 500;
-        }
-        .card {
-            background: var(--surface);
-            border-radius: var(--radius-lg);
-            padding: 20px 24px;
-            box-shadow: var(--shadow-xs);
-            border: 1px solid var(--border);
-            margin-bottom: 16px;
-            transition: all var(--transition);
-        }
-        .card-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 14px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .card-header h3 {
-            font-size: .98rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
-            gap: 12px;
-        }
-        .stat-card {
-            background: var(--surface);
-            border-radius: var(--radius-lg);
-            padding: 16px 18px;
-            box-shadow: var(--shadow-xs);
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transition: all var(--transition);
-            cursor: default;
-        }
-        .stat-card:hover {
-            box-shadow: var(--shadow);
-            transform: translateY(-2px);
-            border-color: var(--border2);
-        }
-        .stat-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-            flex-shrink: 0;
-            background: #eef0ff;
-            color: #4657f0;
-        }
-        .stat-value {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--primary);
-            line-height: 1;
-        }
-        .stat-label {
-            font-size: .68rem;
-            color: var(--text3);
-            margin-top: 2px;
-            font-weight: 500;
-        }
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            padding: 8px 16px;
-            border-radius: 22px;
-            font-size: .8rem;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
-            transition: all var(--transition);
-            font-family: var(--font);
-            white-space: nowrap;
-            letter-spacing: .15px;
-        }
-        .btn:active {
-            transform: scale(.97);
-        }
-        .btn-primary {
-            background: var(--accent);
-            color: #fff;
-        }
-        .btn-primary:hover {
-            background: var(--accent2);
-            box-shadow: 0 5px 16px rgba(70, 87, 240, .3);
-            transform: translateY(-1px);
-        }
-        .btn-outline {
-            background: transparent;
-            border: 1.5px solid var(--border2);
-            color: var(--text2);
-        }
-        .btn-outline:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-            background: var(--accent-light);
-        }
-        .btn-gold {
-            background: var(--gold);
-            color: #fff;
-        }
-        .btn-gold:hover {
-            background: var(--gold2);
-            box-shadow: 0 5px 16px rgba(155, 128, 53, .3);
-            transform: translateY(-1px);
-        }
-        .btn-sm {
-            padding: 4px 11px;
-            font-size: .7rem;
-            border-radius: 16px;
-        }
-        .btn-xs {
-            padding: 3px 8px;
-            font-size: .65rem;
-            border-radius: 13px;
-        }
-        .btn-danger {
-            background: var(--danger);
-            color: #fff;
-        }
-        .btn-danger:hover {
-            background: #b91c1c;
-        }
-        .form-group {
-            margin-bottom: 12px;
-        }
-        .form-group label {
-            display: block;
-            font-size: .72rem;
-            font-weight: 600;
-            color: var(--text2);
-            margin-bottom: 3px;
-        }
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 9px 13px;
-            border: 1.5px solid var(--border2);
-            border-radius: var(--radius-xs);
-            font-size: .81rem;
-            font-family: var(--font);
-            transition: all var(--transition);
-            background: #fafbfc;
-            color: var(--text);
-        }
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(70, 87, 240, .06);
-            background: #fff;
-        }
-        .form-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 10px;
-        }
-        .form-row-3 {
-            grid-template-columns: repeat(3, 1fr);
-        }
-        .form-row-4 {
-            grid-template-columns: repeat(4, 1fr);
-        }
-        @media (max-width:900px) {
-            .form-row-3,
-            .form-row-4 {
-                grid-template-columns: 1fr 1fr;
-            }
-            .sidebar {
-                transform: translateX(-100%);
-            }
-            .sidebar.open {
-                transform: translateX(0);
-            }
-            .main-area {
-                margin-left: 0;
-            }
-            .mobile-toggle {
-                display: flex !important;
-            }
-            .declaration-layout {
-                grid-template-columns: 1fr !important;
-            }
-        }
-        .table-wrap {
-            overflow-x: auto;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border);
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: .78rem;
-        }
-        table th,
-        table td {
-            padding: 9px 12px;
-            text-align: left;
-            border-bottom: 1px solid var(--border);
-            white-space: nowrap;
-        }
-        table th {
-            background: #fafbfc;
-            font-weight: 700;
-            color: var(--text2);
-            font-size: .68rem;
-            text-transform: uppercase;
-            letter-spacing: .5px;
-            position: sticky;
-            top: 0;
-            z-index: 1;
-        }
-        table tbody tr:hover {
-            background: #fafbff;
-        }
-        .badge {
-            display: inline-block;
-            padding: 3px 9px;
-            border-radius: 11px;
-            font-size: .65rem;
-            font-weight: 600;
-        }
-        .badge-available {
-            background: #ecfdf5;
-            color: #15803d;
-        }
-        .badge-assigned {
-            background: #eef0ff;
-            color: #3545d8;
-        }
-        .badge-leave {
-            background: #fffbeb;
-            color: #b45309;
-        }
-        .badge-inactive {
-            background: #fef2f2;
-            color: #b91c1c;
-        }
-        .search-bar {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        .search-bar input {
-            flex: 1;
-            min-width: 180px;
-            padding: 8px 14px;
-            border: 1.5px solid var(--border2);
-            border-radius: 22px;
-            font-size: .8rem;
-            background: #fafbfc;
-            font-family: var(--font);
-        }
-        .search-bar input:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(70, 87, 240, .06);
-            background: #fff;
-            outline: none;
-        }
-        .search-bar select {
-            padding: 8px 13px;
-            border: 1.5px solid var(--border2);
-            border-radius: 22px;
-            font-family: var(--font);
-            font-size: .78rem;
-            background: #fafbfc;
-            cursor: pointer;
-        }
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(13, 17, 53, .5);
-            z-index: 220;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(2px);
-        }
-        .modal-overlay.open {
-            display: flex;
-        }
-        .modal {
-            background: #fff;
-            border-radius: var(--radius-xl);
-            padding: 26px 28px;
-            width: 92%;
-            max-width: 680px;
-            max-height: 82vh;
-            overflow-y: auto;
-            box-shadow: var(--shadow-xl);
-        }
-        .modal.wide {
-            max-width: 920px;
-        }
-        .modal h2 {
-            font-size: 1.2rem;
-            margin-bottom: 14px;
-            color: var(--primary);
-        }
-        .modal-actions {
-            display: flex;
-            gap: 9px;
-            justify-content: flex-end;
-            margin-top: 16px;
-            flex-wrap: wrap;
-        }
-        .declaration-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            align-items: start;
-        }
-        @media (max-width:1100px) {
-            .declaration-layout {
-                grid-template-columns: 1fr;
-            }
-        }
-        .a4-preview-wrap {
-            overflow-y: auto;
-            max-height: 85vh;
-            display: flex;
-            justify-content: center;
-            background: #e8e9f0;
-            border-radius: 6px;
-            padding: 8px;
-        }
-        .a4-preview {
-            background: #fff;
-            width: 210mm;
-            min-height: 297mm;
-            padding: 9mm 10mm 8mm;
-            font-family: var(--font-doc);
-            font-size: 8.8px;
-            line-height: 1.35;
-            color: #1a1a1a;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, .13);
-            flex-shrink: 0;
-            border: 1px solid #d0d0d0;
-        }
-        .a4-preview.lang-ml {
-            font-family: var(--font-ml);
-            font-feature-settings: "liga" 1, "clig" 1;
-            text-rendering: optimizeLegibility;
-        }
-        .a4-preview.lang-ml .doc-header,
-        .a4-preview.lang-ml .doc-header-left .brand-text h3,
-        .a4-preview.lang-ml .doc-header-left .brand-text .tagline,
-        .a4-preview.lang-ml .doc-header-right,
-        .a4-preview.lang-ml .val {
-            font-family: var(--font-doc) !important;
-        }
-        .a4-preview .doc-header {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 8px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #1a1d4e;
-            margin-bottom: 8px;
-        }
-        .a4-preview .doc-header-left {
-            display: flex;
-            align-items: center;
-            gap: 9px;
-        }
-        .a4-preview .doc-header-left .logo-img {
-            width: 46px;
-            height: 46px;
-            border-radius: 50%;
-            object-fit: cover;
-            flex-shrink: 0;
-            border: 1px solid #e0e0e0;
-            background: #f5f5f5;
-        }
-        .a4-preview .doc-header-left .brand-text h3 {
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 1.3px;
-            color: #1a1d4e;
-            margin: 0;
-        }
-        .a4-preview .doc-header-left .brand-text .tagline {
-            font-size: 6px;
-            letter-spacing: 1.8px;
-            color: #9b8035;
-            text-transform: uppercase;
-            font-weight: 600;
-        }
-        .a4-preview .doc-header-right {
-            text-align: right;
-            font-size: 7px;
-            color: #444;
-            line-height: 1.4;
-            flex-shrink: 0;
-        }
-        .a4-preview .doc-header-right strong {
-            font-size: 8px;
-            color: #1a1d4e;
-        }
-        .a4-preview .doc-title-box {
-            text-align: center;
-            border: 2px solid #1a1d4e;
-            padding: 6px 12px;
-            margin: 10px 0;
-            font-weight: 700;
-            font-size: 9.5px;
-            text-transform: uppercase;
-            letter-spacing: 1.3px;
-            color: #1a1d4e;
-        }
-        .a4-preview .meta-row {
-            display: flex;
-            gap: 6px;
-            margin: 4px 0 8px;
-            font-size: 7.5px;
-        }
-        .a4-preview .meta-row span {
-            font-weight: 700;
-            color: #1a1d4e;
-            min-width: 70px;
-        }
-        .a4-preview .section-title {
-            font-weight: 700;
-            font-size: 8px;
-            color: #1a1d4e;
-            border-bottom: 1px solid #d0d0d0;
-            padding-bottom: 2px;
-            margin: 8px 0 4px;
-            text-transform: uppercase;
-            letter-spacing: .8px;
-        }
-        .a4-preview .doc-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 7.5px;
-            margin: 0 0 6px 0;
-        }
-        .a4-preview .doc-table td {
-            padding: 2.5px 5px;
-            border: 1px solid #d5d5d5;
-            vertical-align: top;
-            word-break: break-word;
-            line-height: 1.3;
-        }
-        .a4-preview .doc-table .lbl {
-            font-weight: 700;
-            background: #f5f5f5;
-            color: #3a3a3a;
-            font-size: 7px;
-            letter-spacing: .2px;
-            width: 28%;
-            white-space: nowrap;
-        }
-        .a4-preview .doc-table .val {
-            color: #1a1a1a;
-            font-size: 7.5px;
-        }
-        .a4-preview .terms-block {
-            margin-top: 5px;
-            font-size: 7px;
-            line-height: 1.35;
-            color: #2a2a2a;
-        }
-        .a4-preview .terms-block h4 {
-            font-size: 7.8px;
-            margin-bottom: 2px;
-            color: #1a1d4e;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: .8px;
-        }
-        .a4-preview .terms-block ol {
-            padding-left: 16px;
-        }
-        .a4-preview .terms-block ol li {
-            margin-bottom: 1px;
-        }
-        .a4-preview .emergency-box {
-            border: 1.5px solid #1a1d4e;
-            border-radius: 3px;
-            padding: 5px 8px;
-            margin: 6px 0;
-            text-align: center;
-            font-size: 7.5px;
-            background: #fafafa;
-        }
-        .a4-preview .emergency-box strong {
-            color: #1a1d4e;
-            font-size: 8px;
-        }
-        .a4-preview .sig-section {
-            display: flex;
-            gap: 20px;
-            margin-top: 10px;
-            justify-content: space-between;
-        }
-        .a4-preview .sig-box {
-            flex: 1;
-            text-align: center;
-        }
-        .a4-preview .sig-line {
-            border-bottom: 1.5px solid #333;
-            margin-top: 22px;
-            margin-bottom: 2px;
-            min-height: 32px;
-            position: relative;
-        }
-        .a4-preview .sig-line img {
-            position: absolute;
-            bottom: 1px;
-            left: 50%;
-            transform: translateX(-50%);
-            max-height: 28px;
-            max-width: 100%;
-        }
-        .a4-preview .closing-msg {
-            text-align: center;
-            margin-top: 8px;
-            padding-top: 6px;
-            border-top: 1px solid #d0d0d0;
-            font-size: 7px;
-            color: #555;
-            font-style: italic;
-            line-height: 1.35;
-        }
-        .a4-preview .closing-msg strong {
-            color: #1a1d4e;
-            font-style: normal;
-        }
-        .signature-pad-container {
-            border: 2px dashed #d6d7e2;
-            border-radius: var(--radius-xs);
-            overflow: hidden;
-            background: #fff;
-            cursor: crosshair;
-            touch-action: none;
-        }
-        .signature-pad-container canvas {
-            display: block;
-            width: 100%;
-            height: 95px;
-        }
-        .toast-rack {
-            position: fixed;
-            top: 18px;
-            right: 18px;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            pointer-events: none;
-        }
-        .toast {
-            padding: 10px 18px;
-            border-radius: 22px;
-            color: #fff;
-            font-weight: 600;
-            font-size: .78rem;
-            animation: toastIn .32s ease;
-            box-shadow: var(--shadow-lg);
-            max-width: 350px;
-            pointer-events: auto;
-        }
-        .toast.success {
-            background: #16a34a;
-        }
-        .toast.error {
-            background: #dc2626;
-        }
-        .toast.info {
-            background: #2563eb;
-        }
-        @keyframes toastIn {
-            from {
-                transform: translateX(100px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-        .mobile-toggle {
-            display: none;
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            z-index: 300;
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            cursor: pointer;
-            box-shadow: var(--shadow-lg);
-            align-items: center;
-            justify-content: center;
-        }
-        .empty-state {
-            text-align: center;
-            padding: 35px 18px;
-            color: var(--text3);
-        }
-        input[readonly] {
-            background: #f0f1f5 !important;
-            color: #555 !important;
-            cursor: default;
-        }
-        @page {
-            size: A4 portrait;
-            margin: 0;
-        }
-        @media print {
-            * {
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
-            html,
-            body {
-                background: white !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                width: auto !important;
-                height: auto !important;
-                overflow: visible !important;
-            }
-            .sidebar,
-            .mobile-toggle,
-            .toast-rack,
-            .modal-overlay,
-            .page-top,
-            .search-bar,
-            .btn,
-            .form-group,
-            .form-row,
-            .signature-pad-container,
-            .modal-actions,
-            .card:not(.a4-preview),
-            .a4-preview-wrap,
-            .declaration-layout>.card:first-child,
-            .page:not(#page-declaration),
-            #page-login,
-            #page-dashboard,
-            #page-staff,
-            #page-clients,
-            #page-history,
-            #page-settings,
-            .stats-grid,
-            .table-wrap,
-            .card-header,
-            .sidebar-footer,
-            .sidebar-nav,
-            .sidebar-brand,
-            .main-area>*:not(#page-declaration),
-            .declaration-layout>*:not(.a4-preview-wrap) {
-                display: none !important;
-            }
-            .main-area {
-                margin-left: 0 !important;
-                padding: 0 !important;
-                width: auto !important;
-            }
-            #page-declaration {
-                display: block !important;
-                position: static !important;
-                animation: none !important;
-                padding: 0 !important;
-                margin: 0 !important;
-            }
-            .declaration-layout {
-                display: block !important;
-                grid-template-columns: none !important;
-                gap: 0 !important;
-            }
-            .a4-preview-wrap {
-                display: block !important;
-                max-height: none !important;
-                overflow: visible !important;
-                padding: 0 !important;
-                background: white !important;
-                border-radius: 0 !important;
-            }
-            .a4-preview {
-                position: static !important;
-                width: 210mm !important;
-                min-height: 297mm !important;
-                height: auto !important;
-                padding: 9mm 10mm 8mm !important;
-                margin: 0 auto !important;
-                box-shadow: none !important;
-                border: none !important;
-                background: white !important;
-                color: black !important;
-                font-size: 8.8px !important;
-                line-height: 1.35 !important;
-                page-break-after: avoid !important;
-                page-break-inside: avoid !important;
-                display: block !important;
-                visibility: visible !important;
-                box-sizing: border-box !important;
-                flex-shrink: 0 !important;
-            }
-            .a4-preview.lang-ml,
-            .a4-preview.lang-ml * {
-                font-family: "Noto Sans Malayalam", "Manjari", "Kartika", "Nirmala UI", sans-serif !important;
-                font-feature-settings: "liga" 1, "clig" 1 !important;
-                text-rendering: optimizeLegibility !important;
-            }
-            .a4-preview.lang-ml .doc-header,
-            .a4-preview.lang-ml .doc-header-left .brand-text h3,
-            .a4-preview.lang-ml .doc-header-left .brand-text .tagline,
-            .a4-preview.lang-ml .doc-header-right,
-            .a4-preview.lang-ml .val {
-                font-family: Arial, Helvetica, sans-serif !important;
-            }
-            .a4-preview {
-                font-family: Arial, Helvetica, sans-serif !important;
-            }
+        *{margin:0;padding:0;box-sizing:border-box;}
+        html{font-size:14.5px;scroll-behavior:smooth;-webkit-font-smoothing:antialiased;}
+        body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;line-height:1.55;}
+        .app-shell{display:flex;min-height:100vh;}
+        .sidebar{width:260px;background:linear-gradient(180deg,#0d1135 0%,#151a44 100%);color:#fff;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:120;transition:transform var(--transition);box-shadow:4px 0 28px rgba(0,0,0,.16);overflow:hidden;}
+        .sidebar::after{content:'';position:absolute;top:-70px;right:-70px;width:180px;height:180px;background:radial-gradient(circle,rgba(255,255,255,.02) 0%,transparent 70%);border-radius:50%;pointer-events:none;}
+        .sidebar-brand{padding:20px 16px 16px;text-align:center;border-bottom:1px solid rgba(255,255,255,.07);position:relative;z-index:1;}
+        .sidebar-brand .logo-img{width:48px;height:48px;border-radius:50%;object-fit:contain;border:2px solid rgba(255,255,255,.18);margin-bottom:7px;background:#fff;}
+        .sidebar-brand h2{font-size:1.25rem;font-weight:700;letter-spacing:1.3px;color:#fff;margin:0;}
+        .sidebar-brand .tagline{font-size:.58rem;color:var(--gold);letter-spacing:1.8px;text-transform:uppercase;margin-top:2px;font-weight:500;}
+        .sidebar-nav{flex:1;padding:8px 0;overflow-y:auto;position:relative;z-index:1;}
+        .sidebar-nav .nav-section-label{padding:9px 18px 3px;font-size:.6rem;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,.32);font-weight:600;}
+        .sidebar-nav button{display:flex;align-items:center;gap:10px;width:100%;padding:10px 18px;border:none;background:transparent;color:rgba(255,255,255,.68);cursor:pointer;font-size:.82rem;transition:all var(--transition);text-align:left;font-family:var(--font);border-left:3px solid transparent;}
+        .sidebar-nav button:hover{background:rgba(255,255,255,.04);color:#fff;border-left-color:rgba(255,255,255,.25);}
+        .sidebar-nav button.active{background:rgba(255,255,255,.08);color:#fff;border-left-color:var(--gold);font-weight:600;}
+        .sidebar-nav button .nav-icon{font-size:1.1rem;width:22px;text-align:center;flex-shrink:0;}
+        .main-area{flex:1;margin-left:260px;padding:24px 28px;min-height:100vh;transition:margin var(--transition);}
+        .page{display:none;animation:pageIn .35s ease;}
+        .page.active{display:block;}
+        @keyframes pageIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+        .page-top{margin-bottom:20px;}
+        .page-top h1{font-size:1.5rem;font-weight:700;color:var(--primary);margin-bottom:2px;}
+        .page-top .subtitle{font-size:.76rem;color:var(--text3);font-weight:500;}
+        .card{background:var(--surface);border-radius:var(--radius-lg);padding:20px 24px;box-shadow:var(--shadow-xs);border:1px solid var(--border);margin-bottom:16px;transition:all var(--transition);}
+        .card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+        .card-header h3{font-size:.98rem;font-weight:700;color:var(--primary);}
+        .stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:12px;}
+        .stat-card{background:var(--surface);border-radius:var(--radius-lg);padding:16px 18px;box-shadow:var(--shadow-xs);border:1px solid var(--border);display:flex;align-items:center;gap:12px;transition:all var(--transition);cursor:default;}
+        .stat-card:hover{box-shadow:var(--shadow);transform:translateY(-2px);border-color:var(--border2);}
+        .stat-icon{width:42px;height:42px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:1.25rem;flex-shrink:0;background:#eef0ff;color:#4657f0;}
+        .stat-value{font-size:1.4rem;font-weight:700;color:var(--primary);line-height:1;}
+        .stat-label{font-size:.68rem;color:var(--text3);margin-top:2px;font-weight:500;}
+        .btn{display:inline-flex;align-items:center;gap:5px;padding:8px 16px;border-radius:22px;font-size:.8rem;font-weight:600;cursor:pointer;border:none;transition:all var(--transition);font-family:var(--font);white-space:nowrap;letter-spacing:.15px;}
+        .btn:active{transform:scale(.97);}
+        .btn-primary{background:var(--accent);color:#fff;}
+        .btn-primary:hover{background:var(--accent2);box-shadow:0 5px 16px rgba(70,87,240,.3);transform:translateY(-1px);}
+        .btn-outline{background:transparent;border:1.5px solid var(--border2);color:var(--text2);}
+        .btn-outline:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light);}
+        .btn-gold{background:var(--gold);color:#fff;}
+        .btn-gold:hover{background:var(--gold2);box-shadow:0 5px 16px rgba(155,128,53,.3);transform:translateY(-1px);}
+        .btn-sm{padding:4px 11px;font-size:.7rem;border-radius:16px;}
+        .btn-xs{padding:3px 8px;font-size:.65rem;border-radius:13px;}
+        .btn-danger{background:var(--danger);color:#fff;}
+        .btn-danger:hover{background:#b91c1c;}
+        .form-group{margin-bottom:12px;}
+        .form-group label{display:block;font-size:.72rem;font-weight:600;color:var(--text2);margin-bottom:3px;}
+        .form-group input,.form-group select,.form-group textarea{width:100%;padding:9px 13px;border:1.5px solid var(--border2);border-radius:var(--radius-xs);font-size:.81rem;font-family:var(--font);transition:all var(--transition);background:#fafbfc;color:var(--text);}
+        .form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(70,87,240,.06);background:#fff;}
+        .form-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;}
+        .form-row-3{grid-template-columns:repeat(3,1fr);}
+        .form-row-4{grid-template-columns:repeat(4,1fr);}
+        @media (max-width:900px){.form-row-3,.form-row-4{grid-template-columns:1fr 1fr;}.sidebar{transform:translateX(-100%);}.sidebar.open{transform:translateX(0);}.main-area{margin-left:0;}.mobile-toggle{display:flex!important;}.declaration-layout{grid-template-columns:1fr!important;}}
+        .table-wrap{overflow-x:auto;border-radius:var(--radius-sm);border:1px solid var(--border);}
+        table{width:100%;border-collapse:collapse;font-size:.78rem;}
+        table th,table td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;}
+        table th{background:#fafbfc;font-weight:700;color:var(--text2);font-size:.68rem;text-transform:uppercase;letter-spacing:.5px;position:sticky;top:0;z-index:1;}
+        table tbody tr:hover{background:#fafbff;}
+        .badge{display:inline-block;padding:3px 9px;border-radius:11px;font-size:.65rem;font-weight:600;}
+        .badge-available{background:#ecfdf5;color:#15803d;}
+        .badge-assigned{background:#eef0ff;color:#3545d8;}
+        .badge-leave{background:#fffbeb;color:#b45309;}
+        .badge-inactive{background:#fef2f2;color:#b91c1c;}
+        .search-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+        .search-bar input{flex:1;min-width:180px;padding:8px 14px;border:1.5px solid var(--border2);border-radius:22px;font-size:.8rem;background:#fafbfc;font-family:var(--font);}
+        .search-bar input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(70,87,240,.06);background:#fff;outline:none;}
+        .search-bar select{padding:8px 13px;border:1.5px solid var(--border2);border-radius:22px;font-family:var(--font);font-size:.78rem;background:#fafbfc;cursor:pointer;}
+        .modal-overlay{display:none;position:fixed;inset:0;background:rgba(13,17,53,.5);z-index:220;align-items:center;justify-content:center;backdrop-filter:blur(2px);}
+        .modal-overlay.open{display:flex;}
+        .modal{background:#fff;border-radius:var(--radius-xl);padding:26px 28px;width:92%;max-width:680px;max-height:82vh;overflow-y:auto;box-shadow:var(--shadow-xl);}
+        .modal.wide{max-width:920px;}
+        .modal h2{font-size:1.2rem;margin-bottom:14px;color:var(--primary);}
+        .modal-actions{display:flex;gap:9px;justify-content:flex-end;margin-top:16px;flex-wrap:wrap;}
+        .declaration-layout{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;}
+        @media (max-width:1100px){.declaration-layout{grid-template-columns:1fr;}}
+        .preview-viewport{overflow:auto;max-height:85vh;background:#e8e9f0;border-radius:6px;padding:12px;display:flex;justify-content:center;}
+        .a4-preview{background:#fff;width:210mm;min-height:297mm;padding:7mm 8mm 6mm;font-family:var(--font-doc);font-size:10.5px;line-height:1.38;color:#1a1a1a;box-shadow:0 2px 20px rgba(0,0,0,.13);transform:scale(0.90);transform-origin:top center;flex-shrink:0;border:1px solid #d0d0d0;}
+        .a4-preview.lang-ml{font-family:var(--font-ml);font-feature-settings:"liga" 1,"clig" 1;text-rendering:optimizeLegibility;}
+        .a4-preview.lang-ml .doc-header,.a4-preview.lang-ml .doc-header-left .brand-text h3,.a4-preview.lang-ml .doc-header-left .brand-text .tagline,.a4-preview.lang-ml .doc-header-right,.a4-preview.lang-ml .val{font-family:var(--font-doc)!important;}
+        .a4-preview .doc-header{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;padding-bottom:6px;border-bottom:2px solid #1a1d4e;margin-bottom:6px;}
+        .a4-preview .doc-header-left{display:flex;align-items:center;gap:9px;}
+        .a4-preview .doc-header-left .logo-img{width:58px;height:58px;border-radius:50%;object-fit:contain;flex-shrink:0;border:1px solid #e0e0e0;background:#fff;}
+        .a4-preview .doc-header-left .brand-text h3{font-size:14px;font-weight:700;letter-spacing:1.3px;color:#1a1d4e;margin:0;}
+        .a4-preview .doc-header-left .brand-text .tagline{font-size:7px;letter-spacing:1.8px;color:#9b8035;text-transform:uppercase;font-weight:600;}
+        .a4-preview .doc-header-right{text-align:right;font-size:8px;color:#444;line-height:1.4;flex-shrink:0;}
+        .a4-preview .doc-header-right strong{font-size:9px;color:#1a1d4e;}
+        .a4-preview .doc-title-box{text-align:center;border:2px solid #1a1d4e;padding:5px 10px;margin:8px 0;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:1.3px;color:#1a1d4e;}
+        .a4-preview .meta-row{display:flex;gap:6px;margin:4px 0 6px;font-size:8px;}
+        .a4-preview .meta-row span{font-weight:700;color:#1a1d4e;min-width:70px;}
+        .a4-preview .section-title{font-weight:700;font-size:9px;color:#1a1d4e;border-bottom:1px solid #d0d0d0;padding-bottom:2px;margin:6px 0 3px;text-transform:uppercase;letter-spacing:.8px;}
+        .a4-preview .doc-table{width:100%;border-collapse:collapse;font-size:8.5px;margin:0 0 5px 0;}
+        .a4-preview .doc-table td{padding:2px 4px;border:1px solid #d5d5d5;vertical-align:top;word-break:break-word;line-height:1.35;}
+        .a4-preview .doc-table .lbl{font-weight:700;background:#f5f5f5;color:#3a3a3a;font-size:7.8px;letter-spacing:.2px;width:28%;white-space:nowrap;}
+        .a4-preview .doc-table .val{color:#1a1a1a;font-size:8.5px;}
+        .a4-preview .terms-block{margin-top:4px;font-size:7.8px;line-height:1.35;color:#2a2a2a;}
+        .a4-preview .terms-block h4{font-size:8.2px;margin-bottom:2px;color:#1a1d4e;font-weight:700;text-transform:uppercase;letter-spacing:.8px;}
+        .a4-preview .terms-block ol{padding-left:16px;}
+        .a4-preview .terms-block ol li{margin-bottom:1px;}
+        .a4-preview .emergency-box{border:1.5px solid #1a1d4e;border-radius:3px;padding:4px 8px;margin:5px 0;text-align:center;font-size:8px;background:#fafafa;}
+        .a4-preview .emergency-box strong{color:#1a1d4e;font-size:8.5px;}
+        .a4-preview .sig-section{display:flex;gap:20px;margin-top:8px;justify-content:space-between;}
+        .a4-preview .sig-box{flex:1;text-align:center;}
+        .a4-preview .sig-line{border-bottom:1.5px solid #333;margin-top:18px;margin-bottom:2px;min-height:28px;position:relative;}
+        .a4-preview .sig-line img{position:absolute;bottom:1px;left:50%;transform:translateX(-50%);max-height:24px;max-width:100%;}
+        .a4-preview .closing-msg{text-align:center;margin-top:6px;padding-top:5px;border-top:1px solid #d0d0d0;font-size:7.5px;color:#555;font-style:italic;line-height:1.35;}
+        .a4-preview .closing-msg strong{color:#1a1d4e;font-style:normal;}
+        .signature-pad-container{border:2px dashed #d6d7e2;border-radius:var(--radius-xs);overflow:hidden;background:#fff;cursor:crosshair;touch-action:none;}
+        .signature-pad-container canvas{display:block;width:100%;height:95px;}
+        .toast-rack{position:fixed;top:18px;right:18px;z-index:9999;display:flex;flex-direction:column;gap:6px;pointer-events:none;}
+        .toast{padding:10px 18px;border-radius:22px;color:#fff;font-weight:600;font-size:.78rem;animation:toastIn .32s ease;box-shadow:var(--shadow-lg);max-width:350px;pointer-events:auto;}
+        .toast.success{background:#16a34a;}.toast.error{background:#dc2626;}.toast.info{background:#2563eb;}
+        @keyframes toastIn{from{transform:translateX(100px);opacity:0;}to{transform:translateX(0);opacity:1;}}
+        .mobile-toggle{display:none;position:fixed;top:10px;left:10px;z-index:300;background:var(--primary);color:#fff;border:none;width:40px;height:40px;border-radius:50%;font-size:1.2rem;cursor:pointer;box-shadow:var(--shadow-lg);align-items:center;justify-content:center;}
+        .empty-state{text-align:center;padding:35px 18px;color:var(--text3);}
+        input[readonly]{background:#f0f1f5!important;color:#555!important;cursor:default;}
+        @page{size:A4 portrait;margin:0;}
+        @media print{
+            *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
+            html,body{background:white!important;margin:0!important;padding:0!important;}
+            body *{visibility:hidden;}
+            #a4Preview,#a4Preview *{visibility:visible;}
+            #a4Preview{position:absolute;left:0;top:0;width:210mm!important;min-height:297mm!important;max-height:297mm;height:auto;padding:7mm 8mm 6mm!important;margin:0!important;box-shadow:none!important;border:none!important;background:white!important;color:black!important;font-size:10.5px!important;line-height:1.38!important;page-break-after:avoid!important;page-break-inside:avoid!important;transform:none!important;zoom:1!important;scale:1!important;flex-shrink:0;}
+            .a4-preview.lang-ml,.a4-preview.lang-ml *{font-family:"Noto Sans Malayalam","Manjari","Kartika","Nirmala UI",sans-serif!important;font-feature-settings:"liga" 1,"clig" 1!important;text-rendering:optimizeLegibility!important;}
+            .a4-preview.lang-ml .doc-header,.a4-preview.lang-ml .doc-header-left .brand-text h3,.a4-preview.lang-ml .doc-header-left .brand-text .tagline,.a4-preview.lang-ml .doc-header-right,.a4-preview.lang-ml .val{font-family:Arial,Helvetica,sans-serif!important;}
         }
     </style>
 </head>
@@ -991,7 +179,7 @@
     <div class="app-shell">
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-brand">
-                <img src="logo.jpg" alt="KALOPSIA Logo" class="logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+                <img src="./logo.jpg" alt="KALOPSIA Logo" class="logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
                 <div style="display:none;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.14);margin:0 auto 7px;line-height:48px;font-weight:700;color:#fff;font-size:1.1rem;">K</div>
                 <h2>KALOPSIA</h2>
                 <div class="tagline">All Essential Services Under One Roof</div>
@@ -1008,26 +196,8 @@
                 <div class="nav-section-label">System</div>
                 <button onclick="navigate('settings')" data-nav="settings"><span class="nav-icon">⚙️</span>Settings</button>
             </nav>
-            <div class="sidebar-footer">
-                <span class="user-info" id="sidebarUser">Not logged in</span>
-                <button onclick="logout()">Logout</button>
-            </div>
         </aside>
         <main class="main-area" id="mainArea">
-            <div class="page active" id="page-login">
-                <div style="max-width:420px;margin:45px auto;">
-                    <div class="card" style="text-align:center;padding:42px 30px;">
-                        <img src="logo.jpg" alt="KALOPSIA Logo" style="width:60px;height:60px;border-radius:50%;object-fit:cover;margin-bottom:9px;border:2px solid #e0e0e0;" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-block';">
-                        <div style="display:none;width:60px;height:60px;border-radius:50%;background:var(--primary);margin:0 auto 9px;line-height:60px;font-weight:700;color:#fff;font-size:1.4rem;">K</div>
-                        <h2 style="color:var(--primary);margin-bottom:2px;letter-spacing:1px;">KALOPSIA</h2>
-                        <p style="color:var(--text3);font-size:.76rem;margin-bottom:18px;">Service Management System</p>
-                        <div class="form-group"><input type="email" id="loginEmail" placeholder="Email address"></div>
-                        <div class="form-group"><input type="password" id="loginPassword" placeholder="Password"></div>
-                        <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="login()">Sign In</button>
-                        <p style="margin-top:10px;font-size:.65rem;color:var(--text3);">Demo: admin@kalopsia.com / password123</p>
-                    </div>
-                </div>
-            </div>
             <div class="page" id="page-dashboard">
                 <div class="page-top"><h1>Dashboard</h1><p class="subtitle">Overview of all operations</p></div>
                 <div class="stats-grid" id="dashboardStats"></div>
@@ -1075,12 +245,12 @@
                             <button class="btn btn-primary" onclick="printDeclaration()">🖨️ Print / PDF</button>
                         </div>
                     </div>
-                    <div class="a4-preview-wrap">
+                    <div class="preview-viewport">
                         <div class="a4-preview" id="a4Preview">
                             <div class="doc-header">
                                 <div class="doc-header-left">
-                                    <img src="logo.jpg" alt="KALOPSIA Logo" class="logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-                                    <div style="display:none;width:46px;height:46px;border-radius:50%;background:#f0f0f0;align-items:center;justify-content:center;font-weight:700;font-size:.65rem;color:#888;border:1px solid #e0e0e0;flex-shrink:0;">LOGO</div>
+                                    <img src="./logo.jpg" alt="KALOPSIA Logo" class="logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                                    <div style="display:none;width:58px;height:58px;border-radius:50%;background:#f0f0f0;align-items:center;justify-content:center;font-weight:700;font-size:.7rem;color:#888;border:1px solid #e0e0e0;flex-shrink:0;">LOGO</div>
                                     <div class="brand-text"><h3>KALOPSIA</h3><div class="tagline">ALL ESSENTIAL SERVICES UNDER ONE ROOF</div></div>
                                 </div>
                                 <div class="doc-header-right">
@@ -1095,7 +265,7 @@
                             <table class="doc-table"><tr><td class="lbl" data-key="lblRecName">Name</td><td class="val" id="prevRecipientName">-</td><td class="lbl" data-key="lblAge">Age</td><td class="val" id="prevRecipientAge">-</td></tr><tr><td class="lbl" data-key="lblGender">Gender</td><td class="val" id="prevRecipientGender">-</td><td class="lbl" data-key="lblMedNotes">Medical Notes</td><td class="val" id="prevMedicalNotes">-</td></tr></table>
                             <div class="section-title" data-key="secService">SERVICE DETAILS</div>
                             <table class="doc-table"><tr><td class="lbl" data-key="lblSvcType">Service Type</td><td class="val" id="prevServiceType">-</td><td class="lbl" data-key="lblDutyType">Duty Type</td><td class="val" id="prevDutyType">-</td></tr><tr><td class="lbl" data-key="lblRole">Role Assigned</td><td class="val" id="prevRoleAssigned">-</td><td class="lbl" data-key="lblStartDate">Start Date</td><td class="val" id="prevStartDate">-</td></tr><tr><td class="lbl" data-key="lblDuration">Duration</td><td class="val" id="prevDuration">-</td><td class="lbl" data-key="lblShift">Shift Timing</td><td class="val" id="prevShiftTiming">-</td></tr><tr><td class="lbl" data-key="lblMonthly">Monthly Charge</td><td class="val" id="prevMonthlyCharge">-</td><td class="lbl" data-key="lblAdvance">Advance Paid</td><td class="val" id="prevAdvancePaid">-</td></tr><tr><td class="lbl" data-key="lblBalance">Balance</td><td class="val" id="prevBalance">-</td><td></td><td></td></tr></table>
-                            <div class="section-title" data-key="secStaff">ASSIGNED STAFF <span style="font-weight:400;font-size:6.5px;color:#888;">(Public Info Only)</span></div>
+                            <div class="section-title" data-key="secStaff">ASSIGNED STAFF <span style="font-weight:400;font-size:7px;color:#888;">(Public Info Only)</span></div>
                             <table class="doc-table"><tr><td class="lbl" data-key="lblStaffName">Staff Name</td><td class="val" id="prevStaffName">-</td><td class="lbl" data-key="lblStaffGender">Gender</td><td class="val" id="prevStaffGender">-</td></tr><tr><td class="lbl" data-key="lblStaffID">Staff ID</td><td class="val" id="prevStaffID">-</td><td class="lbl" data-key="lblDeployDate">Deployment Date</td><td class="val" id="prevDeploymentDate">-</td></tr></table>
                             <div class="terms-block">
                                 <h4 data-key="termsClientTitle">CLIENT TERMS &amp; CONDITIONS</h4>
@@ -1104,8 +274,8 @@
                                     <li data-key="ct2">Client shall not assign unrelated, unsafe, excessive, degrading, or unauthorized work.</li>
                                     <li data-key="ct3">Harassment, abuse, threats, bullying, discrimination, or unsafe treatment is strictly prohibited.</li>
                                     <li data-key="ct4">Agreed duty timings must be respected. Overtime / extra duties may incur additional charges.</li>
-                                    <li data-key="ct5">Monthly service charges are based on <strong>28 working days</strong> unless otherwise agreed.</li>
-                                    <li data-key="ct6">For live-in services, safe accommodation and basic facilities must be provided.</li>
+                                    <li data-key="ct5">Monthly charges based on <strong>28 working days</strong> unless otherwise agreed.</li>
+                                    <li data-key="ct6">For live‑in services, safe accommodation and basic facilities must be provided.</li>
                                     <li data-key="ct7">Client shall not transfer or directly employ the assigned staff outside KALOPSIA.</li>
                                     <li data-key="ct8">Payments, complaints, replacements, disputes, or emergencies must be handled only through KALOPSIA.</li>
                                 </ol>
@@ -1114,7 +284,7 @@
                                 <h4 data-key="termsSPTitle">SERVICE PERSON RESPONSIBILITIES</h4>
                                 <ol>
                                     <li data-key="sp1">Service person shall behave respectfully and professionally.</li>
-                                    <li data-key="sp2">Service person shall not demand or accept money, gifts, loans, valuables, tips, or favors without KALOPSIA approval.</li>
+                                    <li data-key="sp2">Service person shall not demand/accept money, gifts, loans, valuables, tips, or favors without approval.</li>
                                     <li data-key="sp3">Service person shall not engage in angry behavior, arguments, rude conduct, abuse, or misconduct.</li>
                                     <li data-key="sp4">Service person shall perform assigned duties honestly within agreed scope.</li>
                                     <li data-key="sp5">Issues, illness, emergencies, or concerns must be reported immediately to KALOPSIA.</li>
@@ -1140,7 +310,7 @@
             </div>
             <div class="page" id="page-settings">
                 <div class="page-top"><h1>Settings</h1><p class="subtitle">Configure system preferences</p></div>
-                <div class="card"><h3>Company Details</h3><div class="form-row form-row-3"><div class="form-group"><label>Office Address</label><textarea id="setOfficeAddr" rows="2">Chullikkara – Kuttikkol Road, Chullikkara, Kerala – 671532, India</textarea></div><div class="form-group"><label>Phone 1</label><input type="text" id="setPhone1" value="9497321453"></div><div class="form-group"><label>Phone 2</label><input type="text" id="setPhone2" value="9961921453"></div></div><div class="form-group"><label>Email</label><input type="email" id="setEmail" value="kalopsia0404@gmail.com"></div><div class="form-group"><label>Logo URL (optional)</label><input type="text" id="setLogoUrl" placeholder="https://..."></div><button class="btn btn-primary" onclick="saveSettings()">💾 Save Settings</button></div>
+                <div class="card"><h3>Company Details</h3><div class="form-row form-row-3"><div class="form-group"><label>Office Address</label><textarea id="setOfficeAddr" rows="2">Chullikkara – Kuttikkol Road, Chullikkara, Kerala – 671532, India</textarea></div><div class="form-group"><label>Phone 1</label><input type="text" id="setPhone1" value="9497321453"></div><div class="form-group"><label>Phone 2</label><input type="text" id="setPhone2" value="9961921453"></div></div><div class="form-group"><label>Email</label><input type="email" id="setEmail" value="kalopsia0404@gmail.com"></div><button class="btn btn-primary" onclick="saveSettings()">💾 Save Settings</button></div>
             </div>
         </main>
     </div>
@@ -1158,19 +328,23 @@
             <div class="form-group"><label>PIN</label><input type="text" id="cPIN"></div><input type="hidden" id="cDocId"><div class="modal-actions"><button class="btn btn-outline" onclick="closeClientModal()">Cancel</button><button class="btn btn-primary" onclick="saveClient()">💾 Save Client</button></div></div></div>
     <script>
         (function() {
-            const firebaseConfig = { apiKey: "AIzaSyDOS4GRe58LsQLkcSuM8enXkzrpnta36ME", authDomain: "paliative-c77f3.firebaseapp.com", projectId: "paliative-c77f3", storageBucket: "paliative-c77f3.firebasestorage.app",
-                messagingSenderId: "310033694821", appId: "1:310033694821:web:02c210ecbcfdf0858b868c" };
-            let fbReady = false;
+            const firebaseConfig = {
+                apiKey: "AIzaSyDOS4GRe58LsQLkcSuM8enXkzrpnta36ME",
+                authDomain: "paliative-c77f3.firebaseapp.com",
+                projectId: "paliative-c77f3",
+                storageBucket: "paliative-c77f3.firebasestorage.app",
+                messagingSenderId: "310033694821",
+                appId: "1:310033694821:web:02c210ecbcfdf0858b868c"
+            };
             let db = null;
-            let auth = null;
-            let currentUser = null;
+            let fbReady = false;
             let allStaff = [];
             let allClients = [];
             let allDecls = [];
             let currentDeclId = null;
             let isMalayalam = false;
-            let appSettings = { officeAddress: 'Chullikkara – Kuttikkol Road, Chullikkara, Kerala – 671532, India',
-                phone1: '9497321453', phone2: '9961921453', email: 'kalopsia0404@gmail.com', logoUrl: '' };
+            let appSettings = { officeAddress: 'Chullikkara – Kuttikkol Road, Chullikkara, Kerala – 671532, India', phone1: '9497321453', phone2: '9961921453', email: 'kalopsia0404@gmail.com' };
+
             const mlTranslations = {
                 docTitle: 'സേവന വിന്യാസ പ്രഖ്യാപനവും കരാറും',
                 declNo: 'പ്രഖ്യാപന നമ്പർ:',
@@ -1227,97 +401,42 @@
                 closingText: 'നിങ്ങൾക്കും നിങ്ങളുടെ കുടുംബത്തിനും സുഖവും സമാധാനവും സുരക്ഷയും ക്ഷേമവും ഞങ്ങൾ ആശംസിക്കുന്നു.'
             };
             const enDefaults = {};
-            document.addEventListener('DOMContentLoaded', () => {
-                document.querySelectorAll('#a4Preview [data-key]').forEach(el => { const k = el.getAttribute(
-                        'data-key'); if (k && !enDefaults[k]) enDefaults[k] = el.textContent.trim(); });
-                initFirebase();
-                initSigPads();
-                loadLocalData();
-                if (!fbReady) { loadDashboardData();
-                    renderStaffTable();
-                    renderClientTable();
-                    renderHistory();
-                    populateDeclDropdowns();
-                    updateDeclPreview();
-                    document.getElementById('page-login').classList.remove('active');
-                    navigate('dashboard'); }
-            });
 
-            function initFirebase() {
+            async function loadFSData() {
+                if (!fbReady || !db) return;
                 try {
-                    if (firebaseConfig.apiKey && firebaseConfig.apiKey.length > 3) {
-                        firebase.initializeApp(firebaseConfig);
-                        db = firebase.firestore();
-                        auth = firebase.auth();
-                        fbReady = true;
-                        auth.onAuthStateChanged(u => {
-                            currentUser = u;
-                            if (u) {
-                                document.getElementById('sidebarUser').textContent = u.email || 'User';
-                                navigate('dashboard');
-                                loadDashboardData();
-                                document.getElementById('page-login').classList.remove('active');
-                                loadFSData();
-                            } else {
-                                document.getElementById('sidebarUser').textContent = 'Not logged in';
-                                document.getElementById('page-login').classList.add('active');
-                                document.querySelectorAll('.page').forEach(p => { if (p.id !== 'page-login') p
-                                        .classList.remove('active'); });
-                            }
-                        });
-                    } else { console.warn('Firebase config not set - demo mode');
-                        demoMode(); }
-                } catch (e) { console.warn('Firebase init failed - demo mode');
-                    demoMode(); }
+                    const staffSnap = await db.collection('staff').get();
+                    allStaff = staffSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+                    const clientSnap = await db.collection('clients').get();
+                    allClients = clientSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+                    const declSnap = await db.collection('declarations').get();
+                    allDecls = declSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+                    const settingsDoc = await db.collection('settings').doc('main').get();
+                    if (settingsDoc.exists) appSettings = { ...appSettings, ...settingsDoc.data() };
+                } catch (e) {
+                    console.error('Firestore load error:', e);
+                    showToast('Failed to load data. Check Firestore rules.', 'error');
+                }
+                renderAll();
             }
 
-            function demoMode() { fbReady = false;
-                currentUser = { email: 'demo@kalopsia.com', uid: 'demo-user' };
-                document.getElementById('sidebarUser').textContent = 'Demo User';
-                document.getElementById('page-login').classList.remove('active');
-                navigate('dashboard');
-                loadLocalData();
-                loadDashboardData();
+            function renderAll() {
                 renderStaffTable();
                 renderClientTable();
                 renderHistory();
                 populateDeclDropdowns();
-                updateDeclPreview(); }
-
-            function loadLocalData() {
-                try {
-                    allStaff = JSON.parse(localStorage.getItem('kps_staff') || '[]');
-                    allClients = JSON.parse(localStorage.getItem('kps_clients') || '[]');
-                    allDecls = JSON.parse(localStorage.getItem('kps_decls') || '[]');
-                    const s = JSON.parse(localStorage.getItem('kps_settings') || 'null');
-                    if (s) appSettings = s;
-                } catch (e) { allStaff = [];
-                    allClients = [];
-                    allDecls = []; }
+                loadDashboardData();
+                updateDeclPreview();
             }
 
-            function saveLocalData() {
-                if (!fbReady) {
-                    localStorage.setItem('kps_staff', JSON.stringify(allStaff));
-                    localStorage.setItem('kps_clients', JSON.stringify(allClients));
-                    localStorage.setItem('kps_decls', JSON.stringify(allDecls));
-                    localStorage.setItem('kps_settings', JSON.stringify(appSettings));
+            async function initApp() {
+                if (!firebase.apps.length) {
+                    firebase.initializeApp(firebaseConfig);
                 }
-            }
-
-            function loadFSData() {
-                if (!fbReady || !db) return;
-                db.collection('staff').get().then(s => { allStaff = s.docs.map(d => ({ id: d.id, ...d.data() }));
-                    renderStaffTable();
-                    populateDeclDropdowns(); }).catch(() => {});
-                db.collection('clients').get().then(s => { allClients = s.docs.map(d => ({ id: d.id, ...d.data() }));
-                    renderClientTable();
-                    populateDeclDropdowns(); }).catch(() => {});
-                db.collection('declarations').get().then(s => { allDecls = s.docs.map(d => ({ id: d.id, ...d.data() }));
-                    loadDashboardData();
-                    renderHistory(); }).catch(() => {});
-                db.collection('settings').doc('app').get().then(d => { if (d.exists) appSettings = { ...appSettings, ...d
-                        .data() }; }).catch(() => {});
+                db = firebase.firestore();
+                fbReady = true;
+                await loadFSData();
+                navigate('dashboard');
             }
 
             function showToast(m, t = 'info') {
@@ -1326,17 +445,14 @@
                 d.className = 'toast ' + t;
                 d.textContent = m;
                 r.appendChild(d);
-                setTimeout(() => { d.style.opacity = '0';
-                    d.style.transition = 'opacity .3s';
-                    setTimeout(() => d.remove(), 300); }, 3000);
+                setTimeout(() => { d.style.opacity = '0'; d.style.transition = 'opacity .3s'; setTimeout(() => d.remove(), 300); }, 3200);
             }
 
             function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
 
             function navigate(view) {
                 document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-                const map = { dashboard: 'page-dashboard', staff: 'page-staff', clients: 'page-clients',
-                    declaration: 'page-declaration', history: 'page-history', settings: 'page-settings' };
+                const map = { dashboard: 'page-dashboard', staff: 'page-staff', clients: 'page-clients', declaration: 'page-declaration', history: 'page-history', settings: 'page-settings' };
                 const t = map[view];
                 if (t) { const el = document.getElementById(t); if (el) el.classList.add('active'); }
                 document.querySelectorAll('.sidebar-nav button').forEach(b => b.classList.remove('active'));
@@ -1345,53 +461,27 @@
                 if (view === 'dashboard') loadDashboardData();
                 if (view === 'staff') renderStaffTable();
                 if (view === 'clients') renderClientTable();
-                if (view === 'declaration') { populateDeclDropdowns();
-                    updateDeclPreview(); }
+                if (view === 'declaration') { populateDeclDropdowns(); updateDeclPreview(); }
                 if (view === 'history') renderHistory();
                 if (view === 'settings') loadSettingsForm();
                 document.getElementById('sidebar').classList.remove('open');
                 document.getElementById('mainArea').scrollTop = 0;
             }
 
-            function login() {
-                const e = document.getElementById('loginEmail').value.trim();
-                const p = document.getElementById('loginPassword').value.trim();
-                if (!e || !p) { showToast('Enter email and password', 'error'); return; }
-                if (fbReady && auth) { auth.signInWithEmailAndPassword(e, p).then(() => showToast('Login successful',
-                        'success')).catch(err => { showToast('Login failed: ' + err.message, 'error');
-                        demoMode(); }); } else { demoMode();
-                    showToast('Signed in (demo mode)', 'success'); }
-            }
-
-            function logout() {
-                if (fbReady && auth) { auth.signOut(); } else { currentUser = null;
-                    document.getElementById('sidebarUser').textContent = 'Not logged in';
-                    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-                    document.getElementById('page-login').classList.add('active');
-                    showToast('Logged out', 'info'); }
-            }
-
             function loadDashboardData() {
-                const t = allStaff.length;
-                const a = allStaff.filter(s => s.status === 'Available').length;
-                const as = allStaff.filter(s => s.status === 'Assigned').length;
-                const n = allStaff.filter(s => s.category === 'Nurse').length;
-                const c = allStaff.filter(s => s.category === 'Caretaker').length;
-                const m = allStaff.filter(s => s.category === 'Home Maid' || s.category === 'Maid + Caretaker').length;
-                const ac = allDecls.length;
-                const p = allDecls.filter(d => parseFloat(d.balance || 0) > 0).length;
+                const t = allStaff.length, a = allStaff.filter(s => s.status === 'Available').length,
+                      as = allStaff.filter(s => s.status === 'Assigned').length,
+                      n = allStaff.filter(s => s.category === 'Nurse').length,
+                      c = allStaff.filter(s => s.category === 'Caretaker').length,
+                      m = allStaff.filter(s => s.category === 'Home Maid' || s.category === 'Maid + Caretaker').length,
+                      ac = allDecls.length, p = allDecls.filter(d => parseFloat(d.balance || 0) > 0).length;
                 document.getElementById('dashboardStats').innerHTML = [
-                    { i: '👥', v: t, l: 'Total Staff' }, { i: '✅', v: a, l: 'Available Staff' }, { i: '📋', v: as,
-                        l: 'Assigned Staff' }, { i: '🏥', v: n, l: 'Nurses' }, { i: '🤝', v: c, l: 'Caretakers' }, { i: '🏠',
-                        v: m, l: 'Maids' }, { i: '📝', v: ac, l: 'Active Services' }, { i: '💰', v: p, l: 'Pending Payments' }
-                ].map(s =>
-                    `<div class="stat-card"><div class="stat-icon">${s.i}</div><div><div class="stat-value">${s.v}</div><div class="stat-label">${s.l}</div></div></div>`
-                    ).join('');
-                const rec = [...allDecls].reverse().slice(0, 8);
-                document.getElementById('recentDeclarations').innerHTML = rec.length ? rec.map(d =>
-                    `<tr><td><strong>${d.declNo||'-'}</strong></td><td>${d.date||'-'}</td><td>${d.clientName||'-'}</td><td>${d.serviceType||'-'}</td><td>${d.staffName||'-'}</td><td>₹${d.monthlyCharge||'0'}</td></tr>`
-                    ).join('') :
-                    '<tr><td colspan="6" class="empty-state">No declarations yet</td></tr>';
+                    {i:'👥',v:t,l:'Total Staff'},{i:'✅',v:a,l:'Available Staff'},{i:'📋',v:as,l:'Assigned Staff'},
+                    {i:'🏥',v:n,l:'Nurses'},{i:'🤝',v:c,l:'Caretakers'},{i:'🏠',v:m,l:'Maids'},
+                    {i:'📝',v:ac,l:'Active Services'},{i:'💰',v:p,l:'Pending Payments'}
+                ].map(s => `<div class="stat-card"><div class="stat-icon">${s.i}</div><div><div class="stat-value">${s.v}</div><div class="stat-label">${s.l}</div></div></div>`).join('');
+                const rec = [...allDecls].reverse().slice(0,8);
+                document.getElementById('recentDeclarations').innerHTML = rec.length ? rec.map(d => `<tr><td><strong>${d.declNo||'-'}</strong></td><td>${d.date||'-'}</td><td>${d.clientName||'-'}</td><td>${d.serviceType||'-'}</td><td>${d.staffName||'-'}</td><td>₹${d.monthlyCharge||'0'}</td></tr>`).join('') : '<tr><td colspan="6" class="empty-state">No declarations yet</td></tr>';
             }
 
             function renderStaffTable() {
@@ -1399,16 +489,13 @@
                 const fc = document.getElementById('staffFilterCategory')?.value || '';
                 const fs = document.getElementById('staffFilterStatus')?.value || '';
                 let f = allStaff;
-                if (s) f = f.filter(st => (st.name || '').toLowerCase().includes(s) || (st.mobile || '').includes(s) || (
-                    st.staffId || '').toLowerCase().includes(s));
-                if (fc) f = f.filter(st => st.category === fc);
-                if (fs) f = f.filter(st => st.status === fs);
+                if(s) f = f.filter(st => (st.name||'').toLowerCase().includes(s) || (st.mobile||'').includes(s) || (st.staffId||'').toLowerCase().includes(s));
+                if(fc) f = f.filter(st => st.category === fc);
+                if(fs) f = f.filter(st => st.status === fs);
                 const tb = document.getElementById('staffTableBody');
-                if (!f.length) { tb.innerHTML =
-                        '<tr><td colspan="6" class="empty-state">No staff found</td></tr>'; return; }
+                if(!f.length){ tb.innerHTML = '<tr><td colspan="6" class="empty-state">No staff found</td></tr>'; return; }
                 tb.innerHTML = f.map(st => {
-                    const bc = st.status === 'Available' ? 'badge-available' : st.status === 'Assigned' ?
-                        'badge-assigned' : st.status === 'On Leave' ? 'badge-leave' : 'badge-inactive';
+                    const bc = st.status === 'Available' ? 'badge-available' : st.status === 'Assigned' ? 'badge-assigned' : st.status === 'On Leave' ? 'badge-leave' : 'badge-inactive';
                     return `<tr><td><strong>${st.staffId||'-'}</strong></td><td>${st.name||'-'}</td><td>${st.category||'-'}</td><td>${st.mobile||'-'}</td><td><span class="badge ${bc}">${st.status||'?'}</span></td><td><button class="btn btn-xs btn-outline" onclick="editStaff('${st.id}')">✏️</button> <button class="btn btn-xs btn-danger" onclick="deleteStaff('${st.id}')">🗑️</button></td></tr>`;
                 }).join('');
             }
@@ -1416,10 +503,10 @@
 
             function openStaffModal(id = null) {
                 document.getElementById('staffModal').classList.add('open');
-                if (id) {
+                if(id){
                     document.getElementById('staffModalTitle').textContent = 'Edit Staff';
                     const st = allStaff.find(x => x.id === id);
-                    if (st) {
+                    if(st){
                         document.getElementById('sDocId').value = st.id;
                         document.getElementById('sStaffId').value = st.staffId || '';
                         document.getElementById('sName').value = st.name || '';
@@ -1439,185 +526,142 @@
                 } else {
                     document.getElementById('staffModalTitle').textContent = 'Add Staff';
                     document.getElementById('sDocId').value = '';
-                    document.getElementById('sStaffId').value = 'KAL-' + new Date().getFullYear() + '-' + String(allStaff
-                        .length + 1).padStart(4, '0');
-                    ['sName', 'sMobile', 'sAltMobile', 'sAadhaar', 'sDOB', 'sAddress', 'sDistrict', 'sPIN', 'sSkills',
-                        'sJoinDate'].forEach(idd => document.getElementById(idd).value = '');
+                    document.getElementById('sStaffId').value = 'KAL-' + new Date().getFullYear() + '-' + String(allStaff.length+1).padStart(4,'0');
+                    ['sName','sMobile','sAltMobile','sAadhaar','sDOB','sAddress','sDistrict','sPIN','sSkills','sJoinDate'].forEach(idd => document.getElementById(idd).value = '');
                     document.getElementById('sGender').value = 'Male';
                     document.getElementById('sCategory').value = 'Nurse';
                     document.getElementById('sStatus').value = 'Available';
                 }
             }
             window.openStaffModal = openStaffModal;
-            window.closeStaffModal = function() { document.getElementById('staffModal').classList.remove('open'); };
+            window.closeStaffModal = function(){ document.getElementById('staffModal').classList.remove('open'); };
 
-            function saveStaff() {
+            async function saveStaff() {
                 const nm = document.getElementById('sName').value.trim();
                 const mb = document.getElementById('sMobile').value.trim();
-                if (!nm || !mb) { showToast('Name and Mobile required', 'error'); return; }
+                if(!nm || !mb){ showToast('Name and Mobile required','error'); return; }
                 const did = document.getElementById('sDocId').value;
                 const dv = document.getElementById('sDOB').value;
                 const sd = {
-                    id: did || 'staff_' + Date.now(),
-                    staffId: document.getElementById('sStaffId').value.trim() || 'KAL-' + new Date().getFullYear() +
-                        '-' + String(allStaff.length + 1).padStart(4, '0'),
-                    name: nm,
-                    gender: document.getElementById('sGender').value,
-                    mobile: mb,
+                    staffId: document.getElementById('sStaffId').value.trim() || 'KAL-'+new Date().getFullYear()+'-'+String(allStaff.length+1).padStart(4,'0'),
+                    name: nm, gender: document.getElementById('sGender').value, mobile: mb,
                     altMobile: document.getElementById('sAltMobile').value.trim(),
-                    aadhaar: document.getElementById('sAadhaar').value.trim(),
-                    dob: dv,
-                    address: document.getElementById('sAddress').value.trim(),
-                    district: document.getElementById('sDistrict').value.trim(),
-                    pin: document.getElementById('sPIN').value.trim(),
-                    category: document.getElementById('sCategory').value,
-                    status: document.getElementById('sStatus').value,
-                    joinDate: document.getElementById('sJoinDate').value,
-                    skills: document.getElementById('sSkills').value.split(',').map(x => x.trim()).filter(Boolean),
-                    age: dv ? Math.floor((new Date() - new Date(dv)) / (365.25 * 24 * 60 * 60 * 1000)) : ''
+                    aadhaar: document.getElementById('sAadhaar').value.trim(), dob: dv,
+                    address: document.getElementById('sAddress').value.trim(), district: document.getElementById('sDistrict').value.trim(),
+                    pin: document.getElementById('sPIN').value.trim(), category: document.getElementById('sCategory').value,
+                    status: document.getElementById('sStatus').value, joinDate: document.getElementById('sJoinDate').value,
+                    skills: document.getElementById('sSkills').value.split(',').map(x=>x.trim()).filter(Boolean),
+                    age: dv ? Math.floor((new Date() - new Date(dv)) / (365.25*24*60*60*1000)) : ''
                 };
-                if (did) { const i = allStaff.findIndex(x => x.id === did); if (i >= 0) allStaff[i] = sd; } else { allStaff
-                        .push(sd); }
-                saveLocalData();
-                if (fbReady && db) { db.collection('staff').doc(sd.id).set(sd).catch(() => {}); }
-                closeStaffModal();
-                renderStaffTable();
-                populateDeclDropdowns();
-                showToast('Staff saved', 'success');
+                try {
+                    if(did && fbReady) { await db.collection('staff').doc(did).set(sd); }
+                    else if(fbReady) { await db.collection('staff').add(sd); }
+                    else { showToast('Firebase not available','error'); return; }
+                    await loadFSData();
+                    closeStaffModal();
+                    showToast('Staff saved','success');
+                } catch(e) { console.error(e); showToast('Save failed: '+e.message,'error'); }
             }
             window.saveStaff = saveStaff;
-            window.editStaff = function(id) { openStaffModal(id); };
-            window.deleteStaff = function(id) {
-                if (!confirm('Delete this staff member?')) return;
-                allStaff = allStaff.filter(s => s.id !== id);
-                saveLocalData();
-                if (fbReady && db) { db.collection('staff').doc(id).delete().catch(() => {}); }
-                renderStaffTable();
-                populateDeclDropdowns();
-                showToast('Staff deleted', 'info');
+            window.editStaff = function(id){ openStaffModal(id); };
+            window.deleteStaff = async function(id){
+                if(!confirm('Delete this staff member?')) return;
+                if(fbReady){ await db.collection('staff').doc(id).delete(); await loadFSData(); }
+                else { allStaff = allStaff.filter(s => s.id !== id); renderAll(); }
+                showToast('Staff deleted','info');
             };
 
             function renderClientTable() {
                 const s = (document.getElementById('clientSearch')?.value || '').toLowerCase();
                 let f = allClients;
-                if (s) f = f.filter(c => (c.name || '').toLowerCase().includes(s) || (c.mobile || '').includes(s) || (c
-                    .district || '').toLowerCase().includes(s));
+                if(s) f = f.filter(c => (c.name||'').toLowerCase().includes(s) || (c.mobile||'').includes(s) || (c.district||'').toLowerCase().includes(s));
                 const tb = document.getElementById('clientTableBody');
-                if (!f.length) { tb.innerHTML = '<tr><td colspan="5" class="empty-state">No clients found</td></tr>'; return; }
-                tb.innerHTML = f.map(c =>
-                    `<tr><td><strong>${c.name||'-'}</strong></td><td>${c.contactPerson||'-'}</td><td>${c.mobile||'-'}</td><td>${c.district||'-'}</td><td><button class="btn btn-xs btn-outline" onclick="editClient('${c.id}')">✏️</button> <button class="btn btn-xs btn-danger" onclick="deleteClient('${c.id}')">🗑️</button></td></tr>`
-                    ).join('');
+                if(!f.length){ tb.innerHTML = '<tr><td colspan="5" class="empty-state">No clients found</td></tr>'; return; }
+                tb.innerHTML = f.map(c => `<tr><td><strong>${c.name||'-'}</strong></td><td>${c.contactPerson||'-'}</td><td>${c.mobile||'-'}</td><td>${c.district||'-'}</td><td><button class="btn btn-xs btn-outline" onclick="editClient('${c.id}')">✏️</button> <button class="btn btn-xs btn-danger" onclick="deleteClient('${c.id}')">🗑️</button></td></tr>`).join('');
             }
             window.renderClientTable = renderClientTable;
 
             function openClientModal(id = null) {
                 document.getElementById('clientModal').classList.add('open');
-                if (id) {
+                if(id){
                     document.getElementById('clientModalTitle').textContent = 'Edit Client';
                     const c = allClients.find(x => x.id === id);
-                    if (c) {
-                        document.getElementById('cDocId').value = c.id;
-                        document.getElementById('cName').value = c.name || '';
-                        document.getElementById('cContact').value = c.contactPerson || '';
-                        document.getElementById('cMobile').value = c.mobile || '';
-                        document.getElementById('cAlt').value = c.altMobile || '';
-                        document.getElementById('cEmail').value = c.email || '';
-                        document.getElementById('cHouseName').value = c.houseName || '';
-                        document.getElementById('cAddress').value = c.address || '';
-                        document.getElementById('cLandmark').value = c.landmark || '';
-                        document.getElementById('cDistrict').value = c.district || '';
+                    if(c){
+                        document.getElementById('cDocId').value = c.id; document.getElementById('cName').value = c.name || '';
+                        document.getElementById('cContact').value = c.contactPerson || ''; document.getElementById('cMobile').value = c.mobile || '';
+                        document.getElementById('cAlt').value = c.altMobile || ''; document.getElementById('cEmail').value = c.email || '';
+                        document.getElementById('cHouseName').value = c.houseName || ''; document.getElementById('cAddress').value = c.address || '';
+                        document.getElementById('cLandmark').value = c.landmark || ''; document.getElementById('cDistrict').value = c.district || '';
                         document.getElementById('cPIN').value = c.pin || '';
                     }
                 } else {
-                    document.getElementById('clientModalTitle').textContent = 'Add Client';
-                    document.getElementById('cDocId').value = '';
-                    ['cName', 'cContact', 'cMobile', 'cAlt', 'cEmail', 'cHouseName', 'cAddress', 'cLandmark', 'cDistrict',
-                        'cPIN'].forEach(idd => document.getElementById(idd).value = '');
+                    document.getElementById('clientModalTitle').textContent = 'Add Client'; document.getElementById('cDocId').value = '';
+                    ['cName','cContact','cMobile','cAlt','cEmail','cHouseName','cAddress','cLandmark','cDistrict','cPIN'].forEach(idd => document.getElementById(idd).value = '');
                 }
             }
             window.openClientModal = openClientModal;
-            window.closeClientModal = function() { document.getElementById('clientModal').classList.remove('open'); };
+            window.closeClientModal = function(){ document.getElementById('clientModal').classList.remove('open'); };
 
-            function saveClient() {
+            async function saveClient() {
                 const nm = document.getElementById('cName').value.trim();
                 const mb = document.getElementById('cMobile').value.trim();
-                if (!nm || !mb) { showToast('Name and Mobile required', 'error'); return; }
+                if(!nm || !mb){ showToast('Name and Mobile required','error'); return; }
                 const did = document.getElementById('cDocId').value;
                 const cd = {
-                    id: did || 'client_' + Date.now(),
-                    name: nm,
-                    contactPerson: document.getElementById('cContact').value.trim(),
-                    mobile: mb,
-                    altMobile: document.getElementById('cAlt').value.trim(),
-                    email: document.getElementById('cEmail').value.trim(),
-                    houseName: document.getElementById('cHouseName').value.trim(),
-                    address: document.getElementById('cAddress').value.trim(),
-                    landmark: document.getElementById('cLandmark').value.trim(),
-                    district: document.getElementById('cDistrict').value.trim(),
+                    name: nm, contactPerson: document.getElementById('cContact').value.trim(), mobile: mb,
+                    altMobile: document.getElementById('cAlt').value.trim(), email: document.getElementById('cEmail').value.trim(),
+                    houseName: document.getElementById('cHouseName').value.trim(), address: document.getElementById('cAddress').value.trim(),
+                    landmark: document.getElementById('cLandmark').value.trim(), district: document.getElementById('cDistrict').value.trim(),
                     pin: document.getElementById('cPIN').value.trim()
                 };
-                if (did) { const i = allClients.findIndex(x => x.id === did); if (i >= 0) allClients[i] = cd; } else {
-                    allClients.push(cd); }
-                saveLocalData();
-                if (fbReady && db) { db.collection('clients').doc(cd.id).set(cd).catch(() => {}); }
-                closeClientModal();
-                renderClientTable();
-                populateDeclDropdowns();
-                showToast('Client saved', 'success');
+                try {
+                    if(did && fbReady) { await db.collection('clients').doc(did).set(cd); }
+                    else if(fbReady) { await db.collection('clients').add(cd); }
+                    else { showToast('Firebase not available','error'); return; }
+                    await loadFSData();
+                    closeClientModal();
+                    showToast('Client saved','success');
+                } catch(e) { console.error(e); showToast('Save failed: '+e.message,'error'); }
             }
             window.saveClient = saveClient;
-            window.editClient = function(id) { openClientModal(id); };
-            window.deleteClient = function(id) {
-                if (!confirm('Delete this client?')) return;
-                allClients = allClients.filter(c => c.id !== id);
-                saveLocalData();
-                if (fbReady && db) { db.collection('clients').doc(id).delete().catch(() => {}); }
-                renderClientTable();
-                populateDeclDropdowns();
-                showToast('Client deleted', 'info');
+            window.editClient = function(id){ openClientModal(id); };
+            window.deleteClient = async function(id){
+                if(!confirm('Delete this client?')) return;
+                if(fbReady){ await db.collection('clients').doc(id).delete(); await loadFSData(); }
+                else { allClients = allClients.filter(c => c.id !== id); renderAll(); }
+                showToast('Client deleted','info');
             };
 
             function populateDeclDropdowns() {
                 const cs = document.getElementById('declClientSearch');
-                cs.innerHTML = '<option value="">-- Select or type to search --</option>' + allClients.map(c =>
-                    `<option value="${c.id}">${c.name} - ${c.mobile} (${c.district||''})</option>`).join('');
+                cs.innerHTML = '<option value="">-- Select or type to search --</option>' + allClients.map(c => `<option value="${c.id}">${c.name} - ${c.mobile} (${c.district||''})</option>`).join('');
                 const ss = document.getElementById('declStaffSelect');
-                ss.innerHTML = '<option value="">-- Click to choose service person --</option>' + allStaff.filter(s => s
-                    .status === 'Available' || s.status === 'Assigned').map(s =>
-                    `<option value="${s.id}">${s.name} - ${s.staffId} (${s.category})</option>`).join('');
+                ss.innerHTML = '<option value="">-- Click to choose service person --</option>' + allStaff.filter(s => s.status === 'Available' || s.status === 'Assigned').map(s => `<option value="${s.id}">${s.name} - ${s.staffId} (${s.category})</option>`).join('');
             }
 
             function autofillClient() {
                 const id = document.getElementById('declClientSearch').value;
-                if (!id) return;
+                if(!id) return;
                 const c = allClients.find(x => x.id === id);
-                if (c) {
-                    document.getElementById('declClientName').value = c.name || '';
-                    document.getElementById('declClientMobile').value = c.mobile || '';
-                    document.getElementById('declClientAlt').value = c.altMobile || '';
-                    document.getElementById('declClientEmail').value = c.email || '';
-                    document.getElementById('declHouseName').value = c.houseName || '';
-                    document.getElementById('declAddress').value = c.address || '';
-                    document.getElementById('declLandmark').value = c.landmark || '';
-                    document.getElementById('declDistrict').value = c.district || '';
-                    document.getElementById('declPIN').value = c.pin || '';
-                    updateDeclPreview();
+                if(c){
+                    document.getElementById('declClientName').value = c.name || ''; document.getElementById('declClientMobile').value = c.mobile || '';
+                    document.getElementById('declClientAlt').value = c.altMobile || ''; document.getElementById('declClientEmail').value = c.email || '';
+                    document.getElementById('declHouseName').value = c.houseName || ''; document.getElementById('declAddress').value = c.address || '';
+                    document.getElementById('declLandmark').value = c.landmark || ''; document.getElementById('declDistrict').value = c.district || '';
+                    document.getElementById('declPIN').value = c.pin || ''; updateDeclPreview();
                 }
             }
             window.autofillClient = autofillClient;
 
             function autofillStaff() {
                 const id = document.getElementById('declStaffSelect').value;
-                if (!id) { ['declStaffName', 'declStaffID', 'declStaffGender', 'declStaffMobile', 'declStaffAadhaar',
-                        'declStaffCategory'].forEach(f => document.getElementById(f).value = ''); } else {
+                if(!id){ ['declStaffName','declStaffID','declStaffGender','declStaffMobile','declStaffAadhaar','declStaffCategory'].forEach(f => document.getElementById(f).value = ''); }
+                else {
                     const s = allStaff.find(x => x.id === id);
-                    if (s) {
-                        document.getElementById('declStaffName').value = s.name || '';
-                        document.getElementById('declStaffID').value = s.staffId || '';
-                        document.getElementById('declStaffGender').value = s.gender || '';
-                        document.getElementById('declStaffMobile').value = s.mobile || '';
-                        document.getElementById('declStaffAadhaar').value = s.aadhaar || '';
-                        document.getElementById('declStaffCategory').value = s.category || '';
+                    if(s){
+                        document.getElementById('declStaffName').value = s.name || ''; document.getElementById('declStaffID').value = s.staffId || '';
+                        document.getElementById('declStaffGender').value = s.gender || ''; document.getElementById('declStaffMobile').value = s.mobile || '';
+                        document.getElementById('declStaffAadhaar').value = s.aadhaar || ''; document.getElementById('declStaffCategory').value = s.category || '';
                     }
                 }
                 updateDeclPreview();
@@ -1626,170 +670,100 @@
 
             function updateDeclPreview() {
                 const g = id => document.getElementById(id)?.value || '-';
-                document.getElementById('prevDeclNo').textContent = currentDeclId ? 'KAL-DECL-' + currentDeclId.slice(-6)
-                    .toUpperCase() : '(Auto)';
-                document.getElementById('prevDate').textContent = new Date().toLocaleDateString('en-IN', { day: 'numeric',
-                    month: 'long', year: 'numeric' });
-                document.getElementById('prevClientName').textContent = g('declClientName');
-                document.getElementById('prevClientMobile').textContent = g('declClientMobile');
-                document.getElementById('prevClientAlt').textContent = g('declClientAlt');
-                document.getElementById('prevClientEmail').textContent = g('declClientEmail');
-                document.getElementById('prevHouseName').textContent = g('declHouseName');
-                document.getElementById('prevAddress').textContent = g('declAddress');
-                document.getElementById('prevLandmark').textContent = g('declLandmark');
-                document.getElementById('prevDistrictPIN').textContent = g('declDistrict') + ' - ' + g('declPIN');
-                document.getElementById('prevRecipientName').textContent = g('declRecipientName');
-                document.getElementById('prevRecipientAge').textContent = g('declRecipientAge');
-                document.getElementById('prevRecipientGender').textContent = g('declRecipientGender');
-                document.getElementById('prevMedicalNotes').textContent = g('declMedicalNotes');
-                document.getElementById('prevServiceType').textContent = g('declServiceType');
-                document.getElementById('prevDutyType').textContent = g('declDutyType');
-                document.getElementById('prevRoleAssigned').textContent = g('declRoleAssigned');
-                document.getElementById('prevStartDate').textContent = g('declStartDate');
-                document.getElementById('prevDuration').textContent = g('declDuration');
-                document.getElementById('prevShiftTiming').textContent = g('declShiftTiming');
-                const mc = g('declMonthlyCharge');
-                document.getElementById('prevMonthlyCharge').textContent = mc !== '-' ? '₹' + mc : '-';
-                const ap = g('declAdvancePaid');
-                document.getElementById('prevAdvancePaid').textContent = ap !== '-' ? '₹' + ap : '-';
-                const bal = g('declBalance');
-                document.getElementById('prevBalance').textContent = bal !== '-' ? '₹' + bal : '-';
-                document.getElementById('prevStaffName').textContent = g('declStaffName');
-                document.getElementById('prevStaffGender').textContent = g('declStaffGender');
-                document.getElementById('prevStaffID').textContent = g('declStaffID');
-                document.getElementById('prevDeploymentDate').textContent = g('declStartDate');
+                document.getElementById('prevDeclNo').textContent = currentDeclId ? 'KAL-DECL-'+currentDeclId.slice(-6).toUpperCase() : '(Auto)';
+                document.getElementById('prevDate').textContent = new Date().toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'});
+                document.getElementById('prevClientName').textContent = g('declClientName'); document.getElementById('prevClientMobile').textContent = g('declClientMobile');
+                document.getElementById('prevClientAlt').textContent = g('declClientAlt'); document.getElementById('prevClientEmail').textContent = g('declClientEmail');
+                document.getElementById('prevHouseName').textContent = g('declHouseName'); document.getElementById('prevAddress').textContent = g('declAddress');
+                document.getElementById('prevLandmark').textContent = g('declLandmark'); document.getElementById('prevDistrictPIN').textContent = g('declDistrict') + ' - ' + g('declPIN');
+                document.getElementById('prevRecipientName').textContent = g('declRecipientName'); document.getElementById('prevRecipientAge').textContent = g('declRecipientAge');
+                document.getElementById('prevRecipientGender').textContent = g('declRecipientGender'); document.getElementById('prevMedicalNotes').textContent = g('declMedicalNotes');
+                document.getElementById('prevServiceType').textContent = g('declServiceType'); document.getElementById('prevDutyType').textContent = g('declDutyType');
+                document.getElementById('prevRoleAssigned').textContent = g('declRoleAssigned'); document.getElementById('prevStartDate').textContent = g('declStartDate');
+                document.getElementById('prevDuration').textContent = g('declDuration'); document.getElementById('prevShiftTiming').textContent = g('declShiftTiming');
+                const mc = g('declMonthlyCharge'); document.getElementById('prevMonthlyCharge').textContent = mc !== '-' ? '₹'+mc : '-';
+                const ap = g('declAdvancePaid'); document.getElementById('prevAdvancePaid').textContent = ap !== '-' ? '₹'+ap : '-';
+                const bal = g('declBalance'); document.getElementById('prevBalance').textContent = bal !== '-' ? '₹'+bal : '-';
+                document.getElementById('prevStaffName').textContent = g('declStaffName'); document.getElementById('prevStaffGender').textContent = g('declStaffGender');
+                document.getElementById('prevStaffID').textContent = g('declStaffID'); document.getElementById('prevDeploymentDate').textContent = g('declStartDate');
                 updatePreviewSigs();
             }
             window.updateDeclPreview = updateDeclPreview;
 
             function updatePreviewSigs() {
-                const cC = document.getElementById('sigClient');
-                const sC = document.getElementById('sigStaff');
-                const pC = document.getElementById('prevSigClient');
-                const pS = document.getElementById('prevSigStaff');
-                if (cC && pC) { const du = cC.toDataURL();
-                    pC.innerHTML = du && !cC.dataset.empty ? `<img src="${du}" alt="Client Signature">` : ''; }
-                if (sC && pS) { const du = sC.toDataURL();
-                    pS.innerHTML = du && !sC.dataset.empty ? `<img src="${du}" alt="Staff Signature">` : ''; }
+                const cC = document.getElementById('sigClient'), sC = document.getElementById('sigStaff');
+                const pC = document.getElementById('prevSigClient'), pS = document.getElementById('prevSigStaff');
+                if(cC && pC){ const du = cC.toDataURL(); pC.innerHTML = du && !cC.dataset.empty ? `<img src="${du}" alt="Client Signature">` : ''; }
+                if(sC && pS){ const du = sC.toDataURL(); pS.innerHTML = du && !sC.dataset.empty ? `<img src="${du}" alt="Staff Signature">` : ''; }
             }
 
             function initSigPads() {
-                ['sigClient', 'sigStaff'].forEach(cid => {
-                    const cv = document.getElementById(cid);
-                    if (!cv) return;
-                    cv.dataset.empty = 'true';
-                    const ctx = cv.getContext('2d');
-                    ctx.fillStyle = '#fff';
-                    ctx.fillRect(0, 0, cv.width, cv.height);
+                ['sigClient','sigStaff'].forEach(cid => {
+                    const cv = document.getElementById(cid); if(!cv) return;
+                    cv.dataset.empty = 'true'; const ctx = cv.getContext('2d');
+                    ctx.fillStyle = '#fff'; ctx.fillRect(0,0,cv.width,cv.height);
                     let drawing = false;
-                    const sd = (x, y) => { drawing = true;
-                        cv.dataset.empty = 'false';
-                        ctx.beginPath();
-                        ctx.moveTo(x, y); };
-                    const md = (x, y) => { if (!drawing) return;
-                        ctx.lineWidth = 2;
-                        ctx.strokeStyle = '#000';
-                        ctx.lineCap = 'round';
-                        ctx.lineTo(x, y);
-                        ctx.stroke(); };
-                    const ed = () => { drawing = false;
-                        updateDeclPreview(); };
-                    cv.addEventListener('mousedown', e => sd(e.offsetX, e.offsetY));
-                    cv.addEventListener('mousemove', e => md(e.offsetX, e.offsetY));
-                    cv.addEventListener('mouseup', ed);
-                    cv.addEventListener('mouseleave', ed);
-                    cv.addEventListener('touchstart', e => { e.preventDefault();
-                        const r = cv.getBoundingClientRect();
-                        sd((e.touches[0].clientX - r.left) * (cv.width / r.width), (e.touches[0].clientY - r.top) * (
-                            cv.height / r.height)); });
-                    cv.addEventListener('touchmove', e => { e.preventDefault(); if (!drawing) return;
-                        const r = cv.getBoundingClientRect();
-                        md((e.touches[0].clientX - r.left) * (cv.width / r.width), (e.touches[0].clientY - r.top) * (
-                            cv.height / r.height)); });
+                    const sd = (x,y)=>{ drawing=true; cv.dataset.empty='false'; ctx.beginPath(); ctx.moveTo(x,y); };
+                    const md = (x,y)=>{ if(!drawing) return; ctx.lineWidth=2; ctx.strokeStyle='#000'; ctx.lineCap='round'; ctx.lineTo(x,y); ctx.stroke(); };
+                    const ed = ()=>{ drawing=false; updateDeclPreview(); };
+                    cv.addEventListener('mousedown', e=> sd(e.offsetX,e.offsetY));
+                    cv.addEventListener('mousemove', e=> md(e.offsetX,e.offsetY));
+                    cv.addEventListener('mouseup', ed); cv.addEventListener('mouseleave', ed);
+                    cv.addEventListener('touchstart', e=>{ e.preventDefault(); const r=cv.getBoundingClientRect(); sd((e.touches[0].clientX-r.left)*(cv.width/r.width), (e.touches[0].clientY-r.top)*(cv.height/r.height)); });
+                    cv.addEventListener('touchmove', e=>{ e.preventDefault(); if(!drawing) return; const r=cv.getBoundingClientRect(); md((e.touches[0].clientX-r.left)*(cv.width/r.width), (e.touches[0].clientY-r.top)*(cv.height/r.height)); });
                     cv.addEventListener('touchend', ed);
                 });
             }
 
             function clearSignature(cid) {
-                const cv = document.getElementById(cid);
-                if (!cv) return;
-                cv.dataset.empty = 'true';
-                const ctx = cv.getContext('2d');
-                ctx.fillStyle = '#fff';
-                ctx.fillRect(0, 0, cv.width, cv.height);
-                updateDeclPreview();
+                const cv = document.getElementById(cid); if(!cv) return;
+                cv.dataset.empty = 'true'; const ctx = cv.getContext('2d');
+                ctx.fillStyle = '#fff'; ctx.fillRect(0,0,cv.width,cv.height); updateDeclPreview();
             }
             window.clearSignature = clearSignature;
 
             function resetDeclaration() {
-                ['declClientSearch', 'declClientName', 'declClientMobile', 'declClientAlt', 'declClientEmail',
-                    'declHouseName', 'declAddress', 'declLandmark', 'declDistrict', 'declPIN', 'declRecipientName',
-                    'declRecipientAge', 'declMedicalNotes', 'declRoleAssigned', 'declStartDate', 'declDuration',
-                    'declShiftTiming', 'declMonthlyCharge', 'declAdvancePaid', 'declBalance', 'declStaffSelect',
-                    'declStaffName', 'declStaffID', 'declStaffGender', 'declStaffMobile', 'declStaffAadhaar',
-                    'declStaffCategory'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
-                document.getElementById('declRecipientGender').value = 'Male';
-                document.getElementById('declServiceType').value = 'Home Nurse';
-                document.getElementById('declDutyType').value = 'Day';
-                currentDeclId = null;
-                clearSignature('sigClient');
-                clearSignature('sigStaff');
-                updateDeclPreview();
-                showToast('Form reset', 'info');
+                ['declClientSearch','declClientName','declClientMobile','declClientAlt','declClientEmail','declHouseName','declAddress','declLandmark','declDistrict','declPIN','declRecipientName','declRecipientAge','declMedicalNotes','declRoleAssigned','declStartDate','declDuration','declShiftTiming','declMonthlyCharge','declAdvancePaid','declBalance','declStaffSelect','declStaffName','declStaffID','declStaffGender','declStaffMobile','declStaffAadhaar','declStaffCategory'].forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
+                document.getElementById('declRecipientGender').value = 'Male'; document.getElementById('declServiceType').value = 'Home Nurse';
+                document.getElementById('declDutyType').value = 'Day'; currentDeclId = null;
+                clearSignature('sigClient'); clearSignature('sigStaff'); updateDeclPreview(); showToast('Form reset','info');
             }
             window.resetDeclaration = resetDeclaration;
 
-            function saveDeclaration() {
+            async function saveDeclaration() {
                 const dd = {
-                    id: currentDeclId || 'decl_' + Date.now(),
-                    declNo: 'KAL-DECL-' + String(allDecls.length + 1).padStart(5, '0'),
-                    date: new Date().toISOString().split('T')[0],
-                    clientName: document.getElementById('declClientName').value,
-                    clientMobile: document.getElementById('declClientMobile').value,
-                    clientAlt: document.getElementById('declClientAlt').value,
-                    clientEmail: document.getElementById('declClientEmail').value,
-                    houseName: document.getElementById('declHouseName').value,
-                    address: document.getElementById('declAddress').value,
-                    landmark: document.getElementById('declLandmark').value,
-                    district: document.getElementById('declDistrict').value,
-                    pin: document.getElementById('declPIN').value,
-                    recipientName: document.getElementById('declRecipientName').value,
-                    recipientAge: document.getElementById('declRecipientAge').value,
-                    recipientGender: document.getElementById('declRecipientGender').value,
-                    medicalNotes: document.getElementById('declMedicalNotes').value,
-                    serviceType: document.getElementById('declServiceType').value,
-                    dutyType: document.getElementById('declDutyType').value,
-                    roleAssigned: document.getElementById('declRoleAssigned').value,
-                    startDate: document.getElementById('declStartDate').value,
-                    duration: document.getElementById('declDuration').value,
-                    shiftTiming: document.getElementById('declShiftTiming').value,
-                    monthlyCharge: document.getElementById('declMonthlyCharge').value,
-                    advancePaid: document.getElementById('declAdvancePaid').value,
-                    balance: document.getElementById('declBalance').value,
-                    staffName: document.getElementById('declStaffName').value,
-                    staffID: document.getElementById('declStaffID').value,
-                    staffGender: document.getElementById('declStaffGender').value,
-                    staffMobile: document.getElementById('declStaffMobile').value,
-                    staffAadhaar: document.getElementById('declStaffAadhaar').value,
-                    staffCategory: document.getElementById('declStaffCategory').value,
-                    sigClient: document.getElementById('sigClient').toDataURL(),
-                    sigStaff: document.getElementById('sigStaff').toDataURL(),
+                    declNo: 'KAL-DECL-'+String(allDecls.length+1).padStart(5,'0'), date: new Date().toISOString().split('T')[0],
+                    clientName: document.getElementById('declClientName').value, clientMobile: document.getElementById('declClientMobile').value,
+                    clientAlt: document.getElementById('declClientAlt').value, clientEmail: document.getElementById('declClientEmail').value,
+                    houseName: document.getElementById('declHouseName').value, address: document.getElementById('declAddress').value,
+                    landmark: document.getElementById('declLandmark').value, district: document.getElementById('declDistrict').value,
+                    pin: document.getElementById('declPIN').value, recipientName: document.getElementById('declRecipientName').value,
+                    recipientAge: document.getElementById('declRecipientAge').value, recipientGender: document.getElementById('declRecipientGender').value,
+                    medicalNotes: document.getElementById('declMedicalNotes').value, serviceType: document.getElementById('declServiceType').value,
+                    dutyType: document.getElementById('declDutyType').value, roleAssigned: document.getElementById('declRoleAssigned').value,
+                    startDate: document.getElementById('declStartDate').value, duration: document.getElementById('declDuration').value,
+                    shiftTiming: document.getElementById('declShiftTiming').value, monthlyCharge: document.getElementById('declMonthlyCharge').value,
+                    advancePaid: document.getElementById('declAdvancePaid').value, balance: document.getElementById('declBalance').value,
+                    staffName: document.getElementById('declStaffName').value, staffID: document.getElementById('declStaffID').value,
+                    staffGender: document.getElementById('declStaffGender').value, staffMobile: document.getElementById('declStaffMobile').value,
+                    staffAadhaar: document.getElementById('declStaffAadhaar').value, staffCategory: document.getElementById('declStaffCategory').value,
+                    sigClient: document.getElementById('sigClient').toDataURL(), sigStaff: document.getElementById('sigStaff').toDataURL(),
                     langML: isMalayalam
                 };
-                if (currentDeclId) { const i = allDecls.findIndex(d => d.id === currentDeclId); if (i >= 0) allDecls[i] =
-                        dd; } else { allDecls.push(dd);
-                    currentDeclId = dd.id; }
-                saveLocalData();
-                if (fbReady && db) { db.collection('declarations').doc(dd.id).set(dd).catch(() => {}); }
-                document.getElementById('prevDeclNo').textContent = dd.declNo;
-                showToast('Declaration saved!', 'success');
+                try {
+                    if(currentDeclId && fbReady) { await db.collection('declarations').doc(currentDeclId).set(dd); }
+                    else if(fbReady) { const docRef = await db.collection('declarations').add(dd); currentDeclId = docRef.id; }
+                    else { showToast('Firebase not available','error'); return; }
+                    await loadFSData();
+                    document.getElementById('prevDeclNo').textContent = dd.declNo; showToast('Declaration saved!','success');
+                } catch(e) { console.error(e); showToast('Save failed: '+e.message,'error'); }
                 updateDeclPreview();
             }
             window.saveDeclaration = saveDeclaration;
 
             function printDeclaration() {
                 saveDeclaration();
-                setTimeout(() => { window.print(); }, 350);
+                setTimeout(() => { window.print(); }, 400);
             }
             window.printDeclaration = printDeclaration;
 
@@ -1797,20 +771,12 @@
                 isMalayalam = !isMalayalam;
                 const preview = document.getElementById('a4Preview');
                 const btn = document.getElementById('btnMalayalamToggle');
-                if (isMalayalam) {
-                    preview.classList.add('lang-ml');
-                    btn.textContent = '🌐 English';
-                    document.querySelectorAll('#a4Preview [data-key]').forEach(el => {
-                        const k = el.getAttribute('data-key');
-                        if (k && mlTranslations[k]) el.textContent = mlTranslations[k];
-                    });
+                if(isMalayalam){
+                    preview.classList.add('lang-ml'); btn.textContent = '🌐 English';
+                    document.querySelectorAll('#a4Preview [data-key]').forEach(el => { const k = el.getAttribute('data-key'); if(k && mlTranslations[k]) el.textContent = mlTranslations[k]; });
                 } else {
-                    preview.classList.remove('lang-ml');
-                    btn.textContent = '🌐 Malayalam';
-                    document.querySelectorAll('#a4Preview [data-key]').forEach(el => {
-                        const k = el.getAttribute('data-key');
-                        if (k && enDefaults[k]) el.textContent = enDefaults[k];
-                    });
+                    preview.classList.remove('lang-ml'); btn.textContent = '🌐 Malayalam';
+                    document.querySelectorAll('#a4Preview [data-key]').forEach(el => { const k = el.getAttribute('data-key'); if(k && enDefaults[k]) el.textContent = enDefaults[k]; });
                 }
                 updateDeclPreview();
             }
@@ -1819,115 +785,73 @@
             function renderHistory() {
                 const s = (document.getElementById('historySearch')?.value || '').toLowerCase();
                 let f = [...allDecls].reverse();
-                if (s) f = f.filter(d => (d.declNo || '').toLowerCase().includes(s) || (d.clientName || '').toLowerCase()
-                    .includes(s) || (d.staffName || '').toLowerCase().includes(s));
+                if(s) f = f.filter(d => (d.declNo||'').toLowerCase().includes(s) || (d.clientName||'').toLowerCase().includes(s) || (d.staffName||'').toLowerCase().includes(s));
                 const tb = document.getElementById('historyTableBody');
-                if (!f.length) { tb.innerHTML =
-                        '<tr><td colspan="7" class="empty-state">No declarations found</td></tr>'; return; }
-                tb.innerHTML = f.map(d =>
-                    `<tr><td><strong>${d.declNo||'-'}</strong></td><td>${d.date||'-'}</td><td>${d.clientName||'-'}</td><td>${d.serviceType||'-'}</td><td>${d.staffName||'-'}</td><td>₹${d.monthlyCharge||'0'}</td><td><button class="btn btn-xs btn-outline" onclick="openDecl('${d.id}')">📄</button> <button class="btn btn-xs btn-outline" onclick="dupDecl('${d.id}')">📋</button> <button class="btn btn-xs btn-danger" onclick="delDecl('${d.id}')">🗑️</button></td></tr>`
-                    ).join('');
+                if(!f.length){ tb.innerHTML = '<tr><td colspan="7" class="empty-state">No declarations found</td></tr>'; return; }
+                tb.innerHTML = f.map(d => `<tr><td><strong>${d.declNo||'-'}</strong></td><td>${d.date||'-'}</td><td>${d.clientName||'-'}</td><td>${d.serviceType||'-'}</td><td>${d.staffName||'-'}</td><td>₹${d.monthlyCharge||'0'}</td><td><button class="btn btn-xs btn-outline" onclick="openDecl('${d.id}')">📄</button> <button class="btn btn-xs btn-outline" onclick="dupDecl('${d.id}')">📋</button> <button class="btn btn-xs btn-danger" onclick="delDecl('${d.id}')">🗑️</button></td></tr>`).join('');
             }
             window.renderHistory = renderHistory;
 
             function openDecl(id) {
                 const d = allDecls.find(x => x.id === id);
-                if (!d) { showToast('Declaration not found', 'error'); return; }
-                currentDeclId = d.id;
-                isMalayalam = d.langML || false;
+                if(!d){ showToast('Declaration not found','error'); return; }
+                currentDeclId = d.id; isMalayalam = d.langML || false;
                 document.getElementById('btnMalayalamToggle').textContent = isMalayalam ? '🌐 English' : '🌐 Malayalam';
                 const preview = document.getElementById('a4Preview');
-                if (isMalayalam) { preview.classList.add('lang-ml'); } else { preview.classList.remove('lang-ml'); }
-                navigate('declaration');
-                populateDeclDropdowns();
-                const fm = { 'declClientName': 'clientName', 'declClientMobile': 'clientMobile', 'declClientAlt': 'clientAlt',
-                    'declClientEmail': 'clientEmail', 'declHouseName': 'houseName', 'declAddress': 'address',
-                    'declLandmark': 'landmark', 'declDistrict': 'district', 'declPIN': 'pin', 'declRecipientName':
-                        'recipientName', 'declRecipientAge': 'recipientAge', 'declRecipientGender': 'recipientGender',
-                    'declMedicalNotes': 'medicalNotes', 'declServiceType': 'serviceType', 'declDutyType': 'dutyType',
-                    'declRoleAssigned': 'roleAssigned', 'declStartDate': 'startDate', 'declDuration': 'duration',
-                    'declShiftTiming': 'shiftTiming', 'declMonthlyCharge': 'monthlyCharge', 'declAdvancePaid': 'advancePaid',
-                    'declBalance': 'balance', 'declStaffName': 'staffName', 'declStaffID': 'staffID', 'declStaffGender':
-                        'staffGender', 'declStaffMobile': 'staffMobile', 'declStaffAadhaar': 'staffAadhaar',
-                    'declStaffCategory': 'staffCategory' };
-                Object.entries(fm).forEach(([fid, dk]) => { const el = document.getElementById(fid); if (el) el.value = d[dk] ||
-                        ''; });
-                if (d.sigClient) { const c = document.getElementById('sigClient'); if (c) { c.dataset.empty = 'false';
-                        const ctx = c.getContext('2d');
-                        const img = new Image();
-                        img.onload = () => ctx.drawImage(img, 0, 0, c.width, c.height);
-                        img.src = d.sigClient; } }
-                if (d.sigStaff) { const c = document.getElementById('sigStaff'); if (c) { c.dataset.empty = 'false';
-                        const ctx = c.getContext('2d');
-                        const img = new Image();
-                        img.onload = () => ctx.drawImage(img, 0, 0, c.width, c.height);
-                        img.src = d.sigStaff; } }
-                if (isMalayalam) {
-                    document.querySelectorAll('#a4Preview [data-key]').forEach(el => {
-                        const k = el.getAttribute('data-key');
-                        if (k && mlTranslations[k]) el.textContent = mlTranslations[k];
-                    });
+                if(isMalayalam){ preview.classList.add('lang-ml'); } else { preview.classList.remove('lang-ml'); }
+                navigate('declaration'); populateDeclDropdowns();
+                const fm = { 'declClientName':'clientName','declClientMobile':'clientMobile','declClientAlt':'clientAlt','declClientEmail':'clientEmail','declHouseName':'houseName','declAddress':'address','declLandmark':'landmark','declDistrict':'district','declPIN':'pin','declRecipientName':'recipientName','declRecipientAge':'recipientAge','declRecipientGender':'recipientGender','declMedicalNotes':'medicalNotes','declServiceType':'serviceType','declDutyType':'dutyType','declRoleAssigned':'roleAssigned','declStartDate':'startDate','declDuration':'duration','declShiftTiming':'shiftTiming','declMonthlyCharge':'monthlyCharge','declAdvancePaid':'advancePaid','declBalance':'balance','declStaffName':'staffName','declStaffID':'staffID','declStaffGender':'staffGender','declStaffMobile':'staffMobile','declStaffAadhaar':'staffAadhaar','declStaffCategory':'staffCategory' };
+                Object.entries(fm).forEach(([fid,dk]) => { const el = document.getElementById(fid); if(el) el.value = d[dk] || ''; });
+                if(d.sigClient){ const c = document.getElementById('sigClient'); if(c){ c.dataset.empty = 'false'; const ctx = c.getContext('2d'); const img = new Image(); img.onload = ()=> ctx.drawImage(img,0,0,c.width,c.height); img.src = d.sigClient; } }
+                if(d.sigStaff){ const c = document.getElementById('sigStaff'); if(c){ c.dataset.empty = 'false'; const ctx = c.getContext('2d'); const img = new Image(); img.onload = ()=> ctx.drawImage(img,0,0,c.width,c.height); img.src = d.sigStaff; } }
+                if(isMalayalam){
+                    document.querySelectorAll('#a4Preview [data-key]').forEach(el => { const k = el.getAttribute('data-key'); if(k && mlTranslations[k]) el.textContent = mlTranslations[k]; });
                 } else {
-                    document.querySelectorAll('#a4Preview [data-key]').forEach(el => {
-                        const k = el.getAttribute('data-key');
-                        if (k && enDefaults[k]) el.textContent = enDefaults[k];
-                    });
+                    document.querySelectorAll('#a4Preview [data-key]').forEach(el => { const k = el.getAttribute('data-key'); if(k && enDefaults[k]) el.textContent = enDefaults[k]; });
                 }
-                updateDeclPreview();
-                showToast('Declaration loaded', 'info');
+                updateDeclPreview(); showToast('Declaration loaded','info');
             }
-            window.openDecl = openDecl;
-            window.openDeclaration = openDecl;
+            window.openDecl = openDecl; window.openDeclaration = openDecl;
 
             function dupDecl(id) {
-                const d = allDecls.find(x => x.id === id);
-                if (!d) return;
+                const d = allDecls.find(x => x.id === id); if(!d) return;
                 currentDeclId = null;
-                const nd = { ...d, id: 'decl_' + Date.now(), declNo: 'KAL-DECL-' + String(allDecls.length + 1).padStart(5,
-                        '0'), date: new Date().toISOString().split('T')[0] };
-                allDecls.push(nd);
-                saveLocalData();
-                openDecl(nd.id);
-                showToast('Declaration duplicated', 'success');
+                const nd = { ...d, id: '', declNo: 'KAL-DECL-'+String(allDecls.length+1).padStart(5,'0'), date: new Date().toISOString().split('T')[0] };
+                if(fbReady){
+                    db.collection('declarations').add(nd).then(docRef => { nd.id = docRef.id; currentDeclId = nd.id; loadFSData().then(()=> openDecl(nd.id)); showToast('Declaration duplicated','success'); });
+                } else { showToast('Firebase not available','error'); }
             }
-            window.dupDecl = dupDecl;
-            window.duplicateDecl = dupDecl;
+            window.dupDecl = dupDecl; window.duplicateDecl = dupDecl;
 
-            function delDecl(id) {
-                if (!confirm('Delete this declaration permanently?')) return;
-                allDecls = allDecls.filter(d => d.id !== id);
-                saveLocalData();
-                if (fbReady && db) { db.collection('declarations').doc(id).delete().catch(() => {}); }
-                renderHistory();
-                showToast('Declaration deleted', 'info');
+            async function delDecl(id) {
+                if(!confirm('Delete this declaration permanently?')) return;
+                if(fbReady){ await db.collection('declarations').doc(id).delete(); await loadFSData(); }
+                else { allDecls = allDecls.filter(d => d.id !== id); renderAll(); }
+                showToast('Declaration deleted','info');
             }
-            window.delDecl = delDecl;
-            window.deleteDecl = delDecl;
-            window.deleteDeclaration = delDecl;
+            window.delDecl = delDecl; window.deleteDecl = delDecl;
 
             function loadSettingsForm() {
                 document.getElementById('setOfficeAddr').value = appSettings.officeAddress || '';
                 document.getElementById('setPhone1').value = appSettings.phone1 || '';
                 document.getElementById('setPhone2').value = appSettings.phone2 || '';
                 document.getElementById('setEmail').value = appSettings.email || '';
-                document.getElementById('setLogoUrl').value = appSettings.logoUrl || '';
             }
 
-            function saveSettings() {
-                appSettings = { officeAddress: document.getElementById('setOfficeAddr').value, phone1: document.getElementById(
-                        'setPhone1').value, phone2: document.getElementById('setPhone2').value, email: document.getElementById(
-                        'setEmail').value, logoUrl: document.getElementById('setLogoUrl').value };
-                saveLocalData();
-                if (fbReady && db) { db.collection('settings').doc('app').set(appSettings).catch(() => {}); }
+            async function saveSettings() {
+                appSettings = { officeAddress: document.getElementById('setOfficeAddr').value, phone1: document.getElementById('setPhone1').value, phone2: document.getElementById('setPhone2').value, email: document.getElementById('setEmail').value };
+                if(fbReady){ await db.collection('settings').doc('main').set(appSettings); showToast('Settings saved','success'); }
+                else { showToast('Firebase not available','error'); }
                 updateDeclPreview();
-                showToast('Settings saved!', 'success');
             }
             window.saveSettings = saveSettings;
-            window.navigate = navigate;
-            window.login = login;
-            window.logout = logout;
-            window.toggleSidebar = toggleSidebar;
-            window.toggleMalayalam = toggleMalayalam;
+
+            document.addEventListener('DOMContentLoaded', ()=>{
+                document.querySelectorAll('#a4Preview [data-key]').forEach(el => { const k = el.getAttribute('data-key'); if(k && !enDefaults[k]) enDefaults[k] = el.textContent.trim(); });
+                initSigPads();
+                initApp();
+            });
+            window.navigate = navigate; window.toggleSidebar = toggleSidebar; window.toggleMalayalam = toggleMalayalam;
         })();
     </script>
 </body>
