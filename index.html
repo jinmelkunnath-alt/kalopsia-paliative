@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,146 +33,1072 @@
             --success: #16a34a;
             --danger: #dc2626;
             --info: #2563eb;
-            --shadow-xs: 0 1px 2px rgba(0,0,0,.03);
-            --shadow-sm: 0 2px 8px rgba(0,0,0,.05);
-            --shadow: 0 4px 18px rgba(0,0,0,.06);
-            --shadow-lg: 0 14px 40px rgba(0,0,0,.09);
-            --shadow-xl: 0 20px 60px rgba(0,0,0,.12);
+            --warning: #f59e0b;
+            --shadow-xs: 0 1px 2px rgba(0, 0, 0, .03);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, .05);
+            --shadow: 0 4px 18px rgba(0, 0, 0, .06);
+            --shadow-lg: 0 14px 40px rgba(0, 0, 0, .09);
+            --shadow-xl: 0 20px 60px rgba(0, 0, 0, .12);
             --radius-xs: 5px;
             --radius-sm: 9px;
             --radius: 13px;
             --radius-lg: 17px;
             --radius-xl: 22px;
-            --transition: 0.2s cubic-bezier(.4,0,.2,1);
+            --transition: 0.2s cubic-bezier(.4, 0, .2, 1);
             --font: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
             --font-doc: Arial, Helvetica, 'Segoe UI', sans-serif;
             --font-ml: 'Noto Sans Malayalam', 'Manjari', 'Kartika', 'Nirmala UI', sans-serif;
         }
-        *{margin:0;padding:0;box-sizing:border-box;}
-        html{font-size:14.5px;scroll-behavior:smooth;-webkit-font-smoothing:antialiased;}
-        body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;line-height:1.55;}
-        .app-shell{display:flex;min-height:100vh;}
-        .sidebar{width:260px;background:linear-gradient(180deg,#0d1135 0%,#151a44 100%);color:#fff;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:120;transition:transform var(--transition);box-shadow:4px 0 28px rgba(0,0,0,.16);overflow:hidden;}
-        .sidebar::after{content:'';position:absolute;top:-70px;right:-70px;width:180px;height:180px;background:radial-gradient(circle,rgba(255,255,255,.02) 0%,transparent 70%);border-radius:50%;pointer-events:none;}
-        .sidebar-brand{padding:20px 16px 16px;text-align:center;border-bottom:1px solid rgba(255,255,255,.07);position:relative;z-index:1;}
-        .sidebar-brand .logo-img{width:48px;height:48px;border-radius:50%;object-fit:contain;border:2px solid rgba(255,255,255,.18);margin-bottom:7px;background:#fff;}
-        .sidebar-brand h2{font-size:1.25rem;font-weight:700;letter-spacing:1.3px;color:#fff;margin:0;}
-        .sidebar-brand .tagline{font-size:.58rem;color:var(--gold);letter-spacing:1.8px;text-transform:uppercase;margin-top:2px;font-weight:500;}
-        .sidebar-nav{flex:1;padding:8px 0;overflow-y:auto;position:relative;z-index:1;}
-        .sidebar-nav .nav-section-label{padding:9px 18px 3px;font-size:.6rem;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,.32);font-weight:600;}
-        .sidebar-nav button{display:flex;align-items:center;gap:10px;width:100%;padding:10px 18px;border:none;background:transparent;color:rgba(255,255,255,.68);cursor:pointer;font-size:.82rem;transition:all var(--transition);text-align:left;font-family:var(--font);border-left:3px solid transparent;}
-        .sidebar-nav button:hover{background:rgba(255,255,255,.04);color:#fff;border-left-color:rgba(255,255,255,.25);}
-        .sidebar-nav button.active{background:rgba(255,255,255,.08);color:#fff;border-left-color:var(--gold);font-weight:600;}
-        .sidebar-nav button .nav-icon{font-size:1.1rem;width:22px;text-align:center;flex-shrink:0;}
-        .main-area{flex:1;margin-left:260px;padding:24px 28px;min-height:100vh;transition:margin var(--transition);}
-        .page{display:none;animation:pageIn .35s ease;}
-        .page.active{display:block;}
-        @keyframes pageIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
-        .page-top{margin-bottom:20px;}
-        .page-top h1{font-size:1.5rem;font-weight:700;color:var(--primary);margin-bottom:2px;}
-        .page-top .subtitle{font-size:.76rem;color:var(--text3);font-weight:500;}
-        .card{background:var(--surface);border-radius:var(--radius-lg);padding:20px 24px;box-shadow:var(--shadow-xs);border:1px solid var(--border);margin-bottom:16px;transition:all var(--transition);}
-        .card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
-        .card-header h3{font-size:.98rem;font-weight:700;color:var(--primary);}
-        .stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:12px;}
-        .stat-card{background:var(--surface);border-radius:var(--radius-lg);padding:16px 18px;box-shadow:var(--shadow-xs);border:1px solid var(--border);display:flex;align-items:center;gap:12px;transition:all var(--transition);cursor:default;}
-        .stat-card:hover{box-shadow:var(--shadow);transform:translateY(-2px);border-color:var(--border2);}
-        .stat-icon{width:42px;height:42px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:1.25rem;flex-shrink:0;background:#eef0ff;color:#4657f0;}
-        .stat-value{font-size:1.4rem;font-weight:700;color:var(--primary);line-height:1;}
-        .stat-label{font-size:.68rem;color:var(--text3);margin-top:2px;font-weight:500;}
-        .btn{display:inline-flex;align-items:center;gap:5px;padding:8px 16px;border-radius:22px;font-size:.8rem;font-weight:600;cursor:pointer;border:none;transition:all var(--transition);font-family:var(--font);white-space:nowrap;letter-spacing:.15px;}
-        .btn:active{transform:scale(.97);}
-        .btn-primary{background:var(--accent);color:#fff;}
-        .btn-primary:hover{background:var(--accent2);box-shadow:0 5px 16px rgba(70,87,240,.3);transform:translateY(-1px);}
-        .btn-outline{background:transparent;border:1.5px solid var(--border2);color:var(--text2);}
-        .btn-outline:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light);}
-        .btn-gold{background:var(--gold);color:#fff;}
-        .btn-gold:hover{background:var(--gold2);box-shadow:0 5px 16px rgba(155,128,53,.3);transform:translateY(-1px);}
-        .btn-sm{padding:4px 11px;font-size:.7rem;border-radius:16px;}
-        .btn-xs{padding:3px 8px;font-size:.65rem;border-radius:13px;}
-        .btn-danger{background:var(--danger);color:#fff;}
-        .btn-danger:hover{background:#b91c1c;}
-        .form-group{margin-bottom:12px;}
-        .form-group label{display:block;font-size:.72rem;font-weight:600;color:var(--text2);margin-bottom:3px;}
-        .form-group input,.form-group select,.form-group textarea{width:100%;padding:9px 13px;border:1.5px solid var(--border2);border-radius:var(--radius-xs);font-size:.81rem;font-family:var(--font);transition:all var(--transition);background:#fafbfc;color:var(--text);}
-        .form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(70,87,240,.06);background:#fff;}
-        .form-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;}
-        .form-row-3{grid-template-columns:repeat(3,1fr);}
-        .form-row-4{grid-template-columns:repeat(4,1fr);}
-        @media (max-width:900px){.form-row-3,.form-row-4{grid-template-columns:1fr 1fr;}.sidebar{transform:translateX(-100%);}.sidebar.open{transform:translateX(0);}.main-area{margin-left:0;}.mobile-toggle{display:flex!important;}.declaration-layout{grid-template-columns:1fr!important;}}
-        .table-wrap{overflow-x:auto;border-radius:var(--radius-sm);border:1px solid var(--border);}
-        table{width:100%;border-collapse:collapse;font-size:.78rem;}
-        table th,table td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;}
-        table th{background:#fafbfc;font-weight:700;color:var(--text2);font-size:.68rem;text-transform:uppercase;letter-spacing:.5px;position:sticky;top:0;z-index:1;}
-        table tbody tr:hover{background:#fafbff;}
-        .badge{display:inline-block;padding:3px 9px;border-radius:11px;font-size:.65rem;font-weight:600;}
-        .badge-available{background:#ecfdf5;color:#15803d;}
-        .badge-assigned{background:#eef0ff;color:#3545d8;}
-        .badge-leave{background:#fffbeb;color:#b45309;}
-        .badge-inactive{background:#fef2f2;color:#b91c1c;}
-        .search-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
-        .search-bar input{flex:1;min-width:180px;padding:8px 14px;border:1.5px solid var(--border2);border-radius:22px;font-size:.8rem;background:#fafbfc;font-family:var(--font);}
-        .search-bar input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(70,87,240,.06);background:#fff;outline:none;}
-        .search-bar select{padding:8px 13px;border:1.5px solid var(--border2);border-radius:22px;font-family:var(--font);font-size:.78rem;background:#fafbfc;cursor:pointer;}
-        .modal-overlay{display:none;position:fixed;inset:0;background:rgba(13,17,53,.5);z-index:220;align-items:center;justify-content:center;backdrop-filter:blur(2px);}
-        .modal-overlay.open{display:flex;}
-        .modal{background:#fff;border-radius:var(--radius-xl);padding:26px 28px;width:92%;max-width:680px;max-height:82vh;overflow-y:auto;box-shadow:var(--shadow-xl);}
-        .modal.wide{max-width:920px;}
-        .modal h2{font-size:1.2rem;margin-bottom:14px;color:var(--primary);}
-        .modal-actions{display:flex;gap:9px;justify-content:flex-end;margin-top:16px;flex-wrap:wrap;}
-        .declaration-layout{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;}
-        @media (max-width:1100px){.declaration-layout{grid-template-columns:1fr;}}
-        .preview-viewport{overflow:auto;max-height:85vh;background:#e8e9f0;border-radius:6px;padding:12px;display:flex;justify-content:center;}
-        .a4-preview{background:#fff;width:210mm;height:297mm;min-height:297mm;max-height:297mm;display:flex;flex-direction:column;padding:7mm 8mm 6mm;font-family:var(--font-doc);font-size:10.8px;line-height:1.38;color:#1a1a1a;box-shadow:0 2px 20px rgba(0,0,0,.13);transform:scale(0.90);transform-origin:top center;flex-shrink:0;border:1px solid #d0d0d0;box-sizing:border-box;}
-        .a4-preview.lang-ml{font-family:var(--font-ml);font-feature-settings:"liga" 1,"clig" 1;text-rendering:optimizeLegibility;}
-        .a4-preview.lang-ml .doc-header,.a4-preview.lang-ml .doc-header-left .brand-text h3,.a4-preview.lang-ml .doc-header-left .brand-text .tagline,.a4-preview.lang-ml .doc-header-right,.a4-preview.lang-ml .val{font-family:var(--font-doc)!important;}
-        .doc-header{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;padding-bottom:6px;border-bottom:2px solid #1a1d4e;margin-bottom:6px;}
-        .doc-header-left{display:flex;align-items:center;gap:9px;}
-        .doc-header-left .logo-img{width:68px;height:68px;border-radius:50%;object-fit:contain;flex-shrink:0;border:1px solid #e0e0e0;background:#fff;}
-        .doc-header-left .brand-text h3{font-size:17px;font-weight:700;letter-spacing:1.3px;color:#1a1d4e;margin:0;}
-        .doc-header-left .brand-text .tagline{font-size:8px;letter-spacing:1.8px;color:#9b8035;text-transform:uppercase;font-weight:600;}
-        .doc-header-right{text-align:right;font-size:8.5px;color:#444;line-height:1.4;flex-shrink:0;}
-        .doc-header-right strong{font-size:9.5px;color:#1a1d4e;}
-        .doc-main{flex:1;display:flex;flex-direction:column;}
-        .doc-title-box{text-align:center;border:2px solid #1a1d4e;padding:6px 10px;margin:8px 0;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:1.3px;color:#1a1d4e;}
-        .meta-row{display:flex;gap:6px;margin:4px 0 8px;font-size:8.5px;}
-        .meta-row span{font-weight:700;color:#1a1d4e;min-width:70px;}
-        .section-title{font-weight:700;font-size:10px;color:#1a1d4e;border-bottom:1px solid #d0d0d0;padding-bottom:2px;margin:8px 0 4px;text-transform:uppercase;letter-spacing:.8px;}
-        .doc-table{width:100%;border-collapse:collapse;font-size:9.2px;margin:0 0 6px 0;}
-        .doc-table td{padding:4px 6px;border:1px solid #d5d5d5;vertical-align:top;word-break:break-word;line-height:1.35;}
-        .doc-table .lbl{font-weight:700;background:#f5f5f5;color:#3a3a3a;font-size:8.6px;letter-spacing:.2px;width:28%;white-space:nowrap;}
-        .doc-table .val{color:#1a1a1a;font-size:9.2px;}
-        .terms-block{margin-top:6px;font-size:8.4px;line-height:1.35;color:#2a2a2a;}
-        .terms-block h4{font-size:8.8px;margin-bottom:3px;color:#1a1d4e;font-weight:700;text-transform:uppercase;letter-spacing:.8px;}
-        .terms-block ol{padding-left:18px;}
-        .terms-block ol li{margin-bottom:2px;}
-        .emergency-box{border:1.5px solid #1a1d4e;border-radius:3px;padding:5px 8px;margin:6px 0;text-align:center;font-size:8.6px;background:#fafafa;}
-        .emergency-box strong{color:#1a1d4e;font-size:9px;}
-        .doc-bottom{margin-top:auto;padding-top:4px;}
-        .sig-section{display:flex;gap:22px;margin-top:10px;justify-content:space-between;}
-        .sig-box{flex:1;text-align:center;}
-        .sig-line{border-bottom:1.5px solid #333;margin-top:20px;margin-bottom:3px;min-height:32px;position:relative;}
-        .sig-line img{position:absolute;bottom:1px;left:50%;transform:translateX(-50%);max-height:28px;max-width:100%;}
-        .closing-msg{text-align:center;margin-top:8px;padding-top:6px;border-top:1px solid #d0d0d0;font-size:7.8px;color:#555;font-style:italic;line-height:1.35;}
-        .closing-msg strong{color:#1a1d4e;font-style:normal;}
-        .signature-pad-container{border:2px dashed #d6d7e2;border-radius:var(--radius-xs);overflow:hidden;background:#fff;cursor:crosshair;touch-action:none;}
-        .signature-pad-container canvas{display:block;width:100%;height:95px;}
-        .toast-rack{position:fixed;top:18px;right:18px;z-index:9999;display:flex;flex-direction:column;gap:6px;pointer-events:none;}
-        .toast{padding:10px 18px;border-radius:22px;color:#fff;font-weight:600;font-size:.78rem;animation:toastIn .32s ease;box-shadow:var(--shadow-lg);max-width:350px;pointer-events:auto;}
-        .toast.success{background:#16a34a;}.toast.error{background:#dc2626;}.toast.info{background:#2563eb;}
-        @keyframes toastIn{from{transform:translateX(100px);opacity:0;}to{transform:translateX(0);opacity:1;}}
-        .mobile-toggle{display:none;position:fixed;top:10px;left:10px;z-index:300;background:var(--primary);color:#fff;border:none;width:40px;height:40px;border-radius:50%;font-size:1.2rem;cursor:pointer;box-shadow:var(--shadow-lg);align-items:center;justify-content:center;}
-        .empty-state{text-align:center;padding:35px 18px;color:var(--text3);}
-        input[readonly]{background:#f0f1f5!important;color:#555!important;cursor:default;}
-        @page{size:A4 portrait;margin:0;}
-        @media print{
-            *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
-            html,body{background:white!important;margin:0!important;padding:0!important;}
-            body *{visibility:hidden;}
-            #a4Preview,#a4Preview *{visibility:visible;}
-            #a4Preview{position:absolute;left:0;top:0;width:210mm!important;height:297mm!important;min-height:297mm!important;max-height:297mm!important;padding:7mm 8mm 6mm!important;margin:0!important;box-shadow:none!important;border:none!important;background:white!important;color:black!important;font-size:10.8px!important;line-height:1.38!important;page-break-after:avoid!important;page-break-inside:avoid!important;transform:none!important;zoom:1!important;scale:1!important;flex-shrink:0;display:flex!important;flex-direction:column!important;}
-            .a4-preview.lang-ml,.a4-preview.lang-ml *{font-family:"Noto Sans Malayalam","Manjari","Kartika","Nirmala UI",sans-serif!important;font-feature-settings:"liga" 1,"clig" 1!important;text-rendering:optimizeLegibility!important;}
-            .a4-preview.lang-ml .doc-header,.a4-preview.lang-ml .doc-header-left .brand-text h3,.a4-preview.lang-ml .doc-header-left .brand-text .tagline,.a4-preview.lang-ml .doc-header-right,.a4-preview.lang-ml .val{font-family:Arial,Helvetica,sans-serif!important;}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            font-size: 14.5px;
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+        }
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.55;
+        }
+        .app-shell {
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 260px;
+            background: linear-gradient(180deg, #0d1135 0%, #151a44 100%);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 120;
+            transition: transform var(--transition);
+            box-shadow: 4px 0 28px rgba(0, 0, 0, .16);
+            overflow: hidden;
+        }
+        .sidebar::after {
+            content: '';
+            position: absolute;
+            top: -70px;
+            right: -70px;
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, rgba(255, 255, 255, .02) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .sidebar-brand {
+            padding: 20px 16px 16px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, .07);
+            position: relative;
+            z-index: 1;
+        }
+        .sidebar-brand .logo-img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: contain;
+            border: 2px solid rgba(255, 255, 255, .18);
+            margin-bottom: 7px;
+            background: #fff;
+        }
+        .sidebar-brand h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: 1.3px;
+            color: #fff;
+            margin: 0;
+        }
+        .sidebar-brand .tagline {
+            font-size: .58rem;
+            color: var(--gold);
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            margin-top: 2px;
+            font-weight: 500;
+        }
+        .sidebar-nav {
+            flex: 1;
+            padding: 8px 0;
+            overflow-y: auto;
+            position: relative;
+            z-index: 1;
+        }
+        .sidebar-nav .nav-section-label {
+            padding: 9px 18px 3px;
+            font-size: .6rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, .32);
+            font-weight: 600;
+        }
+        .sidebar-nav button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 10px 18px;
+            border: none;
+            background: transparent;
+            color: rgba(255, 255, 255, .68);
+            cursor: pointer;
+            font-size: .82rem;
+            transition: all var(--transition);
+            text-align: left;
+            font-family: var(--font);
+            border-left: 3px solid transparent;
+        }
+        .sidebar-nav button:hover {
+            background: rgba(255, 255, 255, .04);
+            color: #fff;
+            border-left-color: rgba(255, 255, 255, .25);
+        }
+        .sidebar-nav button.active {
+            background: rgba(255, 255, 255, .08);
+            color: #fff;
+            border-left-color: var(--gold);
+            font-weight: 600;
+        }
+        .sidebar-nav button .nav-icon {
+            font-size: 1.1rem;
+            width: 22px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .main-area {
+            flex: 1;
+            margin-left: 260px;
+            padding: 24px 28px;
+            min-height: 100vh;
+            transition: margin var(--transition);
+        }
+        .page {
+            display: none;
+            animation: pageIn .35s ease;
+        }
+        .page.active {
+            display: block;
+        }
+        @keyframes pageIn {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .page-top {
+            margin-bottom: 20px;
+        }
+        .page-top h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 2px;
+        }
+        .page-top .subtitle {
+            font-size: .76rem;
+            color: var(--text3);
+            font-weight: 500;
+        }
+        .card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 20px 24px;
+            box-shadow: var(--shadow-xs);
+            border: 1px solid var(--border);
+            margin-bottom: 16px;
+            transition: all var(--transition);
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .card-header h3 {
+            font-size: .98rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+            gap: 12px;
+        }
+        .stat-card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 16px 18px;
+            box-shadow: var(--shadow-xs);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all var(--transition);
+            cursor: default;
+        }
+        .stat-card:hover {
+            box-shadow: var(--shadow);
+            transform: translateY(-2px);
+            border-color: var(--border2);
+        }
+        .stat-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+            background: #eef0ff;
+            color: #4657f0;
+        }
+        .stat-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+        }
+        .stat-label {
+            font-size: .68rem;
+            color: var(--text3);
+            margin-top: 2px;
+            font-weight: 500;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 16px;
+            border-radius: 22px;
+            font-size: .8rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all var(--transition);
+            font-family: var(--font);
+            white-space: nowrap;
+            letter-spacing: .15px;
+        }
+        .btn:active {
+            transform: scale(.97);
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: var(--accent2);
+            box-shadow: 0 5px 16px rgba(70, 87, 240, .3);
+            transform: translateY(-1px);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid var(--border2);
+            color: var(--text2);
+        }
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-light);
+        }
+        .btn-gold {
+            background: var(--gold);
+            color: #fff;
+        }
+        .btn-gold:hover {
+            background: var(--gold2);
+            box-shadow: 0 5px 16px rgba(155, 128, 53, .3);
+            transform: translateY(-1px);
+        }
+        .btn-sm {
+            padding: 4px 11px;
+            font-size: .7rem;
+            border-radius: 16px;
+        }
+        .btn-xs {
+            padding: 3px 8px;
+            font-size: .65rem;
+            border-radius: 13px;
+        }
+        .btn-danger {
+            background: var(--danger);
+            color: #fff;
+        }
+        .btn-danger:hover {
+            background: #b91c1c;
+        }
+        .btn-success {
+            background: var(--success);
+            color: #fff;
+        }
+        .btn-success:hover {
+            background: #15803d;
+        }
+        .btn-warning {
+            background: var(--warning);
+            color: #fff;
+        }
+        .btn-warning:hover {
+            background: #d97706;
+        }
+        .form-group {
+            margin-bottom: 12px;
+        }
+        .form-group label {
+            display: block;
+            font-size: .72rem;
+            font-weight: 600;
+            color: var(--text2);
+            margin-bottom: 3px;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 9px 13px;
+            border: 1.5px solid var(--border2);
+            border-radius: var(--radius-xs);
+            font-size: .81rem;
+            font-family: var(--font);
+            transition: all var(--transition);
+            background: #fafbfc;
+            color: var(--text);
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(70, 87, 240, .06);
+            background: #fff;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+        }
+        .form-row-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        .form-row-4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        @media (max-width:900px) {
+            .form-row-3,
+            .form-row-4 {
+                grid-template-columns: 1fr 1fr;
+            }
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .main-area {
+                margin-left: 0;
+            }
+            .mobile-toggle {
+                display: flex !important;
+            }
+            .declaration-layout {
+                grid-template-columns: 1fr !important;
+            }
+            .equipment-grid {
+                grid-template-columns: 1fr !important;
+            }
+        }
+        .table-wrap {
+            overflow-x: auto;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: .78rem;
+        }
+        table th,
+        table td {
+            padding: 9px 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+        }
+        table th {
+            background: #fafbfc;
+            font-weight: 700;
+            color: var(--text2);
+            font-size: .68rem;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        table tbody tr:hover {
+            background: #fafbff;
+        }
+        .badge {
+            display: inline-block;
+            padding: 3px 9px;
+            border-radius: 11px;
+            font-size: .65rem;
+            font-weight: 600;
+        }
+        .badge-available {
+            background: #ecfdf5;
+            color: #15803d;
+        }
+        .badge-assigned {
+            background: #eef0ff;
+            color: #3545d8;
+        }
+        .badge-leave {
+            background: #fffbeb;
+            color: #b45309;
+        }
+        .badge-inactive {
+            background: #fef2f2;
+            color: #b91c1c;
+        }
+        .badge-active {
+            background: #ecfdf5;
+            color: #15803d;
+        }
+        .badge-returned {
+            background: #f0fdf4;
+            color: #166534;
+        }
+        .badge-overdue {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+        .badge-booked {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+        .badge-cancelled {
+            background: #f9fafb;
+            color: #6b7280;
+        }
+        .badge-outofstock {
+            background: #fef2f2;
+            color: #b91c1c;
+        }
+        .badge-lowstock {
+            background: #fffbeb;
+            color: #b45309;
+        }
+        .badge-maintenance {
+            background: #fefce8;
+            color: #a16207;
+        }
+        .badge-paid {
+            background: #ecfdf5;
+            color: #15803d;
+        }
+        .badge-partial {
+            background: #fffbeb;
+            color: #b45309;
+        }
+        .badge-pending {
+            background: #fef2f2;
+            color: #b91c1c;
+        }
+        .search-bar {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .search-bar input {
+            flex: 1;
+            min-width: 180px;
+            padding: 8px 14px;
+            border: 1.5px solid var(--border2);
+            border-radius: 22px;
+            font-size: .8rem;
+            background: #fafbfc;
+            font-family: var(--font);
+        }
+        .search-bar input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(70, 87, 240, .06);
+            background: #fff;
+            outline: none;
+        }
+        .search-bar select {
+            padding: 8px 13px;
+            border: 1.5px solid var(--border2);
+            border-radius: 22px;
+            font-family: var(--font);
+            font-size: .78rem;
+            background: #fafbfc;
+            cursor: pointer;
+        }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(13, 17, 53, .5);
+            z-index: 220;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(2px);
+        }
+        .modal-overlay.open {
+            display: flex;
+        }
+        .modal {
+            background: #fff;
+            border-radius: var(--radius-xl);
+            padding: 26px 28px;
+            width: 92%;
+            max-width: 680px;
+            max-height: 82vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-xl);
+        }
+        .modal.wide {
+            max-width: 920px;
+        }
+        .modal h2 {
+            font-size: 1.2rem;
+            margin-bottom: 14px;
+            color: var(--primary);
+        }
+        .modal-actions {
+            display: flex;
+            gap: 9px;
+            justify-content: flex-end;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+        .declaration-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+        @media (max-width:1100px) {
+            .declaration-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+        .preview-viewport {
+            overflow: auto;
+            max-height: 85vh;
+            background: #e8e9f0;
+            border-radius: 6px;
+            padding: 12px;
+            display: flex;
+            justify-content: center;
+        }
+        .a4-preview {
+            background: #fff;
+            width: 210mm;
+            height: 297mm;
+            min-height: 297mm;
+            max-height: 297mm;
+            display: flex;
+            flex-direction: column;
+            padding: 7mm 8mm 6mm;
+            font-family: var(--font-doc);
+            font-size: 10.8px;
+            line-height: 1.38;
+            color: #1a1a1a;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, .13);
+            transform: scale(0.90);
+            transform-origin: top center;
+            flex-shrink: 0;
+            border: 1px solid #d0d0d0;
+            box-sizing: border-box;
+        }
+        .a4-preview.lang-ml {
+            font-family: var(--font-ml);
+            font-feature-settings: "liga"1, "clig"1;
+            text-rendering: optimizeLegibility;
+        }
+        .a4-preview.lang-ml .doc-header,
+        .a4-preview.lang-ml .doc-header-left .brand-text h3,
+        .a4-preview.lang-ml .doc-header-left .brand-text .tagline,
+        .a4-preview.lang-ml .doc-header-right,
+        .a4-preview.lang-ml .val {
+            font-family: var(--font-doc) !important;
+        }
+        .doc-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 8px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid #1a1d4e;
+            margin-bottom: 6px;
+        }
+        .doc-header-left {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+        .doc-header-left .logo-img {
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            object-fit: contain;
+            flex-shrink: 0;
+            border: 1px solid #e0e0e0;
+            background: #fff;
+        }
+        .doc-header-left .brand-text h3 {
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: 1.3px;
+            color: #1a1d4e;
+            margin: 0;
+        }
+        .doc-header-left .brand-text .tagline {
+            font-size: 8px;
+            letter-spacing: 1.8px;
+            color: #9b8035;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .doc-header-right {
+            text-align: right;
+            font-size: 8.5px;
+            color: #444;
+            line-height: 1.4;
+            flex-shrink: 0;
+        }
+        .doc-header-right strong {
+            font-size: 9.5px;
+            color: #1a1d4e;
+        }
+        .doc-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .doc-title-box {
+            text-align: center;
+            border: 2px solid #1a1d4e;
+            padding: 6px 10px;
+            margin: 8px 0;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.3px;
+            color: #1a1d4e;
+        }
+        .meta-row {
+            display: flex;
+            gap: 6px;
+            margin: 4px 0 8px;
+            font-size: 8.5px;
+        }
+        .meta-row span {
+            font-weight: 700;
+            color: #1a1d4e;
+            min-width: 70px;
+        }
+        .section-title {
+            font-weight: 700;
+            font-size: 10px;
+            color: #1a1d4e;
+            border-bottom: 1px solid #d0d0d0;
+            padding-bottom: 2px;
+            margin: 8px 0 4px;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+        }
+        .doc-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 9.2px;
+            margin: 0 0 6px 0;
+        }
+        .doc-table td {
+            padding: 4px 6px;
+            border: 1px solid #d5d5d5;
+            vertical-align: top;
+            word-break: break-word;
+            line-height: 1.35;
+        }
+        .doc-table .lbl {
+            font-weight: 700;
+            background: #f5f5f5;
+            color: #3a3a3a;
+            font-size: 8.6px;
+            letter-spacing: .2px;
+            width: 28%;
+            white-space: nowrap;
+        }
+        .doc-table .val {
+            color: #1a1a1a;
+            font-size: 9.2px;
+        }
+        .terms-block {
+            margin-top: 6px;
+            font-size: 8.4px;
+            line-height: 1.35;
+            color: #2a2a2a;
+        }
+        .terms-block h4 {
+            font-size: 8.8px;
+            margin-bottom: 3px;
+            color: #1a1d4e;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+        }
+        .terms-block ol {
+            padding-left: 18px;
+        }
+        .terms-block ol li {
+            margin-bottom: 2px;
+        }
+        .emergency-box {
+            border: 1.5px solid #1a1d4e;
+            border-radius: 3px;
+            padding: 5px 8px;
+            margin: 6px 0;
+            text-align: center;
+            font-size: 8.6px;
+            background: #fafafa;
+        }
+        .emergency-box strong {
+            color: #1a1d4e;
+            font-size: 9px;
+        }
+        .doc-bottom {
+            margin-top: auto;
+            padding-top: 4px;
+        }
+        .sig-section {
+            display: flex;
+            gap: 22px;
+            margin-top: 10px;
+            justify-content: space-between;
+        }
+        .sig-box {
+            flex: 1;
+            text-align: center;
+        }
+        .sig-line {
+            border-bottom: 1.5px solid #333;
+            margin-top: 20px;
+            margin-bottom: 3px;
+            min-height: 32px;
+            position: relative;
+        }
+        .sig-line img {
+            position: absolute;
+            bottom: 1px;
+            left: 50%;
+            transform: translateX(-50%);
+            max-height: 28px;
+            max-width: 100%;
+        }
+        .closing-msg {
+            text-align: center;
+            margin-top: 8px;
+            padding-top: 6px;
+            border-top: 1px solid #d0d0d0;
+            font-size: 7.8px;
+            color: #555;
+            font-style: italic;
+            line-height: 1.35;
+        }
+        .closing-msg strong {
+            color: #1a1d4e;
+            font-style: normal;
+        }
+        .signature-pad-container {
+            border: 2px dashed #d6d7e2;
+            border-radius: var(--radius-xs);
+            overflow: hidden;
+            background: #fff;
+            cursor: crosshair;
+            touch-action: none;
+        }
+        .signature-pad-container canvas {
+            display: block;
+            width: 100%;
+            height: 95px;
+        }
+        .toast-rack {
+            position: fixed;
+            top: 18px;
+            right: 18px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            pointer-events: none;
+        }
+        .toast {
+            padding: 10px 18px;
+            border-radius: 22px;
+            color: #fff;
+            font-weight: 600;
+            font-size: .78rem;
+            animation: toastIn .32s ease;
+            box-shadow: var(--shadow-lg);
+            max-width: 350px;
+            pointer-events: auto;
+        }
+        .toast.success {
+            background: #16a34a;
+        }
+        .toast.error {
+            background: #dc2626;
+        }
+        .toast.info {
+            background: #2563eb;
+        }
+        @keyframes toastIn {
+            from {
+                transform: translateX(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        .mobile-toggle {
+            display: none;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 300;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            align-items: center;
+            justify-content: center;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 35px 18px;
+            color: var(--text3);
+        }
+        input[readonly] {
+            background: #f0f1f5 !important;
+            color: #555 !important;
+            cursor: default;
+        }
+
+        /* Rental Management - Equipment Card Grid */
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 14px;
+        }
+        .equipment-card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 16px 18px;
+            box-shadow: var(--shadow-xs);
+            border: 1px solid var(--border);
+            transition: all var(--transition);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .equipment-card:hover {
+            box-shadow: var(--shadow);
+            transform: translateY(-2px);
+            border-color: var(--border2);
+        }
+        .equipment-card .eq-photo {
+            width: 100%;
+            height: 110px;
+            border-radius: var(--radius-sm);
+            object-fit: cover;
+            background: #f0f1f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: #c0c1d0;
+            margin-bottom: 10px;
+        }
+        .equipment-card .eq-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: var(--radius-sm);
+        }
+        .equipment-card .eq-name {
+            font-weight: 700;
+            font-size: .95rem;
+            color: var(--primary);
+            margin-bottom: 2px;
+        }
+        .equipment-card .eq-category {
+            font-size: .65rem;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            margin-bottom: 8px;
+        }
+        .equipment-card .eq-code {
+            font-size: .6rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .equipment-card .eq-stock-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            font-size: .68rem;
+            margin-bottom: 4px;
+        }
+        .equipment-card .eq-stock-row span {
+            background: #f7f8fb;
+            padding: 2px 8px;
+            border-radius: 10px;
+            color: var(--text2);
+            font-weight: 500;
+        }
+        .equipment-card .eq-rent-row {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            font-size: .66rem;
+            color: var(--text2);
+            margin-bottom: 8px;
+        }
+        .equipment-card .eq-rent-row span {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        .equipment-card .eq-actions {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+            margin-top: 6px;
+        }
+        .equipment-card .eq-status-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        .rental-tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+        .rental-tabs button {
+            padding: 7px 16px;
+            border-radius: 20px;
+            border: 1.5px solid var(--border2);
+            background: transparent;
+            cursor: pointer;
+            font-family: var(--font);
+            font-size: .78rem;
+            font-weight: 600;
+            color: var(--text2);
+            transition: all var(--transition);
+        }
+        .rental-tabs button.active-tab {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+        .rental-tabs button:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .rental-tabs button.active-tab:hover {
+            color: #fff;
+        }
+        @page {
+            size: A4 portrait;
+            margin: 0;
+        }
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            html,
+            body {
+                background: white !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            body * {
+                visibility: hidden;
+            }
+            #a4Preview,
+            #a4Preview * {
+                visibility: visible;
+            }
+            #a4Preview {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 210mm !important;
+                height: 297mm !important;
+                min-height: 297mm !important;
+                max-height: 297mm !important;
+                padding: 7mm 8mm 6mm !important;
+                margin: 0 !important;
+                box-shadow: none !important;
+                border: none !important;
+                background: white !important;
+                color: black !important;
+                font-size: 10.8px !important;
+                line-height: 1.38 !important;
+                page-break-after: avoid !important;
+                page-break-inside: avoid !important;
+                transform: none !important;
+                zoom: 1 !important;
+                scale: 1 !important;
+                flex-shrink: 0;
+                display: flex !important;
+                flex-direction: column !important;
+            }
+            .a4-preview.lang-ml,
+            .a4-preview.lang-ml * {
+                font-family: "Noto Sans Malayalam", "Manjari", "Kartika", "Nirmala UI", sans-serif !important;
+                font-feature-settings: "liga"1, "clig"1 !important;
+                text-rendering: optimizeLegibility !important;
+            }
+            .a4-preview.lang-ml .doc-header,
+            .a4-preview.lang-ml .doc-header-left .brand-text h3,
+            .a4-preview.lang-ml .doc-header-left .brand-text .tagline,
+            .a4-preview.lang-ml .doc-header-right,
+            .a4-preview.lang-ml .val {
+                font-family: Arial, Helvetica, sans-serif !important;
+            }
         }
     </style>
 </head>
@@ -195,24 +1122,30 @@
                 <div class="nav-section-label">Operations</div>
                 <button onclick="navigate('declaration')" data-nav="declaration"><span class="nav-icon">📝</span>Declaration Generator</button>
                 <button onclick="navigate('history')" data-nav="history"><span class="nav-icon">📋</span>Declaration History</button>
+                <button onclick="navigate('rental')" data-nav="rental"><span class="nav-icon">📦</span>Rental Management</button>
                 <div class="nav-section-label">System</div>
                 <button onclick="navigate('settings')" data-nav="settings"><span class="nav-icon">⚙️</span>Settings</button>
             </nav>
         </aside>
         <main class="main-area" id="mainArea">
+            <!-- Dashboard Page -->
             <div class="page" id="page-dashboard">
                 <div class="page-top"><h1>Dashboard</h1><p class="subtitle">Overview of all operations</p></div>
                 <div class="stats-grid" id="dashboardStats"></div>
                 <div class="card" style="margin-top:14px;"><div class="card-header"><h3>Recent Declarations</h3></div><div class="table-wrap"><table><thead><tr><th>Decl#</th><th>Date</th><th>Client</th><th>Service</th><th>Staff</th><th>Amount</th></tr></thead><tbody id="recentDeclarations"></tbody></table></div></div>
+                <div class="card" style="margin-top:14px;"><div class="card-header"><h3>Recent Rentals</h3></div><div class="table-wrap"><table><thead><tr><th>Rental ID</th><th>Date</th><th>Customer</th><th>Equipment</th><th>Qty</th><th>Status</th></tr></thead><tbody id="recentRentals"></tbody></table></div></div>
             </div>
+            <!-- Staff Page -->
             <div class="page" id="page-staff">
                 <div class="page-top"><h1>Staff Management</h1><p class="subtitle">Manage all service personnel</p></div>
                 <div class="card"><div class="card-header"><h3>Staff Directory</h3><div class="search-bar"><input type="text" id="staffSearch" placeholder="Search staff..." oninput="renderStaffTable()"><select id="staffFilterCategory" onchange="renderStaffTable()"><option value="">All Categories</option><option>Nurse</option><option>Palliative Staff</option><option>Caretaker</option><option>Home Maid</option><option>Maid + Caretaker</option><option>Babysitter</option><option>Cook</option><option>Housekeeping</option><option>Other</option></select><select id="staffFilterStatus" onchange="renderStaffTable()"><option value="">All Status</option><option>Available</option><option>Assigned</option><option>On Leave</option><option>Inactive</option></select><button class="btn btn-primary" onclick="openStaffModal()">+ Add Staff</button></div></div><div class="table-wrap"><table><thead><tr><th>Staff ID</th><th>Name</th><th>Category</th><th>Mobile</th><th>Status</th><th>Actions</th></tr></thead><tbody id="staffTableBody"></tbody></table></div></div>
             </div>
+            <!-- Clients Page -->
             <div class="page" id="page-clients">
                 <div class="page-top"><h1>Client Management</h1><p class="subtitle">Manage client records</p></div>
                 <div class="card"><div class="card-header"><h3>Clients</h3><div class="search-bar"><input type="text" id="clientSearch" placeholder="Search clients..." oninput="renderClientTable()"><button class="btn btn-primary" onclick="openClientModal()">+ Add Client</button></div></div><div class="table-wrap"><table><thead><tr><th>Client Name</th><th>Contact</th><th>Mobile</th><th>District</th><th>Actions</th></tr></thead><tbody id="clientTableBody"></tbody></table></div></div>
             </div>
+            <!-- Declaration Page -->
             <div class="page" id="page-declaration">
                 <div class="page-top"><h1>Declaration Generator</h1><p class="subtitle">Create service deployment declarations</p></div>
                 <div class="declaration-layout">
@@ -309,28 +1242,97 @@
                     </div>
                 </div>
             </div>
+            <!-- History Page -->
             <div class="page" id="page-history">
                 <div class="page-top"><h1>Declaration History</h1><p class="subtitle">View and manage past declarations</p></div>
                 <div class="card"><div class="card-header"><h3>All Declarations</h3><div class="search-bar"><input type="text" id="historySearch" placeholder="Search..." oninput="renderHistory()"><button class="btn btn-outline" onclick="renderHistory()">🔄 Refresh</button></div></div><div class="table-wrap"><table><thead><tr><th>Decl#</th><th>Date</th><th>Client</th><th>Service</th><th>Staff</th><th>Amount</th><th>Actions</th></tr></thead><tbody id="historyTableBody"></tbody></table></div></div>
             </div>
+            <!-- Rental Management Page -->
+            <div class="page" id="page-rental">
+                <div class="page-top"><h1>Rental Management</h1><p class="subtitle">Manage equipment and rental transactions</p></div>
+                <div class="rental-tabs" id="rentalTabs">
+                    <button class="active-tab" onclick="switchRentalTab('equipment')">📦 Equipment</button>
+                    <button onclick="switchRentalTab('transactions')">📋 Rental Transactions</button>
+                </div>
+                <!-- Equipment View -->
+                <div id="rentalEquipmentView">
+                    <div class="card"><div class="card-header"><h3>Equipment Inventory</h3><div class="search-bar"><input type="text" id="equipSearch" placeholder="Search equipment..." oninput="renderEquipmentGrid()"><select id="equipFilterCategory" onchange="renderEquipmentGrid()"><option value="">All Categories</option><option>Medical Equipment</option><option>Mobility</option><option>Respiratory</option><option>Hospital Furniture</option><option>Patient Care</option><option>Rehabilitation</option><option>General Rental</option><option>Other</option></select><select id="equipFilterStatus" onchange="renderEquipmentGrid()"><option value="">All Status</option><option>Available</option><option>Low Stock</option><option>Out of Stock</option><option>Under Maintenance</option></select><button class="btn btn-primary" onclick="openEquipmentModal()">+ Add Equipment</button></div></div><div class="equipment-grid" id="equipmentGrid"></div></div>
+                </div>
+                <!-- Transactions View -->
+                <div id="rentalTransactionsView" style="display:none;">
+                    <div class="card"><div class="card-header"><h3>Rental Transactions</h3><div class="search-bar"><input type="text" id="rentalSearch" placeholder="Search rentals..." oninput="renderRentalTable()"><select id="rentalFilterStatus" onchange="renderRentalTable()"><option value="">All Status</option><option>Booked</option><option>Active</option><option>Returned</option><option>Cancelled</option><option>Overdue</option></select><select id="rentalFilterPayment" onchange="renderRentalTable()"><option value="">All Payment</option><option>Paid</option><option>Partially Paid</option><option>Pending</option></select><button class="btn btn-primary" onclick="openRentalModal()">+ New Rental</button></div></div><div class="table-wrap"><table><thead><tr><th>Rental ID</th><th>Equipment</th><th>Customer</th><th>Phone</th><th>Qty</th><th>Start Date</th><th>Return Date</th><th>Rent (₹)</th><th>Deposit (₹)</th><th>Pending (₹)</th><th>Status</th><th>Payment</th><th>Actions</th></tr></thead><tbody id="rentalTableBody"></tbody></table></div></div>
+                </div>
+            </div>
+            <!-- Settings Page -->
             <div class="page" id="page-settings">
                 <div class="page-top"><h1>Settings</h1><p class="subtitle">Configure system preferences</p></div>
                 <div class="card"><h3>Company Details</h3><div class="form-row form-row-3"><div class="form-group"><label>Office Address</label><textarea id="setOfficeAddr" rows="2">Chullikkara – Kuttikkol Road, Chullikkara, Kerala – 671532, India</textarea></div><div class="form-group"><label>Phone 1</label><input type="text" id="setPhone1" value="9497321453"></div><div class="form-group"><label>Phone 2</label><input type="text" id="setPhone2" value="9961921453"></div></div><div class="form-group"><label>Email</label><input type="email" id="setEmail" value="kalopsia0404@gmail.com"></div><button class="btn btn-primary" onclick="saveSettings()">💾 Save Settings</button></div>
             </div>
         </main>
     </div>
+    <!-- Staff Modal -->
     <div class="modal-overlay" id="staffModal"><div class="modal wide"><h2 id="staffModalTitle">Add Staff</h2>
-            <div class="form-row form-row-3"><div class="form-group"><label>Full Name *</label><input type="text" id="sName"></div><div class="form-group"><label>Gender</label><select id="sGender"><option>Male</option><option>Female</option><option>Other</option></select></div><div class="form-group"><label>Mobile Number *</label><input type="text" id="sMobile"></div></div>
-            <div class="form-row form-row-3"><div class="form-group"><label>Alternate Number</label><input type="text" id="sAltMobile"></div><div class="form-group"><label>Aadhaar Number</label><input type="text" id="sAadhaar"></div><div class="form-group"><label>Date of Birth</label><input type="date" id="sDOB"></div></div>
-            <div class="form-row form-row-3"><div class="form-group"><label>Address</label><input type="text" id="sAddress"></div><div class="form-group"><label>District</label><input type="text" id="sDistrict"></div><div class="form-group"><label>PIN</label><input type="text" id="sPIN"></div></div>
-            <div class="form-row form-row-3"><div class="form-group"><label>Category</label><select id="sCategory"><option>Nurse</option><option>Palliative Staff</option><option>Caretaker</option><option>Home Maid</option><option>Maid + Caretaker</option><option>Babysitter</option><option>Cook</option><option>Housekeeping</option><option>Other</option></select></div><div class="form-group"><label>Status</label><select id="sStatus"><option>Available</option><option>Assigned</option><option>On Leave</option><option>Inactive</option></select></div><div class="form-group"><label>Joining Date</label><input type="date" id="sJoinDate"></div></div>
-            <div class="form-group"><label>Skills (comma separated)</label><input type="text" id="sSkills" placeholder="Patient Care, Elder Care, Cooking..."></div>
-            <input type="hidden" id="sDocId"><input type="hidden" id="sStaffId"><div class="modal-actions"><button class="btn btn-outline" onclick="closeStaffModal()">Cancel</button><button class="btn btn-primary" onclick="saveStaff()">💾 Save Staff</button></div></div></div>
+        <div class="form-row form-row-3"><div class="form-group"><label>Full Name *</label><input type="text" id="sName"></div><div class="form-group"><label>Gender</label><select id="sGender"><option>Male</option><option>Female</option><option>Other</option></select></div><div class="form-group"><label>Mobile Number *</label><input type="text" id="sMobile"></div></div>
+        <div class="form-row form-row-3"><div class="form-group"><label>Alternate Number</label><input type="text" id="sAltMobile"></div><div class="form-group"><label>Aadhaar Number</label><input type="text" id="sAadhaar"></div><div class="form-group"><label>Date of Birth</label><input type="date" id="sDOB"></div></div>
+        <div class="form-row form-row-3"><div class="form-group"><label>Address</label><input type="text" id="sAddress"></div><div class="form-group"><label>District</label><input type="text" id="sDistrict"></div><div class="form-group"><label>PIN</label><input type="text" id="sPIN"></div></div>
+        <div class="form-row form-row-3"><div class="form-group"><label>Category</label><select id="sCategory"><option>Nurse</option><option>Palliative Staff</option><option>Caretaker</option><option>Home Maid</option><option>Maid + Caretaker</option><option>Babysitter</option><option>Cook</option><option>Housekeeping</option><option>Other</option></select></div><div class="form-group"><label>Status</label><select id="sStatus"><option>Available</option><option>Assigned</option><option>On Leave</option><option>Inactive</option></select></div><div class="form-group"><label>Joining Date</label><input type="date" id="sJoinDate"></div></div>
+        <div class="form-group"><label>Skills (comma separated)</label><input type="text" id="sSkills" placeholder="Patient Care, Elder Care, Cooking..."></div>
+        <input type="hidden" id="sDocId"><input type="hidden" id="sStaffId"><div class="modal-actions"><button class="btn btn-outline" onclick="closeStaffModal()">Cancel</button><button class="btn btn-primary" onclick="saveStaff()">💾 Save Staff</button></div></div></div>
+    <!-- Client Modal -->
     <div class="modal-overlay" id="clientModal"><div class="modal"><h2 id="clientModalTitle">Add Client</h2>
-            <div class="form-row form-row-3"><div class="form-group"><label>Client Name *</label><input type="text" id="cName"></div><div class="form-group"><label>Contact Person</label><input type="text" id="cContact"></div><div class="form-group"><label>Mobile Number *</label><input type="text" id="cMobile"></div></div>
-            <div class="form-row form-row-3"><div class="form-group"><label>Alternate Number</label><input type="text" id="cAlt"></div><div class="form-group"><label>Email</label><input type="email" id="cEmail"></div><div class="form-group"><label>House Name</label><input type="text" id="cHouseName"></div></div>
-            <div class="form-row form-row-3"><div class="form-group"><label>Full Address</label><input type="text" id="cAddress"></div><div class="form-group"><label>Landmark</label><input type="text" id="cLandmark"></div><div class="form-group"><label>District</label><input type="text" id="cDistrict"></div></div>
-            <div class="form-group"><label>PIN</label><input type="text" id="cPIN"></div><input type="hidden" id="cDocId"><div class="modal-actions"><button class="btn btn-outline" onclick="closeClientModal()">Cancel</button><button class="btn btn-primary" onclick="saveClient()">💾 Save Client</button></div></div></div>
+        <div class="form-row form-row-3"><div class="form-group"><label>Client Name *</label><input type="text" id="cName"></div><div class="form-group"><label>Contact Person</label><input type="text" id="cContact"></div><div class="form-group"><label>Mobile Number *</label><input type="text" id="cMobile"></div></div>
+        <div class="form-row form-row-3"><div class="form-group"><label>Alternate Number</label><input type="text" id="cAlt"></div><div class="form-group"><label>Email</label><input type="email" id="cEmail"></div><div class="form-group"><label>House Name</label><input type="text" id="cHouseName"></div></div>
+        <div class="form-row form-row-3"><div class="form-group"><label>Full Address</label><input type="text" id="cAddress"></div><div class="form-group"><label>Landmark</label><input type="text" id="cLandmark"></div><div class="form-group"><label>District</label><input type="text" id="cDistrict"></div></div>
+        <div class="form-group"><label>PIN</label><input type="text" id="cPIN"></div><input type="hidden" id="cDocId"><div class="modal-actions"><button class="btn btn-outline" onclick="closeClientModal()">Cancel</button><button class="btn btn-primary" onclick="saveClient()">💾 Save Client</button></div></div></div>
+    <!-- Equipment Modal -->
+    <div class="modal-overlay" id="equipmentModal"><div class="modal wide"><h2 id="equipModalTitle">Add Equipment</h2>
+        <div class="form-row form-row-3"><div class="form-group"><label>Equipment Name *</label><input type="text" id="eqName"></div><div class="form-group"><label>Category</label><select id="eqCategory"><option>Medical Equipment</option><option>Mobility</option><option>Respiratory</option><option>Hospital Furniture</option><option>Patient Care</option><option>Rehabilitation</option><option>General Rental</option><option>Other</option></select></div><div class="form-group"><label>Equipment Code</label><input type="text" id="eqCode" readonly></div></div>
+        <div class="form-row form-row-3"><div class="form-group"><label>Purchase Date</label><input type="date" id="eqPurchaseDate"></div><div class="form-group"><label>Purchase Cost (₹)</label><input type="number" id="eqPurchaseCost"></div><div class="form-group"><label>Vendor</label><input type="text" id="eqVendor"></div></div>
+        <div class="form-row form-row-3"><div class="form-group"><label>Total Quantity *</label><input type="number" id="eqTotalStock" min="1" value="1"></div><div class="form-group"><label>Available Quantity</label><input type="number" id="eqAvailableStock" min="0" value="1"></div><div class="form-group"><label>Min Stock Alert</label><input type="number" id="eqMinStock" min="0" value="2"></div></div>
+        <div class="form-row form-row-4"><div class="form-group"><label>Daily Rent (₹)</label><input type="number" id="eqDailyRent" min="0" value="0"></div><div class="form-group"><label>Weekly Rent (₹)</label><input type="number" id="eqWeeklyRent" min="0" value="0"></div><div class="form-group"><label>Monthly Rent (₹)</label><input type="number" id="eqMonthlyRent" min="0" value="0"></div><div class="form-group"><label>Security Deposit (₹)</label><input type="number" id="eqDeposit" min="0" value="0"></div></div>
+        <div class="form-row"><div class="form-group"><label>Description</label><textarea id="eqDescription" rows="2"></textarea></div><div class="form-group"><label>Image URL (optional)</label><input type="text" id="eqImageUrl" placeholder="https://..."></div></div>
+        <div class="form-group"><label>Remarks</label><input type="text" id="eqRemarks"></div>
+        <input type="hidden" id="eqDocId"><div class="modal-actions"><button class="btn btn-outline" onclick="closeEquipmentModal()">Cancel</button><button class="btn btn-primary" onclick="saveEquipment()">💾 Save Equipment</button></div></div></div>
+    <!-- Equipment Detail Modal -->
+    <div class="modal-overlay" id="equipDetailModal"><div class="modal wide" id="equipDetailContent"></div></div>
+    <!-- Rental Modal -->
+    <div class="modal-overlay" id="rentalModal"><div class="modal wide"><h2 id="rentalModalTitle">New Rental</h2>
+        <div class="form-row form-row-3"><div class="form-group"><label>Equipment *</label><select id="rEquipSelect" onchange="onRentalEquipChange()"><option value="">-- Select Equipment --</option></select></div><div class="form-group"><label>Quantity *</label><input type="number" id="rQuantity" min="1" value="1" onchange="calcRentalAmount()"></div><div class="form-group"><label>Rent Type</label><select id="rRentType" onchange="calcRentalAmount()"><option>Daily</option><option>Weekly</option><option>Monthly</option><option>Custom</option></select></div></div>
+        <div class="form-row form-row-3"><div class="form-group"><label>Rent Amount (₹)</label><input type="number" id="rRentAmount" onchange="calcRentalAmount()"></div><div class="form-group"><label>Security Deposit (₹)</label><input type="number" id="rDeposit" readonly></div><div class="form-group"><label>Advance Paid (₹)</label><input type="number" id="rAdvance" min="0" value="0" onchange="calcRentalAmount()"></div></div>
+        <h4 style="margin:7px 0 5px;color:var(--primary);font-size:.8rem;font-weight:700;">Customer Details</h4>
+        <div class="form-row form-row-3"><div class="form-group"><label>Customer Name *</label><input type="text" id="rCustomerName"></div><div class="form-group"><label>Phone Number *</label><input type="text" id="rPhone"></div><div class="form-group"><label>Alternate Number</label><input type="text" id="rAltPhone"></div></div>
+        <div class="form-row form-row-3"><div class="form-group"><label>Address</label><input type="text" id="rAddress"></div><div class="form-group"><label>ID Proof Type</label><select id="rIdType"><option>Aadhaar</option><option>Voter ID</option><option>Driving License</option><option>Passport</option><option>Other</option></select></div><div class="form-group"><label>ID Proof Number</label><input type="text" id="rIdNumber"></div></div>
+        <h4 style="margin:7px 0 5px;color:var(--primary);font-size:.8rem;font-weight:700;">Rental Period & Delivery</h4>
+        <div class="form-row form-row-3"><div class="form-group"><label>Start Date *</label><input type="date" id="rStartDate" onchange="calcRentalAmount()"></div><div class="form-group"><label>Expected Return Date</label><input type="date" id="rExpectedReturn" onchange="calcRentalAmount()"></div><div class="form-group"><label>Assigned Staff</label><select id="rStaffSelect"><option value="">-- Optional --</option></select></div></div>
+        <div class="form-row form-row-4"><div class="form-group"><label>Delivery Required</label><select id="rDeliveryRequired"><option>No</option><option>Yes</option></select></div><div class="form-group"><label>Pickup Required</label><select id="rPickupRequired"><option>No</option><option>Yes</option></select></div><div class="form-group"><label>Delivery Charge (₹)</label><input type="number" id="rDeliveryCharge" min="0" value="0"></div><div class="form-group"><label>Pickup Charge (₹)</label><input type="number" id="rPickupCharge" min="0" value="0"></div></div>
+        <div class="form-group"><label>Delivery Address</label><input type="text" id="rDeliveryAddress"></div>
+        <div class="form-row form-row-3"><div class="form-group"><label>Payment Status</label><select id="rPaymentStatus"><option>Pending</option><option>Partially Paid</option><option>Paid</option></select></div><div class="form-group"><label>Rental Status</label><select id="rRentalStatus"><option>Booked</option><option>Active</option></select></div><div class="form-group"><label>Remarks</label><input type="text" id="rRemarks"></div></div>
+        <div style="background:#fafbfc;border-radius:var(--radius-sm);padding:10px 14px;margin-top:8px;font-size:.75rem;">
+            <strong>Pending Amount:</strong> ₹<span id="rPendingDisplay">0</span> &nbsp;|&nbsp;
+            <strong>Available Stock:</strong> <span id="rAvailStockDisplay">-</span>
+        </div>
+        <input type="hidden" id="rDocId"><input type="hidden" id="rEquipId"><div class="modal-actions"><button class="btn btn-outline" onclick="closeRentalModal()">Cancel</button><button class="btn btn-primary" onclick="saveRental()">💾 Save Rental</button></div></div></div>
+    <!-- Return Modal -->
+    <div class="modal-overlay" id="returnModal"><div class="modal"><h2>Return Equipment</h2>
+        <div class="form-row form-row-3"><div class="form-group"><label>Actual Return Date *</label><input type="date" id="retActualDate"></div><div class="form-group"><label>Condition</label><select id="retCondition" onchange="calcReturnCharges()"><option>Good</option><option>Minor Damage</option><option>Major Damage</option><option>Lost</option></select></div><div class="form-group"><label>Late Return Charges (₹)</label><input type="number" id="retLateCharges" min="0" value="0" onchange="calcReturnCharges()"></div></div>
+        <div class="form-row form-row-3"><div class="form-group"><label>Damage Charges (₹)</label><input type="number" id="retDamageCharges" min="0" value="0" onchange="calcReturnCharges()"></div><div class="form-group"><label>Refund Deposit (₹)</label><input type="number" id="retRefundDeposit" min="0" value="0"></div><div class="form-group"><label>Additional Payment (₹)</label><input type="number" id="retAdditional" min="0" value="0" onchange="calcReturnCharges()"></div></div>
+        <div class="form-group"><label>Remarks</label><input type="text" id="retRemarks"></div>
+        <div style="background:#fafbfc;border-radius:var(--radius-sm);padding:10px 14px;margin-top:8px;font-size:.75rem;">
+            <strong>Total Pending:</strong> ₹<span id="retTotalPending">0</span> &nbsp;|&nbsp;
+            <strong>Deposit:</strong> ₹<span id="retDepositVal">0</span> &nbsp;|&nbsp;
+            <strong>Net Refund:</strong> ₹<span id="retNetRefund">0</span>
+        </div>
+        <input type="hidden" id="retDocId"><input type="hidden" id="retEquipId"><input type="hidden" id="retQuantity"><input type="hidden" id="retOrigDeposit"><div class="modal-actions"><button class="btn btn-outline" onclick="closeReturnModal()">Cancel</button><button class="btn btn-success" onclick="confirmReturn()">✅ Mark Returned</button></div></div></div>
+    <!-- Payment Modal -->
+    <div class="modal-overlay" id="paymentModal"><div class="modal"><h2>Receive Payment</h2>
+        <div class="form-row form-row-3"><div class="form-group"><label>Amount Received (₹) *</label><input type="number" id="payAmount" min="0"></div><div class="form-group"><label>Payment Method</label><select id="payMethod"><option>Cash</option><option>UPI</option><option>Bank Transfer</option><option>Cheque</option><option>Other</option></select></div><div class="form-group"><label>Payment Date</label><input type="date" id="payDate"></div></div>
+        <div class="form-group"><label>Remarks</label><input type="text" id="payRemarks"></div>
+        <div style="background:#fafbfc;border-radius:var(--radius-sm);padding:10px 14px;margin-top:8px;font-size:.75rem;">
+            <strong>Total Rent:</strong> ₹<span id="payTotalRent">0</span> &nbsp;|&nbsp;
+            <strong>Already Paid:</strong> ₹<span id="payAlreadyPaid">0</span> &nbsp;|&nbsp;
+            <strong>Pending:</strong> ₹<span id="payPending">0</span>
+        </div>
+        <input type="hidden" id="payDocId"><div class="modal-actions"><button class="btn btn-outline" onclick="closePaymentModal()">Cancel</button><button class="btn btn-gold" onclick="confirmPayment()">💰 Record Payment</button></div></div></div>
     <script>
         (function() {
             const firebaseConfig = {
@@ -346,9 +1348,13 @@
             let allStaff = [];
             let allClients = [];
             let allDecls = [];
+            let allEquipment = [];
+            let allRentals = [];
             let currentDeclId = null;
             let isMalayalam = false;
-            let appSettings = { officeAddress: 'Chullikkara – Kuttikkol Road, Chullikkara, Kerala – 671532, India', phone1: '9497321453', phone2: '9961921453', email: 'kalopsia0404@gmail.com' };
+            let rentalTabMode = 'equipment';
+            let appSettings = { officeAddress: 'Chullikkara – Kuttikkol Road, Chullikkara, Kerala – 671532, India', phone1: '9497321453',
+                phone2: '9961921453', email: 'kalopsia0404@gmail.com' };
 
             const mlTranslations = {
                 docTitle: 'സേവന വിന്യാസ പ്രഖ്യാപനവും കരാറും',
@@ -415,6 +1421,10 @@
                     allClients = clientSnap.docs.map(d => ({ id: d.id, ...d.data() }));
                     const declSnap = await db.collection('declarations').get();
                     allDecls = declSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+                    const equipSnap = await db.collection('equipment').get();
+                    allEquipment = equipSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+                    const rentalSnap = await db.collection('rentalTransactions').get();
+                    allRentals = rentalSnap.docs.map(d => ({ id: d.id, ...d.data() }));
                     const settingsDoc = await db.collection('settings').doc('main').get();
                     if (settingsDoc.exists) appSettings = { ...appSettings, ...settingsDoc.data() };
                 } catch (e) {
@@ -431,6 +1441,9 @@
                 populateDeclDropdowns();
                 loadDashboardData();
                 updateDeclPreview();
+                renderEquipmentGrid();
+                renderRentalTable();
+                populateRentalDropdowns();
             }
 
             async function initApp() {
@@ -449,14 +1462,18 @@
                 d.className = 'toast ' + t;
                 d.textContent = m;
                 r.appendChild(d);
-                setTimeout(() => { d.style.opacity = '0'; d.style.transition = 'opacity .3s'; setTimeout(() => d.remove(), 300); }, 3200);
+                setTimeout(() => { d.style.opacity = '0';
+                    d.style.transition = 'opacity .3s';
+                    setTimeout(() => d.remove(), 300); }, 3200);
             }
 
             function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
 
             function navigate(view) {
                 document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-                const map = { dashboard: 'page-dashboard', staff: 'page-staff', clients: 'page-clients', declaration: 'page-declaration', history: 'page-history', settings: 'page-settings' };
+                const map = { dashboard: 'page-dashboard', staff: 'page-staff', clients: 'page-clients',
+                    declaration: 'page-declaration', history: 'page-history', rental: 'page-rental',
+                    settings: 'page-settings' };
                 const t = map[view];
                 if (t) { const el = document.getElementById(t); if (el) el.classList.add('active'); }
                 document.querySelectorAll('.sidebar-nav button').forEach(b => b.classList.remove('active'));
@@ -465,27 +1482,75 @@
                 if (view === 'dashboard') loadDashboardData();
                 if (view === 'staff') renderStaffTable();
                 if (view === 'clients') renderClientTable();
-                if (view === 'declaration') { populateDeclDropdowns(); updateDeclPreview(); }
+                if (view === 'declaration') { populateDeclDropdowns();
+                    updateDeclPreview(); }
                 if (view === 'history') renderHistory();
+                if (view === 'rental') { switchRentalTab('equipment');
+                    populateRentalDropdowns();
+                    renderEquipmentGrid();
+                    renderRentalTable(); }
                 if (view === 'settings') loadSettingsForm();
                 document.getElementById('sidebar').classList.remove('open');
                 document.getElementById('mainArea').scrollTop = 0;
             }
 
             function loadDashboardData() {
-                const t = allStaff.length, a = allStaff.filter(s => s.status === 'Available').length,
-                      as = allStaff.filter(s => s.status === 'Assigned').length,
-                      n = allStaff.filter(s => s.category === 'Nurse').length,
-                      c = allStaff.filter(s => s.category === 'Caretaker').length,
-                      m = allStaff.filter(s => s.category === 'Home Maid' || s.category === 'Maid + Caretaker').length,
-                      ac = allDecls.length, p = allDecls.filter(d => parseFloat(d.balance || 0) > 0).length;
+                const t = allStaff.length,
+                    a = allStaff.filter(s => s.status === 'Available').length,
+                    as = allStaff.filter(s => s.status === 'Assigned').length,
+                    n = allStaff.filter(s => s.category === 'Nurse').length,
+                    c = allStaff.filter(s => s.category === 'Caretaker').length,
+                    m = allStaff.filter(s => s.category === 'Home Maid' || s.category === 'Maid + Caretaker')
+                    .length,
+                    ac = allDecls.length,
+                    p = allDecls.filter(d => parseFloat(d.balance || 0) > 0).length;
+                const totalEquip = allEquipment.length;
+                const totalStock = allEquipment.reduce((sum, e) => sum + (parseInt(e.totalStock) || 0), 0);
+                const availItems = allEquipment.reduce((sum, e) => sum + (parseInt(e.availableStock) || 0), 0);
+                const rentedItems = allEquipment.reduce((sum, e) => sum + (parseInt(e.rentedStock) || 0), 0);
+                const todayStr = new Date().toISOString().split('T')[0];
+                const todayRentals = allRentals.filter(r => r.startDate === todayStr).length;
+                const todayReturns = allRentals.filter(r => r.actualReturn === todayStr).length;
+                const overdueRentals = allRentals.filter(r => (r.status === 'Active' || r.status === 'Overdue') && r
+                    .expectedReturn && r.expectedReturn < todayStr).length;
+                const pendingPayments = allRentals.filter(r => parseFloat(r.pending || 0) > 0 && r.status !== 'Cancelled')
+                    .length;
+                const now = new Date();
+                const monthlyRevenue = allRentals.reduce((sum, r) => {
+                    const pd = r.paymentHistory || [];
+                    return sum + pd.filter(ph => ph.date && ph.date.startsWith(now.getFullYear() + '-' + String(now
+                        .getMonth() + 1).padStart(2, '0'))).reduce((s, ph) => s + (parseFloat(ph.amount) || 0),
+                        0);
+                }, 0);
                 document.getElementById('dashboardStats').innerHTML = [
-                    {i:'👥',v:t,l:'Total Staff'},{i:'✅',v:a,l:'Available Staff'},{i:'📋',v:as,l:'Assigned Staff'},
-                    {i:'🏥',v:n,l:'Nurses'},{i:'🤝',v:c,l:'Caretakers'},{i:'🏠',v:m,l:'Maids'},
-                    {i:'📝',v:ac,l:'Active Services'},{i:'💰',v:p,l:'Pending Payments'}
-                ].map(s => `<div class="stat-card"><div class="stat-icon">${s.i}</div><div><div class="stat-value">${s.v}</div><div class="stat-label">${s.l}</div></div></div>`).join('');
-                const rec = [...allDecls].reverse().slice(0,8);
-                document.getElementById('recentDeclarations').innerHTML = rec.length ? rec.map(d => `<tr><td><strong>${d.declNo||'-'}</strong></td><td>${d.date||'-'}</td><td>${d.clientName||'-'}</td><td>${d.serviceType||'-'}</td><td>${d.staffName||'-'}</td><td>₹${d.monthlyCharge||'0'}</td></tr>`).join('') : '<tr><td colspan="6" class="empty-state">No declarations yet</td></tr>';
+                    { i: '👥', v: t, l: 'Total Staff' }, { i: '✅', v: a, l: 'Available Staff' }, { i: '📋', v: as,
+                        l: 'Assigned Staff' },
+                    { i: '🏥', v: n, l: 'Nurses' }, { i: '🤝', v: c, l: 'Caretakers' }, { i: '🏠', v: m, l: 'Maids' },
+                    { i: '📝', v: ac, l: 'Active Services' }, { i: '💰', v: p, l: 'Pending Payments' },
+                    { i: '📦', v: totalEquip, l: 'Total Equipment' }, { i: '📦', v: totalStock,
+                    l: 'Total Stock' },
+                    { i: '✅', v: availItems, l: 'Available Items' }, { i: '📋', v: rentedItems,
+                    l: 'Items On Rent' },
+                    { i: '🆕', v: todayRentals, l: "Today's Rentals" }, { i: '🔄', v: todayReturns,
+                        l: "Today's Returns" },
+                    { i: '⚠️', v: overdueRentals, l: 'Overdue Rentals' }, { i: '💳', v: pendingPayments,
+                        l: 'Pending Rental Payments' },
+                    { i: '📊', v: '₹' + monthlyRevenue.toLocaleString('en-IN'), l: 'Monthly Rental Revenue' }
+                ].map(s =>
+                    `<div class="stat-card"><div class="stat-icon">${s.i}</div><div><div class="stat-value">${s.v}</div><div class="stat-label">${s.l}</div></div></div>`
+                    ).join('');
+                const rec = [...allDecls].reverse().slice(0, 8);
+                document.getElementById('recentDeclarations').innerHTML = rec.length ? rec.map(d =>
+                    `<tr><td><strong>${d.declNo||'-'}</strong></td><td>${d.date||'-'}</td><td>${d.clientName||'-'}</td><td>${d.serviceType||'-'}</td><td>${d.staffName||'-'}</td><td>₹${d.monthlyCharge||'0'}</td></tr>`
+                    ).join('') :
+                    '<tr><td colspan="6" class="empty-state">No declarations yet</td></tr>';
+                const rrec = [...allRentals].reverse().slice(0, 8);
+                document.getElementById('recentRentals').innerHTML = rrec.length ? rrec.map(r => {
+                    const sb = r.status === 'Active' ? 'badge-active' : r.status === 'Returned' ?
+                        'badge-returned' : r.status === 'Overdue' ? 'badge-overdue' : r.status ===
+                        'Booked' ? 'badge-booked' : 'badge-cancelled';
+                    return `<tr><td><strong>${r.rentalId||'-'}</strong></td><td>${r.startDate||'-'}</td><td>${r.customerName||'-'}</td><td>${r.equipmentName||'-'}</td><td>${r.quantity||'1'}</td><td><span class="badge ${sb}">${r.status||'?'}</span></td></tr>`;
+                }).join('') : '<tr><td colspan="6" class="empty-state">No rentals yet</td></tr>';
             }
 
             function renderStaffTable() {
@@ -493,13 +1558,15 @@
                 const fc = document.getElementById('staffFilterCategory')?.value || '';
                 const fs = document.getElementById('staffFilterStatus')?.value || '';
                 let f = allStaff;
-                if(s) f = f.filter(st => (st.name||'').toLowerCase().includes(s) || (st.mobile||'').includes(s) || (st.staffId||'').toLowerCase().includes(s));
-                if(fc) f = f.filter(st => st.category === fc);
-                if(fs) f = f.filter(st => st.status === fs);
+                if (s) f = f.filter(st => (st.name || '').toLowerCase().includes(s) || (st.mobile || '').includes(s) || (
+                    st.staffId || '').toLowerCase().includes(s));
+                if (fc) f = f.filter(st => st.category === fc);
+                if (fs) f = f.filter(st => st.status === fs);
                 const tb = document.getElementById('staffTableBody');
-                if(!f.length){ tb.innerHTML = '<tr><td colspan="6" class="empty-state">No staff found</td></tr>'; return; }
+                if (!f.length) { tb.innerHTML = '<tr><td colspan="6" class="empty-state">No staff found</td></tr>'; return; }
                 tb.innerHTML = f.map(st => {
-                    const bc = st.status === 'Available' ? 'badge-available' : st.status === 'Assigned' ? 'badge-assigned' : st.status === 'On Leave' ? 'badge-leave' : 'badge-inactive';
+                    const bc = st.status === 'Available' ? 'badge-available' : st.status === 'Assigned' ?
+                        'badge-assigned' : st.status === 'On Leave' ? 'badge-leave' : 'badge-inactive';
                     return `<tr><td><strong>${st.staffId||'-'}</strong></td><td>${st.name||'-'}</td><td>${st.category||'-'}</td><td>${st.mobile||'-'}</td><td><span class="badge ${bc}">${st.status||'?'}</span></td><td><button class="btn btn-xs btn-outline" onclick="editStaff('${st.id}')">✏️</button> <button class="btn btn-xs btn-danger" onclick="deleteStaff('${st.id}')">🗑️</button></td></tr>`;
                 }).join('');
             }
@@ -507,10 +1574,10 @@
 
             function openStaffModal(id = null) {
                 document.getElementById('staffModal').classList.add('open');
-                if(id){
+                if (id) {
                     document.getElementById('staffModalTitle').textContent = 'Edit Staff';
                     const st = allStaff.find(x => x.id === id);
-                    if(st){
+                    if (st) {
                         document.getElementById('sDocId').value = st.id;
                         document.getElementById('sStaffId').value = st.staffId || '';
                         document.getElementById('sName').value = st.name || '';
@@ -530,142 +1597,184 @@
                 } else {
                     document.getElementById('staffModalTitle').textContent = 'Add Staff';
                     document.getElementById('sDocId').value = '';
-                    document.getElementById('sStaffId').value = 'KAL-' + new Date().getFullYear() + '-' + String(allStaff.length+1).padStart(4,'0');
-                    ['sName','sMobile','sAltMobile','sAadhaar','sDOB','sAddress','sDistrict','sPIN','sSkills','sJoinDate'].forEach(idd => document.getElementById(idd).value = '');
+                    document.getElementById('sStaffId').value = 'KAL-' + new Date().getFullYear() + '-' + String(
+                        allStaff.length + 1).padStart(4, '0');
+                    ['sName', 'sMobile', 'sAltMobile', 'sAadhaar', 'sDOB', 'sAddress', 'sDistrict', 'sPIN', 'sSkills',
+                        'sJoinDate'
+                    ].forEach(idd => document.getElementById(idd).value = '');
                     document.getElementById('sGender').value = 'Male';
                     document.getElementById('sCategory').value = 'Nurse';
                     document.getElementById('sStatus').value = 'Available';
                 }
             }
             window.openStaffModal = openStaffModal;
-            window.closeStaffModal = function(){ document.getElementById('staffModal').classList.remove('open'); };
+            window.closeStaffModal = function() { document.getElementById('staffModal').classList.remove('open'); };
 
             async function saveStaff() {
                 const nm = document.getElementById('sName').value.trim();
                 const mb = document.getElementById('sMobile').value.trim();
-                if(!nm || !mb){ showToast('Name and Mobile required','error'); return; }
+                if (!nm || !mb) { showToast('Name and Mobile required', 'error'); return; }
                 const did = document.getElementById('sDocId').value;
                 const dv = document.getElementById('sDOB').value;
                 const sd = {
-                    staffId: document.getElementById('sStaffId').value.trim() || 'KAL-'+new Date().getFullYear()+'-'+String(allStaff.length+1).padStart(4,'0'),
-                    name: nm, gender: document.getElementById('sGender').value, mobile: mb,
+                    staffId: document.getElementById('sStaffId').value.trim() || 'KAL-' + new Date().getFullYear() +
+                        '-' + String(allStaff.length + 1).padStart(4, '0'),
+                    name: nm,
+                    gender: document.getElementById('sGender').value,
+                    mobile: mb,
                     altMobile: document.getElementById('sAltMobile').value.trim(),
-                    aadhaar: document.getElementById('sAadhaar').value.trim(), dob: dv,
-                    address: document.getElementById('sAddress').value.trim(), district: document.getElementById('sDistrict').value.trim(),
-                    pin: document.getElementById('sPIN').value.trim(), category: document.getElementById('sCategory').value,
-                    status: document.getElementById('sStatus').value, joinDate: document.getElementById('sJoinDate').value,
-                    skills: document.getElementById('sSkills').value.split(',').map(x=>x.trim()).filter(Boolean),
-                    age: dv ? Math.floor((new Date() - new Date(dv)) / (365.25*24*60*60*1000)) : ''
+                    aadhaar: document.getElementById('sAadhaar').value.trim(),
+                    dob: dv,
+                    address: document.getElementById('sAddress').value.trim(),
+                    district: document.getElementById('sDistrict').value.trim(),
+                    pin: document.getElementById('sPIN').value.trim(),
+                    category: document.getElementById('sCategory').value,
+                    status: document.getElementById('sStatus').value,
+                    joinDate: document.getElementById('sJoinDate').value,
+                    skills: document.getElementById('sSkills').value.split(',').map(x => x.trim()).filter(Boolean),
+                    age: dv ? Math.floor((new Date() - new Date(dv)) / (365.25 * 24 * 60 * 60 * 1000)) : ''
                 };
                 try {
-                    if(did && fbReady) { await db.collection('staff').doc(did).set(sd); }
-                    else if(fbReady) { await db.collection('staff').add(sd); }
-                    else { showToast('Firebase not available','error'); return; }
+                    if (did && fbReady) { await db.collection('staff').doc(did).set(sd); } else if (fbReady) { await db
+                            .collection('staff').add(sd); } else { showToast('Firebase not available', 'error');
+                        return; }
                     await loadFSData();
                     closeStaffModal();
-                    showToast('Staff saved','success');
-                } catch(e) { console.error(e); showToast('Save failed: '+e.message,'error'); }
+                    showToast('Staff saved', 'success');
+                } catch (e) { console.error(e);
+                    showToast('Save failed: ' + e.message, 'error'); }
             }
             window.saveStaff = saveStaff;
-            window.editStaff = function(id){ openStaffModal(id); };
-            window.deleteStaff = async function(id){
-                if(!confirm('Delete this staff member?')) return;
-                if(fbReady){ await db.collection('staff').doc(id).delete(); await loadFSData(); }
-                else { allStaff = allStaff.filter(s => s.id !== id); renderAll(); }
-                showToast('Staff deleted','info');
+            window.editStaff = function(id) { openStaffModal(id); };
+            window.deleteStaff = async function(id) {
+                if (!confirm('Delete this staff member?')) return;
+                if (fbReady) { await db.collection('staff').doc(id).delete();
+                    await loadFSData(); } else { allStaff = allStaff.filter(s => s.id !== id);
+                    renderAll(); }
+                showToast('Staff deleted', 'info');
             };
 
             function renderClientTable() {
                 const s = (document.getElementById('clientSearch')?.value || '').toLowerCase();
                 let f = allClients;
-                if(s) f = f.filter(c => (c.name||'').toLowerCase().includes(s) || (c.mobile||'').includes(s) || (c.district||'').toLowerCase().includes(s));
+                if (s) f = f.filter(c => (c.name || '').toLowerCase().includes(s) || (c.mobile || '').includes(s) || (c
+                    .district || '').toLowerCase().includes(s));
                 const tb = document.getElementById('clientTableBody');
-                if(!f.length){ tb.innerHTML = '<tr><td colspan="5" class="empty-state">No clients found</td></tr>'; return; }
-                tb.innerHTML = f.map(c => `<tr><td><strong>${c.name||'-'}</strong></td><td>${c.contactPerson||'-'}</td><td>${c.mobile||'-'}</td><td>${c.district||'-'}</td><td><button class="btn btn-xs btn-outline" onclick="editClient('${c.id}')">✏️</button> <button class="btn btn-xs btn-danger" onclick="deleteClient('${c.id}')">🗑️</button></td></tr>`).join('');
+                if (!f.length) { tb.innerHTML = '<tr><td colspan="5" class="empty-state">No clients found</td></tr>'; return; }
+                tb.innerHTML = f.map(c =>
+                    `<tr><td><strong>${c.name||'-'}</strong></td><td>${c.contactPerson||'-'}</td><td>${c.mobile||'-'}</td><td>${c.district||'-'}</td><td><button class="btn btn-xs btn-outline" onclick="editClient('${c.id}')">✏️</button> <button class="btn btn-xs btn-danger" onclick="deleteClient('${c.id}')">🗑️</button></td></tr>`
+                    ).join('');
             }
             window.renderClientTable = renderClientTable;
 
             function openClientModal(id = null) {
                 document.getElementById('clientModal').classList.add('open');
-                if(id){
+                if (id) {
                     document.getElementById('clientModalTitle').textContent = 'Edit Client';
                     const c = allClients.find(x => x.id === id);
-                    if(c){
-                        document.getElementById('cDocId').value = c.id; document.getElementById('cName').value = c.name || '';
-                        document.getElementById('cContact').value = c.contactPerson || ''; document.getElementById('cMobile').value = c.mobile || '';
-                        document.getElementById('cAlt').value = c.altMobile || ''; document.getElementById('cEmail').value = c.email || '';
-                        document.getElementById('cHouseName').value = c.houseName || ''; document.getElementById('cAddress').value = c.address || '';
-                        document.getElementById('cLandmark').value = c.landmark || ''; document.getElementById('cDistrict').value = c.district || '';
+                    if (c) {
+                        document.getElementById('cDocId').value = c.id;
+                        document.getElementById('cName').value = c.name || '';
+                        document.getElementById('cContact').value = c.contactPerson || '';
+                        document.getElementById('cMobile').value = c.mobile || '';
+                        document.getElementById('cAlt').value = c.altMobile || '';
+                        document.getElementById('cEmail').value = c.email || '';
+                        document.getElementById('cHouseName').value = c.houseName || '';
+                        document.getElementById('cAddress').value = c.address || '';
+                        document.getElementById('cLandmark').value = c.landmark || '';
+                        document.getElementById('cDistrict').value = c.district || '';
                         document.getElementById('cPIN').value = c.pin || '';
                     }
                 } else {
-                    document.getElementById('clientModalTitle').textContent = 'Add Client'; document.getElementById('cDocId').value = '';
-                    ['cName','cContact','cMobile','cAlt','cEmail','cHouseName','cAddress','cLandmark','cDistrict','cPIN'].forEach(idd => document.getElementById(idd).value = '');
+                    document.getElementById('clientModalTitle').textContent = 'Add Client';
+                    document.getElementById('cDocId').value = '';
+                    ['cName', 'cContact', 'cMobile', 'cAlt', 'cEmail', 'cHouseName', 'cAddress', 'cLandmark', 'cDistrict',
+                        'cPIN'
+                    ].forEach(idd => document.getElementById(idd).value = '');
                 }
             }
             window.openClientModal = openClientModal;
-            window.closeClientModal = function(){ document.getElementById('clientModal').classList.remove('open'); };
+            window.closeClientModal = function() { document.getElementById('clientModal').classList.remove('open'); };
 
             async function saveClient() {
                 const nm = document.getElementById('cName').value.trim();
                 const mb = document.getElementById('cMobile').value.trim();
-                if(!nm || !mb){ showToast('Name and Mobile required','error'); return; }
+                if (!nm || !mb) { showToast('Name and Mobile required', 'error'); return; }
                 const did = document.getElementById('cDocId').value;
                 const cd = {
-                    name: nm, contactPerson: document.getElementById('cContact').value.trim(), mobile: mb,
-                    altMobile: document.getElementById('cAlt').value.trim(), email: document.getElementById('cEmail').value.trim(),
-                    houseName: document.getElementById('cHouseName').value.trim(), address: document.getElementById('cAddress').value.trim(),
-                    landmark: document.getElementById('cLandmark').value.trim(), district: document.getElementById('cDistrict').value.trim(),
+                    name: nm,
+                    contactPerson: document.getElementById('cContact').value.trim(),
+                    mobile: mb,
+                    altMobile: document.getElementById('cAlt').value.trim(),
+                    email: document.getElementById('cEmail').value.trim(),
+                    houseName: document.getElementById('cHouseName').value.trim(),
+                    address: document.getElementById('cAddress').value.trim(),
+                    landmark: document.getElementById('cLandmark').value.trim(),
+                    district: document.getElementById('cDistrict').value.trim(),
                     pin: document.getElementById('cPIN').value.trim()
                 };
                 try {
-                    if(did && fbReady) { await db.collection('clients').doc(did).set(cd); }
-                    else if(fbReady) { await db.collection('clients').add(cd); }
-                    else { showToast('Firebase not available','error'); return; }
+                    if (did && fbReady) { await db.collection('clients').doc(did).set(cd); } else if (fbReady) { await db
+                            .collection('clients').add(cd); } else { showToast('Firebase not available', 'error');
+                        return; }
                     await loadFSData();
                     closeClientModal();
-                    showToast('Client saved','success');
-                } catch(e) { console.error(e); showToast('Save failed: '+e.message,'error'); }
+                    showToast('Client saved', 'success');
+                } catch (e) { console.error(e);
+                    showToast('Save failed: ' + e.message, 'error'); }
             }
             window.saveClient = saveClient;
-            window.editClient = function(id){ openClientModal(id); };
-            window.deleteClient = async function(id){
-                if(!confirm('Delete this client?')) return;
-                if(fbReady){ await db.collection('clients').doc(id).delete(); await loadFSData(); }
-                else { allClients = allClients.filter(c => c.id !== id); renderAll(); }
-                showToast('Client deleted','info');
+            window.editClient = function(id) { openClientModal(id); };
+            window.deleteClient = async function(id) {
+                if (!confirm('Delete this client?')) return;
+                if (fbReady) { await db.collection('clients').doc(id).delete();
+                    await loadFSData(); } else { allClients = allClients.filter(c => c.id !== id);
+                    renderAll(); }
+                showToast('Client deleted', 'info');
             };
 
             function populateDeclDropdowns() {
                 const cs = document.getElementById('declClientSearch');
-                cs.innerHTML = '<option value="">-- Select or type to search --</option>' + allClients.map(c => `<option value="${c.id}">${c.name} - ${c.mobile} (${c.district||''})</option>`).join('');
+                cs.innerHTML = '<option value="">-- Select or type to search --</option>' + allClients.map(c =>
+                    `<option value="${c.id}">${c.name} - ${c.mobile} (${c.district||''})</option>`).join('');
                 const ss = document.getElementById('declStaffSelect');
-                ss.innerHTML = '<option value="">-- Click to choose service person --</option>' + allStaff.filter(s => s.status === 'Available' || s.status === 'Assigned').map(s => `<option value="${s.id}">${s.name} - ${s.staffId} (${s.category})</option>`).join('');
+                ss.innerHTML = '<option value="">-- Click to choose service person --</option>' + allStaff.filter(s => s
+                    .status === 'Available' || s.status === 'Assigned').map(s =>
+                    `<option value="${s.id}">${s.name} - ${s.staffId} (${s.category})</option>`).join('');
             }
 
             function autofillClient() {
                 const id = document.getElementById('declClientSearch').value;
-                if(!id) return;
+                if (!id) return;
                 const c = allClients.find(x => x.id === id);
-                if(c){
-                    document.getElementById('declClientName').value = c.name || ''; document.getElementById('declClientMobile').value = c.mobile || '';
-                    document.getElementById('declClientAlt').value = c.altMobile || ''; document.getElementById('declClientEmail').value = c.email || '';
-                    document.getElementById('declHouseName').value = c.houseName || ''; document.getElementById('declAddress').value = c.address || '';
-                    document.getElementById('declLandmark').value = c.landmark || ''; document.getElementById('declDistrict').value = c.district || '';
-                    document.getElementById('declPIN').value = c.pin || ''; updateDeclPreview();
+                if (c) {
+                    document.getElementById('declClientName').value = c.name || '';
+                    document.getElementById('declClientMobile').value = c.mobile || '';
+                    document.getElementById('declClientAlt').value = c.altMobile || '';
+                    document.getElementById('declClientEmail').value = c.email || '';
+                    document.getElementById('declHouseName').value = c.houseName || '';
+                    document.getElementById('declAddress').value = c.address || '';
+                    document.getElementById('declLandmark').value = c.landmark || '';
+                    document.getElementById('declDistrict').value = c.district || '';
+                    document.getElementById('declPIN').value = c.pin || '';
+                    updateDeclPreview();
                 }
             }
             window.autofillClient = autofillClient;
 
             function autofillStaff() {
                 const id = document.getElementById('declStaffSelect').value;
-                if(!id){ ['declStaffName','declStaffID','declStaffGender','declStaffMobile','declStaffAadhaar','declStaffCategory'].forEach(f => document.getElementById(f).value = ''); }
-                else {
+                if (!id) { ['declStaffName', 'declStaffID', 'declStaffGender', 'declStaffMobile', 'declStaffAadhaar',
+                        'declStaffCategory'
+                    ].forEach(f => document.getElementById(f).value = ''); } else {
                     const s = allStaff.find(x => x.id === id);
-                    if(s){
-                        document.getElementById('declStaffName').value = s.name || ''; document.getElementById('declStaffID').value = s.staffId || '';
-                        document.getElementById('declStaffGender').value = s.gender || ''; document.getElementById('declStaffMobile').value = s.mobile || '';
-                        document.getElementById('declStaffAadhaar').value = s.aadhaar || ''; document.getElementById('declStaffCategory').value = s.category || '';
+                    if (s) {
+                        document.getElementById('declStaffName').value = s.name || '';
+                        document.getElementById('declStaffID').value = s.staffId || '';
+                        document.getElementById('declStaffGender').value = s.gender || '';
+                        document.getElementById('declStaffMobile').value = s.mobile || '';
+                        document.getElementById('declStaffAadhaar').value = s.aadhaar || '';
+                        document.getElementById('declStaffCategory').value = s.category || '';
                     }
                 }
                 updateDeclPreview();
@@ -674,93 +1783,164 @@
 
             function updateDeclPreview() {
                 const g = id => document.getElementById(id)?.value || '-';
-                document.getElementById('prevDeclNo').textContent = currentDeclId ? 'KAL-DECL-'+currentDeclId.slice(-6).toUpperCase() : '(Auto)';
-                document.getElementById('prevDate').textContent = new Date().toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'});
-                document.getElementById('prevClientName').textContent = g('declClientName'); document.getElementById('prevClientMobile').textContent = g('declClientMobile');
-                document.getElementById('prevClientAlt').textContent = g('declClientAlt'); document.getElementById('prevClientEmail').textContent = g('declClientEmail');
-                document.getElementById('prevHouseName').textContent = g('declHouseName'); document.getElementById('prevAddress').textContent = g('declAddress');
-                document.getElementById('prevLandmark').textContent = g('declLandmark'); document.getElementById('prevDistrictPIN').textContent = g('declDistrict') + ' - ' + g('declPIN');
-                document.getElementById('prevRecipientName').textContent = g('declRecipientName'); document.getElementById('prevRecipientAge').textContent = g('declRecipientAge');
-                document.getElementById('prevRecipientGender').textContent = g('declRecipientGender'); document.getElementById('prevMedicalNotes').textContent = g('declMedicalNotes');
-                document.getElementById('prevServiceType').textContent = g('declServiceType'); document.getElementById('prevDutyType').textContent = g('declDutyType');
-                document.getElementById('prevRoleAssigned').textContent = g('declRoleAssigned'); document.getElementById('prevStartDate').textContent = g('declStartDate');
-                document.getElementById('prevDuration').textContent = g('declDuration'); document.getElementById('prevShiftTiming').textContent = g('declShiftTiming');
-                const mc = g('declMonthlyCharge'); document.getElementById('prevMonthlyCharge').textContent = mc !== '-' ? '₹'+mc : '-';
-                const ap = g('declAdvancePaid'); document.getElementById('prevAdvancePaid').textContent = ap !== '-' ? '₹'+ap : '-';
-                const bal = g('declBalance'); document.getElementById('prevBalance').textContent = bal !== '-' ? '₹'+bal : '-';
-                document.getElementById('prevStaffName').textContent = g('declStaffName'); document.getElementById('prevStaffGender').textContent = g('declStaffGender');
-                document.getElementById('prevStaffID').textContent = g('declStaffID'); document.getElementById('prevDeploymentDate').textContent = g('declStartDate');
+                document.getElementById('prevDeclNo').textContent = currentDeclId ? 'KAL-DECL-' + currentDeclId.slice(-6)
+                    .toUpperCase() : '(Auto)';
+                document.getElementById('prevDate').textContent = new Date().toLocaleDateString('en-IN', { day: 'numeric',
+                    month: 'long', year: 'numeric' });
+                document.getElementById('prevClientName').textContent = g('declClientName');
+                document.getElementById('prevClientMobile').textContent = g('declClientMobile');
+                document.getElementById('prevClientAlt').textContent = g('declClientAlt');
+                document.getElementById('prevClientEmail').textContent = g('declClientEmail');
+                document.getElementById('prevHouseName').textContent = g('declHouseName');
+                document.getElementById('prevAddress').textContent = g('declAddress');
+                document.getElementById('prevLandmark').textContent = g('declLandmark');
+                document.getElementById('prevDistrictPIN').textContent = g('declDistrict') + ' - ' + g('declPIN');
+                document.getElementById('prevRecipientName').textContent = g('declRecipientName');
+                document.getElementById('prevRecipientAge').textContent = g('declRecipientAge');
+                document.getElementById('prevRecipientGender').textContent = g('declRecipientGender');
+                document.getElementById('prevMedicalNotes').textContent = g('declMedicalNotes');
+                document.getElementById('prevServiceType').textContent = g('declServiceType');
+                document.getElementById('prevDutyType').textContent = g('declDutyType');
+                document.getElementById('prevRoleAssigned').textContent = g('declRoleAssigned');
+                document.getElementById('prevStartDate').textContent = g('declStartDate');
+                document.getElementById('prevDuration').textContent = g('declDuration');
+                document.getElementById('prevShiftTiming').textContent = g('declShiftTiming');
+                const mc = g('declMonthlyCharge');
+                document.getElementById('prevMonthlyCharge').textContent = mc !== '-' ? '₹' + mc : '-';
+                const ap = g('declAdvancePaid');
+                document.getElementById('prevAdvancePaid').textContent = ap !== '-' ? '₹' + ap : '-';
+                const bal = g('declBalance');
+                document.getElementById('prevBalance').textContent = bal !== '-' ? '₹' + bal : '-';
+                document.getElementById('prevStaffName').textContent = g('declStaffName');
+                document.getElementById('prevStaffGender').textContent = g('declStaffGender');
+                document.getElementById('prevStaffID').textContent = g('declStaffID');
+                document.getElementById('prevDeploymentDate').textContent = g('declStartDate');
                 updatePreviewSigs();
             }
             window.updateDeclPreview = updateDeclPreview;
 
             function updatePreviewSigs() {
-                const cC = document.getElementById('sigClient'), sC = document.getElementById('sigStaff');
-                const pC = document.getElementById('prevSigClient'), pS = document.getElementById('prevSigStaff');
-                if(cC && pC){ const du = cC.toDataURL(); pC.innerHTML = du && !cC.dataset.empty ? `<img src="${du}" alt="Client Signature">` : ''; }
-                if(sC && pS){ const du = sC.toDataURL(); pS.innerHTML = du && !sC.dataset.empty ? `<img src="${du}" alt="Staff Signature">` : ''; }
+                const cC = document.getElementById('sigClient'),
+                    sC = document.getElementById('sigStaff');
+                const pC = document.getElementById('prevSigClient'),
+                    pS = document.getElementById('prevSigStaff');
+                if (cC && pC) { const du = cC.toDataURL();
+                    pC.innerHTML = du && !cC.dataset.empty ? `<img src="${du}" alt="Client Signature">` : ''; }
+                if (sC && pS) { const du = sC.toDataURL();
+                    pS.innerHTML = du && !sC.dataset.empty ? `<img src="${du}" alt="Staff Signature">` : ''; }
             }
 
             function initSigPads() {
-                ['sigClient','sigStaff'].forEach(cid => {
-                    const cv = document.getElementById(cid); if(!cv) return;
-                    cv.dataset.empty = 'true'; const ctx = cv.getContext('2d');
-                    ctx.fillStyle = '#fff'; ctx.fillRect(0,0,cv.width,cv.height);
+                ['sigClient', 'sigStaff'].forEach(cid => {
+                    const cv = document.getElementById(cid);
+                    if (!cv) return;
+                    cv.dataset.empty = 'true';
+                    const ctx = cv.getContext('2d');
+                    ctx.fillStyle = '#fff';
+                    ctx.fillRect(0, 0, cv.width, cv.height);
                     let drawing = false;
-                    const sd = (x,y)=>{ drawing=true; cv.dataset.empty='false'; ctx.beginPath(); ctx.moveTo(x,y); };
-                    const md = (x,y)=>{ if(!drawing) return; ctx.lineWidth=2; ctx.strokeStyle='#000'; ctx.lineCap='round'; ctx.lineTo(x,y); ctx.stroke(); };
-                    const ed = ()=>{ drawing=false; updateDeclPreview(); };
-                    cv.addEventListener('mousedown', e=> sd(e.offsetX,e.offsetY));
-                    cv.addEventListener('mousemove', e=> md(e.offsetX,e.offsetY));
-                    cv.addEventListener('mouseup', ed); cv.addEventListener('mouseleave', ed);
-                    cv.addEventListener('touchstart', e=>{ e.preventDefault(); const r=cv.getBoundingClientRect(); sd((e.touches[0].clientX-r.left)*(cv.width/r.width), (e.touches[0].clientY-r.top)*(cv.height/r.height)); });
-                    cv.addEventListener('touchmove', e=>{ e.preventDefault(); if(!drawing) return; const r=cv.getBoundingClientRect(); md((e.touches[0].clientX-r.left)*(cv.width/r.width), (e.touches[0].clientY-r.top)*(cv.height/r.height)); });
+                    const sd = (x, y) => { drawing = true;
+                        cv.dataset.empty = 'false';
+                        ctx.beginPath();
+                        ctx.moveTo(x, y); };
+                    const md = (x, y) => { if (!drawing) return;
+                        ctx.lineWidth = 2;
+                        ctx.strokeStyle = '#000';
+                        ctx.lineCap = 'round';
+                        ctx.lineTo(x, y);
+                        ctx.stroke(); };
+                    const ed = () => { drawing = false;
+                        updateDeclPreview(); };
+                    cv.addEventListener('mousedown', e => sd(e.offsetX, e.offsetY));
+                    cv.addEventListener('mousemove', e => md(e.offsetX, e.offsetY));
+                    cv.addEventListener('mouseup', ed);
+                    cv.addEventListener('mouseleave', ed);
+                    cv.addEventListener('touchstart', e => { e.preventDefault(); const r = cv.getBoundingClientRect();
+                        sd((e.touches[0].clientX - r.left) * (cv.width / r.width), (e.touches[0].clientY - r.top) * (
+                            cv.height / r.height)); });
+                    cv.addEventListener('touchmove', e => { e.preventDefault(); if (!drawing) return; const r = cv
+                            .getBoundingClientRect();
+                        md((e.touches[0].clientX - r.left) * (cv.width / r.width), (e.touches[0].clientY - r.top) * (
+                            cv.height / r.height)); });
                     cv.addEventListener('touchend', ed);
                 });
             }
 
             function clearSignature(cid) {
-                const cv = document.getElementById(cid); if(!cv) return;
-                cv.dataset.empty = 'true'; const ctx = cv.getContext('2d');
-                ctx.fillStyle = '#fff'; ctx.fillRect(0,0,cv.width,cv.height); updateDeclPreview();
+                const cv = document.getElementById(cid);
+                if (!cv) return;
+                cv.dataset.empty = 'true';
+                const ctx = cv.getContext('2d');
+                ctx.fillStyle = '#fff';
+                ctx.fillRect(0, 0, cv.width, cv.height);
+                updateDeclPreview();
             }
             window.clearSignature = clearSignature;
 
             function resetDeclaration() {
-                ['declClientSearch','declClientName','declClientMobile','declClientAlt','declClientEmail','declHouseName','declAddress','declLandmark','declDistrict','declPIN','declRecipientName','declRecipientAge','declMedicalNotes','declRoleAssigned','declStartDate','declDuration','declShiftTiming','declMonthlyCharge','declAdvancePaid','declBalance','declStaffSelect','declStaffName','declStaffID','declStaffGender','declStaffMobile','declStaffAadhaar','declStaffCategory'].forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
-                document.getElementById('declRecipientGender').value = 'Male'; document.getElementById('declServiceType').value = 'Home Nurse';
-                document.getElementById('declDutyType').value = 'Day'; currentDeclId = null;
-                clearSignature('sigClient'); clearSignature('sigStaff'); updateDeclPreview(); showToast('Form reset','info');
+                ['declClientSearch', 'declClientName', 'declClientMobile', 'declClientAlt', 'declClientEmail',
+                    'declHouseName', 'declAddress', 'declLandmark', 'declDistrict', 'declPIN', 'declRecipientName',
+                    'declRecipientAge', 'declMedicalNotes', 'declRoleAssigned', 'declStartDate', 'declDuration',
+                    'declShiftTiming', 'declMonthlyCharge', 'declAdvancePaid', 'declBalance', 'declStaffSelect',
+                    'declStaffName', 'declStaffID', 'declStaffGender', 'declStaffMobile', 'declStaffAadhaar',
+                    'declStaffCategory'
+                ].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+                document.getElementById('declRecipientGender').value = 'Male';
+                document.getElementById('declServiceType').value = 'Home Nurse';
+                document.getElementById('declDutyType').value = 'Day';
+                currentDeclId = null;
+                clearSignature('sigClient');
+                clearSignature('sigStaff');
+                updateDeclPreview();
+                showToast('Form reset', 'info');
             }
             window.resetDeclaration = resetDeclaration;
 
             async function saveDeclaration() {
                 const dd = {
-                    declNo: 'KAL-DECL-'+String(allDecls.length+1).padStart(5,'0'), date: new Date().toISOString().split('T')[0],
-                    clientName: document.getElementById('declClientName').value, clientMobile: document.getElementById('declClientMobile').value,
-                    clientAlt: document.getElementById('declClientAlt').value, clientEmail: document.getElementById('declClientEmail').value,
-                    houseName: document.getElementById('declHouseName').value, address: document.getElementById('declAddress').value,
-                    landmark: document.getElementById('declLandmark').value, district: document.getElementById('declDistrict').value,
-                    pin: document.getElementById('declPIN').value, recipientName: document.getElementById('declRecipientName').value,
-                    recipientAge: document.getElementById('declRecipientAge').value, recipientGender: document.getElementById('declRecipientGender').value,
-                    medicalNotes: document.getElementById('declMedicalNotes').value, serviceType: document.getElementById('declServiceType').value,
-                    dutyType: document.getElementById('declDutyType').value, roleAssigned: document.getElementById('declRoleAssigned').value,
-                    startDate: document.getElementById('declStartDate').value, duration: document.getElementById('declDuration').value,
-                    shiftTiming: document.getElementById('declShiftTiming').value, monthlyCharge: document.getElementById('declMonthlyCharge').value,
-                    advancePaid: document.getElementById('declAdvancePaid').value, balance: document.getElementById('declBalance').value,
-                    staffName: document.getElementById('declStaffName').value, staffID: document.getElementById('declStaffID').value,
-                    staffGender: document.getElementById('declStaffGender').value, staffMobile: document.getElementById('declStaffMobile').value,
-                    staffAadhaar: document.getElementById('declStaffAadhaar').value, staffCategory: document.getElementById('declStaffCategory').value,
-                    sigClient: document.getElementById('sigClient').toDataURL(), sigStaff: document.getElementById('sigStaff').toDataURL(),
+                    declNo: 'KAL-DECL-' + String(allDecls.length + 1).padStart(5, '0'),
+                    date: new Date().toISOString().split('T')[0],
+                    clientName: document.getElementById('declClientName').value,
+                    clientMobile: document.getElementById('declClientMobile').value,
+                    clientAlt: document.getElementById('declClientAlt').value,
+                    clientEmail: document.getElementById('declClientEmail').value,
+                    houseName: document.getElementById('declHouseName').value,
+                    address: document.getElementById('declAddress').value,
+                    landmark: document.getElementById('declLandmark').value,
+                    district: document.getElementById('declDistrict').value,
+                    pin: document.getElementById('declPIN').value,
+                    recipientName: document.getElementById('declRecipientName').value,
+                    recipientAge: document.getElementById('declRecipientAge').value,
+                    recipientGender: document.getElementById('declRecipientGender').value,
+                    medicalNotes: document.getElementById('declMedicalNotes').value,
+                    serviceType: document.getElementById('declServiceType').value,
+                    dutyType: document.getElementById('declDutyType').value,
+                    roleAssigned: document.getElementById('declRoleAssigned').value,
+                    startDate: document.getElementById('declStartDate').value,
+                    duration: document.getElementById('declDuration').value,
+                    shiftTiming: document.getElementById('declShiftTiming').value,
+                    monthlyCharge: document.getElementById('declMonthlyCharge').value,
+                    advancePaid: document.getElementById('declAdvancePaid').value,
+                    balance: document.getElementById('declBalance').value,
+                    staffName: document.getElementById('declStaffName').value,
+                    staffID: document.getElementById('declStaffID').value,
+                    staffGender: document.getElementById('declStaffGender').value,
+                    staffMobile: document.getElementById('declStaffMobile').value,
+                    staffAadhaar: document.getElementById('declStaffAadhaar').value,
+                    staffCategory: document.getElementById('declStaffCategory').value,
+                    sigClient: document.getElementById('sigClient').toDataURL(),
+                    sigStaff: document.getElementById('sigStaff').toDataURL(),
                     langML: isMalayalam
                 };
                 try {
-                    if(currentDeclId && fbReady) { await db.collection('declarations').doc(currentDeclId).set(dd); }
-                    else if(fbReady) { const docRef = await db.collection('declarations').add(dd); currentDeclId = docRef.id; }
-                    else { showToast('Firebase not available','error'); return; }
+                    if (currentDeclId && fbReady) { await db.collection('declarations').doc(currentDeclId).set(dd); } else if (
+                        fbReady) { const docRef = await db.collection('declarations').add(dd);
+                        currentDeclId = docRef.id; } else { showToast('Firebase not available', 'error'); return; }
                     await loadFSData();
-                    document.getElementById('prevDeclNo').textContent = dd.declNo; showToast('Declaration saved!','success');
-                } catch(e) { console.error(e); showToast('Save failed: '+e.message,'error'); }
+                    document.getElementById('prevDeclNo').textContent = dd.declNo;
+                    showToast('Declaration saved!', 'success');
+                } catch (e) { console.error(e);
+                    showToast('Save failed: ' + e.message, 'error'); }
                 updateDeclPreview();
             }
             window.saveDeclaration = saveDeclaration;
@@ -775,12 +1955,16 @@
                 isMalayalam = !isMalayalam;
                 const preview = document.getElementById('a4Preview');
                 const btn = document.getElementById('btnMalayalamToggle');
-                if(isMalayalam){
-                    preview.classList.add('lang-ml'); btn.textContent = '🌐 English';
-                    document.querySelectorAll('#a4Preview [data-key]').forEach(el => { const k = el.getAttribute('data-key'); if(k && mlTranslations[k]) el.textContent = mlTranslations[k]; });
+                if (isMalayalam) {
+                    preview.classList.add('lang-ml');
+                    btn.textContent = '🌐 English';
+                    document.querySelectorAll('#a4Preview [data-key]').forEach(el => { const k = el.getAttribute(
+                            'data-key'); if (k && mlTranslations[k]) el.textContent = mlTranslations[k]; });
                 } else {
-                    preview.classList.remove('lang-ml'); btn.textContent = '🌐 Malayalam';
-                    document.querySelectorAll('#a4Preview [data-key]').forEach(el => { const k = el.getAttribute('data-key'); if(k && enDefaults[k]) el.textContent = enDefaults[k]; });
+                    preview.classList.remove('lang-ml');
+                    btn.textContent = '🌐 Malayalam';
+                    document.querySelectorAll('#a4Preview [data-key]').forEach(el => { const k = el.getAttribute(
+                            'data-key'); if (k && enDefaults[k]) el.textContent = enDefaults[k]; });
                 }
                 updateDeclPreview();
             }
@@ -789,51 +1973,85 @@
             function renderHistory() {
                 const s = (document.getElementById('historySearch')?.value || '').toLowerCase();
                 let f = [...allDecls].reverse();
-                if(s) f = f.filter(d => (d.declNo||'').toLowerCase().includes(s) || (d.clientName||'').toLowerCase().includes(s) || (d.staffName||'').toLowerCase().includes(s));
+                if (s) f = f.filter(d => (d.declNo || '').toLowerCase().includes(s) || (d.clientName || '').toLowerCase()
+                    .includes(s) || (d.staffName || '').toLowerCase().includes(s));
                 const tb = document.getElementById('historyTableBody');
-                if(!f.length){ tb.innerHTML = '<tr><td colspan="7" class="empty-state">No declarations found</td></tr>'; return; }
-                tb.innerHTML = f.map(d => `<tr><td><strong>${d.declNo||'-'}</strong></td><td>${d.date||'-'}</td><td>${d.clientName||'-'}</td><td>${d.serviceType||'-'}</td><td>${d.staffName||'-'}</td><td>₹${d.monthlyCharge||'0'}</td><td><button class="btn btn-xs btn-outline" onclick="openDecl('${d.id}')">📄</button> <button class="btn btn-xs btn-outline" onclick="dupDecl('${d.id}')">📋</button> <button class="btn btn-xs btn-danger" onclick="delDecl('${d.id}')">🗑️</button></td></tr>`).join('');
+                if (!f.length) { tb.innerHTML =
+                    '<tr><td colspan="7" class="empty-state">No declarations found</td></tr>'; return; }
+                tb.innerHTML = f.map(d =>
+                    `<tr><td><strong>${d.declNo||'-'}</strong></td><td>${d.date||'-'}</td><td>${d.clientName||'-'}</td><td>${d.serviceType||'-'}</td><td>${d.staffName||'-'}</td><td>₹${d.monthlyCharge||'0'}</td><td><button class="btn btn-xs btn-outline" onclick="openDecl('${d.id}')">📄</button> <button class="btn btn-xs btn-outline" onclick="dupDecl('${d.id}')">📋</button> <button class="btn btn-xs btn-danger" onclick="delDecl('${d.id}')">🗑️</button></td></tr>`
+                    ).join('');
             }
             window.renderHistory = renderHistory;
 
             function openDecl(id) {
                 const d = allDecls.find(x => x.id === id);
-                if(!d){ showToast('Declaration not found','error'); return; }
-                currentDeclId = d.id; isMalayalam = d.langML || false;
+                if (!d) { showToast('Declaration not found', 'error'); return; }
+                currentDeclId = d.id;
+                isMalayalam = d.langML || false;
                 document.getElementById('btnMalayalamToggle').textContent = isMalayalam ? '🌐 English' : '🌐 Malayalam';
                 const preview = document.getElementById('a4Preview');
-                if(isMalayalam){ preview.classList.add('lang-ml'); } else { preview.classList.remove('lang-ml'); }
-                navigate('declaration'); populateDeclDropdowns();
-                const fm = { 'declClientName':'clientName','declClientMobile':'clientMobile','declClientAlt':'clientAlt','declClientEmail':'clientEmail','declHouseName':'houseName','declAddress':'address','declLandmark':'landmark','declDistrict':'district','declPIN':'pin','declRecipientName':'recipientName','declRecipientAge':'recipientAge','declRecipientGender':'recipientGender','declMedicalNotes':'medicalNotes','declServiceType':'serviceType','declDutyType':'dutyType','declRoleAssigned':'roleAssigned','declStartDate':'startDate','declDuration':'duration','declShiftTiming':'shiftTiming','declMonthlyCharge':'monthlyCharge','declAdvancePaid':'advancePaid','declBalance':'balance','declStaffName':'staffName','declStaffID':'staffID','declStaffGender':'staffGender','declStaffMobile':'staffMobile','declStaffAadhaar':'staffAadhaar','declStaffCategory':'staffCategory' };
-                Object.entries(fm).forEach(([fid,dk]) => { const el = document.getElementById(fid); if(el) el.value = d[dk] || ''; });
-                if(d.sigClient){ const c = document.getElementById('sigClient'); if(c){ c.dataset.empty = 'false'; const ctx = c.getContext('2d'); const img = new Image(); img.onload = ()=> ctx.drawImage(img,0,0,c.width,c.height); img.src = d.sigClient; } }
-                if(d.sigStaff){ const c = document.getElementById('sigStaff'); if(c){ c.dataset.empty = 'false'; const ctx = c.getContext('2d'); const img = new Image(); img.onload = ()=> ctx.drawImage(img,0,0,c.width,c.height); img.src = d.sigStaff; } }
-                if(isMalayalam){
-                    document.querySelectorAll('#a4Preview [data-key]').forEach(el => { const k = el.getAttribute('data-key'); if(k && mlTranslations[k]) el.textContent = mlTranslations[k]; });
+                if (isMalayalam) { preview.classList.add('lang-ml'); } else { preview.classList.remove('lang-ml'); }
+                navigate('declaration');
+                populateDeclDropdowns();
+                const fm = { 'declClientName': 'clientName', 'declClientMobile': 'clientMobile', 'declClientAlt': 'clientAlt',
+                    'declClientEmail': 'clientEmail', 'declHouseName': 'houseName', 'declAddress': 'address',
+                    'declLandmark': 'landmark', 'declDistrict': 'district', 'declPIN': 'pin',
+                    'declRecipientName': 'recipientName', 'declRecipientAge': 'recipientAge',
+                    'declRecipientGender': 'recipientGender', 'declMedicalNotes': 'medicalNotes',
+                    'declServiceType': 'serviceType', 'declDutyType': 'dutyType', 'declRoleAssigned': 'roleAssigned',
+                    'declStartDate': 'startDate', 'declDuration': 'duration', 'declShiftTiming': 'shiftTiming',
+                    'declMonthlyCharge': 'monthlyCharge', 'declAdvancePaid': 'advancePaid', 'declBalance': 'balance',
+                    'declStaffName': 'staffName', 'declStaffID': 'staffID', 'declStaffGender': 'staffGender',
+                    'declStaffMobile': 'staffMobile', 'declStaffAadhaar': 'staffAadhaar', 'declStaffCategory':
+                    'staffCategory' };
+                Object.entries(fm).forEach(([fid, dk]) => { const el = document.getElementById(fid); if (el) el.value = d[
+                        dk] || ''; });
+                if (d.sigClient) { const c = document.getElementById('sigClient'); if (c) { c.dataset.empty = 'false'; const
+                        ctx = c.getContext('2d'); const img = new Image();
+                        img.onload = () => ctx.drawImage(img, 0, 0, c.width, c.height);
+                        img.src = d.sigClient; } }
+                if (d.sigStaff) { const c = document.getElementById('sigStaff'); if (c) { c.dataset.empty = 'false'; const ctx =
+                        c.getContext('2d'); const img = new Image();
+                        img.onload = () => ctx.drawImage(img, 0, 0, c.width, c.height);
+                        img.src = d.sigStaff; } }
+                if (isMalayalam) {
+                    document.querySelectorAll('#a4Preview [data-key]').forEach(el => { const k = el.getAttribute(
+                            'data-key'); if (k && mlTranslations[k]) el.textContent = mlTranslations[k]; });
                 } else {
-                    document.querySelectorAll('#a4Preview [data-key]').forEach(el => { const k = el.getAttribute('data-key'); if(k && enDefaults[k]) el.textContent = enDefaults[k]; });
+                    document.querySelectorAll('#a4Preview [data-key]').forEach(el => { const k = el.getAttribute(
+                            'data-key'); if (k && enDefaults[k]) el.textContent = enDefaults[k]; });
                 }
-                updateDeclPreview(); showToast('Declaration loaded','info');
+                updateDeclPreview();
+                showToast('Declaration loaded', 'info');
             }
-            window.openDecl = openDecl; window.openDeclaration = openDecl;
+            window.openDecl = openDecl;
+            window.openDeclaration = openDecl;
 
             function dupDecl(id) {
-                const d = allDecls.find(x => x.id === id); if(!d) return;
+                const d = allDecls.find(x => x.id === id); if (!d) return;
                 currentDeclId = null;
-                const nd = { ...d, id: '', declNo: 'KAL-DECL-'+String(allDecls.length+1).padStart(5,'0'), date: new Date().toISOString().split('T')[0] };
-                if(fbReady){
-                    db.collection('declarations').add(nd).then(docRef => { nd.id = docRef.id; currentDeclId = nd.id; loadFSData().then(()=> openDecl(nd.id)); showToast('Declaration duplicated','success'); });
-                } else { showToast('Firebase not available','error'); }
+                const nd = { ...d, id: '', declNo: 'KAL-DECL-' + String(allDecls.length + 1).padStart(5, '0'), date: new Date()
+                        .toISOString().split('T')[0] };
+                if (fbReady) {
+                    db.collection('declarations').add(nd).then(docRef => { nd.id = docRef.id;
+                        currentDeclId = nd.id;
+                        loadFSData().then(() => openDecl(nd.id));
+                        showToast('Declaration duplicated', 'success'); });
+                } else { showToast('Firebase not available', 'error'); }
             }
-            window.dupDecl = dupDecl; window.duplicateDecl = dupDecl;
+            window.dupDecl = dupDecl;
+            window.duplicateDecl = dupDecl;
 
             async function delDecl(id) {
-                if(!confirm('Delete this declaration permanently?')) return;
-                if(fbReady){ await db.collection('declarations').doc(id).delete(); await loadFSData(); }
-                else { allDecls = allDecls.filter(d => d.id !== id); renderAll(); }
-                showToast('Declaration deleted','info');
+                if (!confirm('Delete this declaration permanently?')) return;
+                if (fbReady) { await db.collection('declarations').doc(id).delete();
+                    await loadFSData(); } else { allDecls = allDecls.filter(d => d.id !== id);
+                    renderAll(); }
+                showToast('Declaration deleted', 'info');
             }
-            window.delDecl = delDecl; window.deleteDecl = delDecl;
+            window.delDecl = delDecl;
+            window.deleteDecl = delDecl;
 
             function loadSettingsForm() {
                 document.getElementById('setOfficeAddr').value = appSettings.officeAddress || '';
@@ -843,19 +2061,676 @@
             }
 
             async function saveSettings() {
-                appSettings = { officeAddress: document.getElementById('setOfficeAddr').value, phone1: document.getElementById('setPhone1').value, phone2: document.getElementById('setPhone2').value, email: document.getElementById('setEmail').value };
-                if(fbReady){ await db.collection('settings').doc('main').set(appSettings); showToast('Settings saved','success'); }
-                else { showToast('Firebase not available','error'); }
+                appSettings = { officeAddress: document.getElementById('setOfficeAddr').value, phone1: document.getElementById(
+                        'setPhone1').value, phone2: document.getElementById('setPhone2').value, email: document
+                        .getElementById('setEmail').value };
+                if (fbReady) { await db.collection('settings').doc('main').set(appSettings);
+                    showToast('Settings saved', 'success'); } else { showToast('Firebase not available', 'error'); }
                 updateDeclPreview();
             }
             window.saveSettings = saveSettings;
 
-            document.addEventListener('DOMContentLoaded', ()=>{
-                document.querySelectorAll('#a4Preview [data-key]').forEach(el => { const k = el.getAttribute('data-key'); if(k && !enDefaults[k]) enDefaults[k] = el.textContent.trim(); });
+            // ==================== RENTAL MANAGEMENT FUNCTIONS ====================
+
+            function switchRentalTab(tab) {
+                rentalTabMode = tab;
+                document.querySelectorAll('#rentalTabs button').forEach(b => b.classList.remove('active-tab'));
+                if (tab === 'equipment') {
+                    document.querySelector('#rentalTabs button:first-child').classList.add('active-tab');
+                    document.getElementById('rentalEquipmentView').style.display = 'block';
+                    document.getElementById('rentalTransactionsView').style.display = 'none';
+                    renderEquipmentGrid();
+                } else {
+                    document.querySelector('#rentalTabs button:last-child').classList.add('active-tab');
+                    document.getElementById('rentalEquipmentView').style.display = 'none';
+                    document.getElementById('rentalTransactionsView').style.display = 'block';
+                    renderRentalTable();
+                }
+            }
+            window.switchRentalTab = switchRentalTab;
+
+            function populateRentalDropdowns() {
+                const eqSel = document.getElementById('rEquipSelect');
+                if (eqSel) {
+                    eqSel.innerHTML = '<option value="">-- Select Equipment --</option>' + allEquipment.filter(e => (parseInt(
+                        e.availableStock) || 0) > 0).map(e =>
+                        `<option value="${e.id}" data-daily="${e.dailyRent||0}" data-weekly="${e.weeklyRent||0}" data-monthly="${e.monthlyRent||0}" data-deposit="${e.deposit||0}" data-avail="${e.availableStock||0}">${e.name} - ${e.equipmentCode} (Avail: ${e.availableStock||0})</option>`
+                        ).join('');
+                }
+                const staffSel = document.getElementById('rStaffSelect');
+                if (staffSel) {
+                    staffSel.innerHTML = '<option value="">-- Optional --</option>' + allStaff.map(s =>
+                        `<option value="${s.id}">${s.name} - ${s.staffId}</option>`).join('');
+                }
+            }
+
+            function renderEquipmentGrid() {
+                const s = (document.getElementById('equipSearch')?.value || '').toLowerCase();
+                const fc = document.getElementById('equipFilterCategory')?.value || '';
+                const fs = document.getElementById('equipFilterStatus')?.value || '';
+                let f = allEquipment;
+                if (s) f = f.filter(e => (e.name || '').toLowerCase().includes(s) || (e.equipmentCode || '').toLowerCase()
+                    .includes(s) || (e.category || '').toLowerCase().includes(s));
+                if (fc) f = f.filter(e => e.category === fc);
+                if (fs) f = f.filter(e => e.status === fs);
+                const grid = document.getElementById('equipmentGrid');
+                if (!f.length) { grid.innerHTML =
+                        '<div class="empty-state" style="grid-column:1/-1;">No equipment found</div>'; return; }
+                grid.innerHTML = f.map(e => {
+                    const avail = parseInt(e.availableStock) || 0;
+                    const rented = parseInt(e.rentedStock) || 0;
+                    const total = parseInt(e.totalStock) || 0;
+                    const maint = parseInt(e.maintenanceStock) || 0;
+                    const statusBadge = e.status === 'Available' ? 'badge-available' : e.status === 'Low Stock' ?
+                        'badge-lowstock' : e.status === 'Out of Stock' ? 'badge-outofstock' :
+                        'badge-maintenance';
+                    const photoHtml = e.imageUrl ?
+                        `<div class="eq-photo"><img src="${e.imageUrl}" alt="${e.name}" onerror="this.parentElement.innerHTML='📦';"></div>` :
+                        `<div class="eq-photo">📦</div>`;
+                    return `
+                <div class="equipment-card" onclick="viewEquipmentDetail('${e.id}')">
+                  <span class="eq-status-badge"><span class="badge ${statusBadge}">${e.status||'Available'}</span></span>
+                  ${photoHtml}
+                  <div class="eq-name">${e.name||'-'}</div>
+                  <div class="eq-category">${e.category||'-'}</div>
+                  <div class="eq-code">${e.equipmentCode||'-'}</div>
+                  <div class="eq-stock-row"><span>Total: ${total}</span><span>Avail: ${avail}</span><span>Rented: ${rented}</span>${maint>0?`<span>Maint: ${maint}</span>`:''}</div>
+                  <div class="eq-rent-row">Daily: <span>₹${e.dailyRent||0}</span> | Weekly: <span>₹${e.weeklyRent||0}</span> | Monthly: <span>₹${e.monthlyRent||0}</span> | Deposit: <span>₹${e.deposit||0}</span></div>
+                  <div class="eq-actions" onclick="event.stopPropagation();">
+                    <button class="btn btn-xs btn-outline" onclick="openEquipmentModal('${e.id}')">✏️ Edit</button>
+                    <button class="btn btn-xs btn-outline" onclick="viewRentalsForEquipment('${e.id}')">📋 Rentals</button>
+                    <button class="btn btn-xs btn-danger" onclick="deleteEquipment('${e.id}')">🗑️</button>
+                  </div>
+                </div>`;
+                }).join('');
+            }
+            window.renderEquipmentGrid = renderEquipmentGrid;
+
+            function openEquipmentModal(id = null) {
+                document.getElementById('equipmentModal').classList.add('open');
+                if (id) {
+                    document.getElementById('equipModalTitle').textContent = 'Edit Equipment';
+                    const e = allEquipment.find(x => x.id === id);
+                    if (e) {
+                        document.getElementById('eqDocId').value = e.id;
+                        document.getElementById('eqName').value = e.name || '';
+                        document.getElementById('eqCategory').value = e.category || 'Medical Equipment';
+                        document.getElementById('eqCode').value = e.equipmentCode || '';
+                        document.getElementById('eqPurchaseDate').value = e.purchaseDate || '';
+                        document.getElementById('eqPurchaseCost').value = e.purchaseCost || '';
+                        document.getElementById('eqVendor').value = e.vendor || '';
+                        document.getElementById('eqTotalStock').value = e.totalStock || 1;
+                        document.getElementById('eqAvailableStock').value = e.availableStock || 0;
+                        document.getElementById('eqMinStock').value = e.minimumStock || 2;
+                        document.getElementById('eqDailyRent').value = e.dailyRent || 0;
+                        document.getElementById('eqWeeklyRent').value = e.weeklyRent || 0;
+                        document.getElementById('eqMonthlyRent').value = e.monthlyRent || 0;
+                        document.getElementById('eqDeposit').value = e.deposit || 0;
+                        document.getElementById('eqDescription').value = e.description || '';
+                        document.getElementById('eqImageUrl').value = e.imageUrl || '';
+                        document.getElementById('eqRemarks').value = e.remarks || '';
+                    }
+                } else {
+                    document.getElementById('equipModalTitle').textContent = 'Add Equipment';
+                    document.getElementById('eqDocId').value = '';
+                    document.getElementById('eqCode').value = 'EQP-' + new Date().getFullYear() + '-' + String(allEquipment
+                        .length + 1).padStart(4, '0');
+                    ['eqName', 'eqPurchaseDate', 'eqPurchaseCost', 'eqVendor', 'eqDescription', 'eqImageUrl', 'eqRemarks']
+                        .forEach(idd => document.getElementById(idd).value = '');
+                    document.getElementById('eqCategory').value = 'Medical Equipment';
+                    document.getElementById('eqTotalStock').value = 1;
+                    document.getElementById('eqAvailableStock').value = 1;
+                    document.getElementById('eqMinStock').value = 2;
+                    document.getElementById('eqDailyRent').value = 0;
+                    document.getElementById('eqWeeklyRent').value = 0;
+                    document.getElementById('eqMonthlyRent').value = 0;
+                    document.getElementById('eqDeposit').value = 0;
+                }
+            }
+            window.openEquipmentModal = openEquipmentModal;
+            window.closeEquipmentModal = function() { document.getElementById('equipmentModal').classList.remove('open'); };
+
+            function computeEquipmentStatus(eq) {
+                const avail = parseInt(eq.availableStock) || 0;
+                const min = parseInt(eq.minimumStock) || 0;
+                const maint = parseInt(eq.maintenanceStock) || 0;
+                if (maint > 0 && avail <= 0) return 'Under Maintenance';
+                if (avail <= 0) return 'Out of Stock';
+                if (avail <= min) return 'Low Stock';
+                return 'Available';
+            }
+
+            async function saveEquipment() {
+                const nm = document.getElementById('eqName').value.trim();
+                const ts = parseInt(document.getElementById('eqTotalStock').value) || 1;
+                if (!nm) { showToast('Equipment Name required', 'error'); return; }
+                const did = document.getElementById('eqDocId').value;
+                const as = parseInt(document.getElementById('eqAvailableStock').value) || 0;
+                const rs = (parseInt(document.getElementById('eqTotalStock').value) || 1) - as - (allEquipment.find(e => e
+                    .id === did)?.maintenanceStock || 0);
+                const ed = {
+                    name: nm,
+                    category: document.getElementById('eqCategory').value,
+                    equipmentCode: document.getElementById('eqCode').value.trim() || 'EQP-' + new Date().getFullYear() +
+                        '-' + String(allEquipment.length + 1).padStart(4, '0'),
+                    description: document.getElementById('eqDescription').value,
+                    purchaseDate: document.getElementById('eqPurchaseDate').value,
+                    purchaseCost: document.getElementById('eqPurchaseCost').value,
+                    vendor: document.getElementById('eqVendor').value,
+                    totalStock: ts,
+                    availableStock: as,
+                    rentedStock: Math.max(0, ts - as - (parseInt(document.getElementById('eqMaintenanceStock')?.value) ||
+                        0)),
+                    maintenanceStock: 0,
+                    minimumStock: parseInt(document.getElementById('eqMinStock').value) || 2,
+                    dailyRent: document.getElementById('eqDailyRent').value,
+                    weeklyRent: document.getElementById('eqWeeklyRent').value,
+                    monthlyRent: document.getElementById('eqMonthlyRent').value,
+                    deposit: document.getElementById('eqDeposit').value,
+                    imageUrl: document.getElementById('eqImageUrl').value,
+                    remarks: document.getElementById('eqRemarks').value,
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString()
+                };
+                ed.status = computeEquipmentStatus(ed);
+                try {
+                    if (did && fbReady) { await db.collection('equipment').doc(did).set(ed); } else if (fbReady) { await db
+                            .collection('equipment').add(ed); } else { showToast('Firebase not available', 'error');
+                        return; }
+                    await loadFSData();
+                    closeEquipmentModal();
+                    showToast('Equipment saved', 'success');
+                } catch (e) { console.error(e);
+                    showToast('Save failed: ' + e.message, 'error'); }
+            }
+            window.saveEquipment = saveEquipment;
+
+            window.deleteEquipment = async function(id) {
+                if (!confirm('Delete this equipment? All related rental records will remain.')) return;
+                if (fbReady) { await db.collection('equipment').doc(id).delete();
+                    await loadFSData(); } else { allEquipment = allEquipment.filter(e => e.id !== id);
+                    renderAll(); }
+                showToast('Equipment deleted', 'info');
+            };
+
+            function viewEquipmentDetail(id) {
+                const e = allEquipment.find(x => x.id === id);
+                if (!e) return;
+                const eqRentals = allRentals.filter(r => r.equipmentId === id);
+                const totalIncome = eqRentals.reduce((sum, r) => sum + ((r.paymentHistory || []).reduce((s, ph) => s + (
+                    parseFloat(ph.amount) || 0), 0)), 0);
+                const activeRentals = eqRentals.filter(r => r.status === 'Active' || r.status === 'Booked');
+                const avail = parseInt(e.availableStock) || 0;
+                const rented = parseInt(e.rentedStock) || 0;
+                const total = parseInt(e.totalStock) || 0;
+                const maint = parseInt(e.maintenanceStock) || 0;
+                const content = document.getElementById('equipDetailContent');
+                content.innerHTML = `
+            <h2>📦 ${e.name} <span class="badge ${e.status==='Available'?'badge-available':e.status==='Low Stock'?'badge-lowstock':e.status==='Out of Stock'?'badge-outofstock':'badge-maintenance'}">${e.status||'Available'}</span></h2>
+            <div class="form-row form-row-3" style="margin-bottom:10px;">
+              <div><strong>Code:</strong> ${e.equipmentCode||'-'}</div>
+              <div><strong>Category:</strong> ${e.category||'-'}</div>
+              <div><strong>Vendor:</strong> ${e.vendor||'-'}</div>
+            </div>
+            ${e.imageUrl?`<img src="${e.imageUrl}" alt="${e.name}" style="max-width:200px;max-height:150px;border-radius:var(--radius-sm);margin-bottom:10px;object-fit:cover;">`:''}
+            <div class="form-row form-row-4" style="margin-bottom:10px;">
+              <div><strong>Total Stock:</strong> ${total}</div>
+              <div><strong>Available:</strong> ${avail}</div>
+              <div><strong>Rented:</strong> ${rented}</div>
+              <div><strong>Maintenance:</strong> ${maint}</div>
+            </div>
+            <div class="form-row form-row-4" style="margin-bottom:10px;">
+              <div><strong>Daily Rent:</strong> ₹${e.dailyRent||0}</div>
+              <div><strong>Weekly Rent:</strong> ₹${e.weeklyRent||0}</div>
+              <div><strong>Monthly Rent:</strong> ₹${e.monthlyRent||0}</div>
+              <div><strong>Deposit:</strong> ₹${e.deposit||0}</div>
+            </div>
+            <div style="margin-bottom:10px;"><strong>Total Income Generated:</strong> ₹${totalIncome.toLocaleString('en-IN')}</div>
+            <div style="margin-bottom:10px;"><strong>Active Rentals:</strong> ${activeRentals.length}</div>
+            ${e.description?`<div style="margin-bottom:10px;"><strong>Description:</strong> ${e.description}</div>`:''}
+            ${e.remarks?`<div style="margin-bottom:10px;"><strong>Remarks:</strong> ${e.remarks}</div>`:''}
+            <h4 style="margin-top:12px;">Rental History</h4>
+            <div class="table-wrap"><table><thead><tr><th>Rental ID</th><th>Customer</th><th>Qty</th><th>Start</th><th>End</th><th>Amount</th><th>Status</th></tr></thead><tbody>
+              ${eqRentals.length?eqRentals.map(r=>`<tr><td>${r.rentalId||'-'}</td><td>${r.customerName||'-'}</td><td>${r.quantity||1}</td><td>${r.startDate||'-'}</td><td>${r.actualReturn||r.expectedReturn||'-'}</td><td>₹${r.rentAmount||0}</td><td><span class="badge ${r.status==='Active'?'badge-active':r.status==='Returned'?'badge-returned':'badge-booked'}">${r.status||'?'}</span></td></tr>`).join(''):'<tr><td colspan="7" class="empty-state">No rentals</td></tr>'}
+            </tbody></table></div>
+            <div class="modal-actions"><button class="btn btn-outline" onclick="closeEquipDetail()">Close</button><button class="btn btn-primary" onclick="closeEquipDetail();openRentalModal('${e.id}')">+ New Rental</button></div>`;
+                document.getElementById('equipDetailModal').classList.add('open');
+            }
+            window.viewEquipmentDetail = viewEquipmentDetail;
+            window.closeEquipDetail = function() { document.getElementById('equipDetailModal').classList.remove('open'); };
+
+            function viewRentalsForEquipment(id) {
+                switchRentalTab('transactions');
+                document.getElementById('rentalSearch').value = '';
+                const e = allEquipment.find(x => x.id === id);
+                if (e) document.getElementById('rentalSearch').value = e.name || '';
+                renderRentalTable();
+                navigate('rental');
+                switchRentalTab('transactions');
+            }
+            window.viewRentalsForEquipment = viewRentalsForEquipment;
+
+            function renderRentalTable() {
+                const s = (document.getElementById('rentalSearch')?.value || '').toLowerCase();
+                const fs = document.getElementById('rentalFilterStatus')?.value || '';
+                const fp = document.getElementById('rentalFilterPayment')?.value || '';
+                let f = [...allRentals].reverse();
+                if (s) f = f.filter(r => (r.rentalId || '').toLowerCase().includes(s) || (r.customerName || '').toLowerCase()
+                    .includes(s) || (r.phone || '').includes(s) || (r.equipmentName || '').toLowerCase().includes(s));
+                if (fs) f = f.filter(r => r.status === fs);
+                if (fp) f = f.filter(r => r.paymentStatus === fp);
+                const tb = document.getElementById('rentalTableBody');
+                if (!f.length) { tb.innerHTML =
+                        '<tr><td colspan="13" class="empty-state">No rental transactions found</td></tr>'; return; }
+                tb.innerHTML = f.map(r => {
+                    const sb = r.status === 'Active' ? 'badge-active' : r.status === 'Returned' ? 'badge-returned' : r
+                        .status === 'Overdue' ? 'badge-overdue' : r.status === 'Booked' ? 'badge-booked' : r.status ===
+                        'Cancelled' ? 'badge-cancelled' : 'badge-inactive';
+                    const pb = r.paymentStatus === 'Paid' ? 'badge-paid' : r.paymentStatus === 'Partially Paid' ?
+                        'badge-partial' : 'badge-pending';
+                    return `<tr>
+              <td><strong>${r.rentalId||'-'}</strong></td><td>${r.equipmentName||'-'}</td><td>${r.customerName||'-'}</td><td>${r.phone||'-'}</td><td>${r.quantity||'1'}</td>
+              <td>${r.startDate||'-'}</td><td>${r.expectedReturn||'-'}</td><td>₹${r.rentAmount||0}</td><td>₹${r.deposit||0}</td><td>₹${r.pending||0}</td>
+              <td><span class="badge ${sb}">${r.status||'?'}</span></td><td><span class="badge ${pb}">${r.paymentStatus||'?'}</span></td>
+              <td>
+                <button class="btn btn-xs btn-outline" onclick="viewRentalDetail('${r.id}')">👁️</button>
+                <button class="btn btn-xs btn-outline" onclick="openRentalModal('${r.equipmentId}','${r.id}')">✏️</button>
+                ${r.status==='Active'||r.status==='Overdue'||r.status==='Booked'?`<button class="btn btn-xs btn-success" onclick="openReturnModal('${r.id}')">🔄</button>`:''}
+                <button class="btn btn-xs btn-outline" onclick="openPaymentModal('${r.id}')">💰</button>
+                <button class="btn btn-xs btn-outline" onclick="printRentalInvoice('${r.id}')">🖨️</button>
+                <button class="btn btn-xs btn-danger" onclick="deleteRental('${r.id}')">🗑️</button>
+              </td></tr>`;
+                }).join('');
+            }
+            window.renderRentalTable = renderRentalTable;
+
+            function onRentalEquipChange() {
+                const sel = document.getElementById('rEquipSelect');
+                const opt = sel.options[sel.selectedIndex];
+                if (!opt || !opt.value) {
+                    document.getElementById('rDeposit').value = '';
+                    document.getElementById('rRentAmount').value = '';
+                    document.getElementById('rAvailStockDisplay').textContent = '-';
+                    document.getElementById('rEquipId').value = '';
+                    return;
+                }
+                const daily = parseFloat(opt.getAttribute('data-daily')) || 0;
+                const weekly = parseFloat(opt.getAttribute('data-weekly')) || 0;
+                const monthly = parseFloat(opt.getAttribute('data-monthly')) || 0;
+                const deposit = parseFloat(opt.getAttribute('data-deposit')) || 0;
+                const avail = parseInt(opt.getAttribute('data-avail')) || 0;
+                document.getElementById('rDeposit').value = deposit;
+                document.getElementById('rAvailStockDisplay').textContent = avail;
+                document.getElementById('rEquipId').value = opt.value;
+                const rt = document.getElementById('rRentType').value;
+                if (rt === 'Daily') document.getElementById('rRentAmount').value = daily;
+                else if (rt === 'Weekly') document.getElementById('rRentAmount').value = weekly;
+                else if (rt === 'Monthly') document.getElementById('rRentAmount').value = monthly;
+                calcRentalAmount();
+            }
+            window.onRentalEquipChange = onRentalEquipChange;
+
+            function calcRentalAmount() {
+                const rt = document.getElementById('rRentType').value;
+                const sel = document.getElementById('rEquipSelect');
+                const opt = sel.options[sel.selectedIndex];
+                if (opt && opt.value && rt !== 'Custom') {
+                    const daily = parseFloat(opt.getAttribute('data-daily')) || 0;
+                    const weekly = parseFloat(opt.getAttribute('data-weekly')) || 0;
+                    const monthly = parseFloat(opt.getAttribute('data-monthly')) || 0;
+                    if (rt === 'Daily') document.getElementById('rRentAmount').value = daily;
+                    else if (rt === 'Weekly') document.getElementById('rRentAmount').value = weekly;
+                    else if (rt === 'Monthly') document.getElementById('rRentAmount').value = monthly;
+                }
+                const rentAmt = parseFloat(document.getElementById('rRentAmount').value) || 0;
+                const advance = parseFloat(document.getElementById('rAdvance').value) || 0;
+                const deposit = parseFloat(document.getElementById('rDeposit').value) || 0;
+                const pending = Math.max(0, rentAmt + deposit - advance);
+                document.getElementById('rPendingDisplay').textContent = pending.toLocaleString('en-IN');
+                document.getElementById('rAvailStockDisplay').textContent = opt ? (parseInt(opt.getAttribute('data-avail')) ||
+                    0) : '-';
+            }
+            window.calcRentalAmount = calcRentalAmount;
+
+            function openRentalModal(equipId = null, rentalId = null) {
+                document.getElementById('rentalModal').classList.add('open');
+                populateRentalDropdowns();
+                if (rentalId) {
+                    document.getElementById('rentalModalTitle').textContent = 'Edit Rental';
+                    const r = allRentals.find(x => x.id === rentalId);
+                    if (r) {
+                        document.getElementById('rDocId').value = r.id;
+                        document.getElementById('rEquipSelect').value = r.equipmentId || '';
+                        document.getElementById('rEquipId').value = r.equipmentId || '';
+                        document.getElementById('rQuantity').value = r.quantity || 1;
+                        document.getElementById('rRentType').value = r.rentType || 'Daily';
+                        document.getElementById('rRentAmount').value = r.rentAmount || 0;
+                        document.getElementById('rDeposit').value = r.deposit || 0;
+                        document.getElementById('rAdvance').value = r.advance || 0;
+                        document.getElementById('rCustomerName').value = r.customerName || '';
+                        document.getElementById('rPhone').value = r.phone || '';
+                        document.getElementById('rAltPhone').value = r.altPhone || '';
+                        document.getElementById('rAddress').value = r.address || '';
+                        document.getElementById('rIdType').value = r.idType || 'Aadhaar';
+                        document.getElementById('rIdNumber').value = r.idNumber || '';
+                        document.getElementById('rStartDate').value = r.startDate || '';
+                        document.getElementById('rExpectedReturn').value = r.expectedReturn || '';
+                        document.getElementById('rStaffSelect').value = r.staffId || '';
+                        document.getElementById('rDeliveryRequired').value = r.deliveryRequired || 'No';
+                        document.getElementById('rPickupRequired').value = r.pickupRequired || 'No';
+                        document.getElementById('rDeliveryCharge').value = r.deliveryCharge || 0;
+                        document.getElementById('rPickupCharge').value = r.pickupCharge || 0;
+                        document.getElementById('rDeliveryAddress').value = r.deliveryAddress || '';
+                        document.getElementById('rPaymentStatus').value = r.paymentStatus || 'Pending';
+                        document.getElementById('rRentalStatus').value = r.status || 'Booked';
+                        document.getElementById('rRemarks').value = r.remarks || '';
+                    }
+                } else {
+                    document.getElementById('rentalModalTitle').textContent = 'New Rental';
+                    document.getElementById('rDocId').value = '';
+                    ['rQuantity', 'rRentAmount', 'rAdvance', 'rCustomerName', 'rPhone', 'rAltPhone', 'rAddress', 'rIdNumber',
+                        'rStartDate', 'rExpectedReturn', 'rDeliveryCharge', 'rPickupCharge', 'rDeliveryAddress',
+                        'rRemarks', 'rEquipId'
+                    ].forEach(idd => document.getElementById(idd).value = '');
+                    document.getElementById('rDeposit').value = '';
+                    document.getElementById('rRentType').value = 'Daily';
+                    document.getElementById('rIdType').value = 'Aadhaar';
+                    document.getElementById('rDeliveryRequired').value = 'No';
+                    document.getElementById('rPickupRequired').value = 'No';
+                    document.getElementById('rPaymentStatus').value = 'Pending';
+                    document.getElementById('rRentalStatus').value = 'Booked';
+                    document.getElementById('rPendingDisplay').textContent = '0';
+                    document.getElementById('rAvailStockDisplay').textContent = '-';
+                    if (equipId) {
+                        document.getElementById('rEquipSelect').value = equipId;
+                        document.getElementById('rEquipId').value = equipId;
+                        onRentalEquipChange();
+                    }
+                }
+                calcRentalAmount();
+            }
+            window.openRentalModal = openRentalModal;
+            window.closeRentalModal = function() { document.getElementById('rentalModal').classList.remove('open'); };
+
+            async function saveRental() {
+                const cn = document.getElementById('rCustomerName').value.trim();
+                const ph = document.getElementById('rPhone').value.trim();
+                const eqId = document.getElementById('rEquipSelect').value;
+                const qty = parseInt(document.getElementById('rQuantity').value) || 1;
+                if (!cn || !ph) { showToast('Customer Name and Phone required', 'error'); return; }
+                if (!eqId) { showToast('Please select equipment', 'error'); return; }
+                const eq = allEquipment.find(e => e.id === eqId);
+                if (!eq) { showToast('Equipment not found', 'error'); return; }
+                const avail = parseInt(eq.availableStock) || 0;
+                const did = document.getElementById('rDocId').value;
+                const existingRental = did ? allRentals.find(r => r.id === did) : null;
+                const oldQty = existingRental ? (parseInt(existingRental.quantity) || 1) : 0;
+                const oldStatus = existingRental ? existingRental.status : null;
+                const newStatus = document.getElementById('rRentalStatus').value;
+                if (!did && qty > avail) { showToast(`Only ${avail} available!`, 'error'); return; }
+                const rentAmt = parseFloat(document.getElementById('rRentAmount').value) || 0;
+                const deposit = parseFloat(document.getElementById('rDeposit').value) || 0;
+                const advance = parseFloat(document.getElementById('rAdvance').value) || 0;
+                const deliveryChg = parseFloat(document.getElementById('rDeliveryCharge').value) || 0;
+                const pickupChg = parseFloat(document.getElementById('rPickupCharge').value) || 0;
+                const totalRent = rentAmt + deliveryChg + pickupChg;
+                const pending = Math.max(0, totalRent + deposit - advance);
+                const rd = {
+                    rentalId: 'RNT-' + new Date().getFullYear() + '-' + String(allRentals.length + 1).padStart(5, '0'),
+                    equipmentId: eqId,
+                    equipmentName: eq.name || '',
+                    equipmentCode: eq.equipmentCode || '',
+                    customerName: cn,
+                    phone: ph,
+                    altPhone: document.getElementById('rAltPhone').value,
+                    address: document.getElementById('rAddress').value,
+                    idType: document.getElementById('rIdType').value,
+                    idNumber: document.getElementById('rIdNumber').value,
+                    quantity: qty,
+                    rentType: document.getElementById('rRentType').value,
+                    rentAmount: rentAmt,
+                    totalRent: totalRent,
+                    deposit: deposit,
+                    advance: advance,
+                    paid: advance,
+                    pending: pending,
+                    startDate: document.getElementById('rStartDate').value,
+                    expectedReturn: document.getElementById('rExpectedReturn').value,
+                    actualReturn: existingRental ? existingRental.actualReturn || '' : '',
+                    staffId: document.getElementById('rStaffSelect').value,
+                    deliveryRequired: document.getElementById('rDeliveryRequired').value,
+                    pickupRequired: document.getElementById('rPickupRequired').value,
+                    deliveryCharge: deliveryChg,
+                    pickupCharge: pickupChg,
+                    deliveryAddress: document.getElementById('rDeliveryAddress').value,
+                    paymentStatus: document.getElementById('rPaymentStatus').value,
+                    status: newStatus,
+                    remarks: document.getElementById('rRemarks').value,
+                    paymentHistory: existingRental ? (existingRental.paymentHistory || []) : (advance > 0 ? [{ amount: advance,
+                        method: 'Cash', date: new Date().toISOString().split('T')[0], remarks: 'Advance at rental creation' }] :
+                        []),
+                    createdAt: existingRental ? existingRental.createdAt : new Date().toISOString(),
+                    updatedAt: new Date().toISOString()
+                };
+                if (!did) rd.rentalId = 'RNT-' + new Date().getFullYear() + '-' + String(allRentals.length + 1).padStart(5,
+                '0');
+                else rd.rentalId = existingRental ? existingRental.rentalId : rd.rentalId;
+                try {
+                    if (did && fbReady) { await db.collection('rentalTransactions').doc(did).set(rd); } else if (fbReady) { const
+                            docRef = await db.collection('rentalTransactions').add(rd);
+                        rd.id = docRef.id; } else { showToast('Firebase not available', 'error'); return; }
+                    if (!did && (newStatus === 'Active' || newStatus === 'Booked')) {
+                        const newAvail = Math.max(0, avail - qty);
+                        const newRented = (parseInt(eq.rentedStock) || 0) + qty;
+                        const updEq = { ...eq, availableStock: newAvail, rentedStock: newRented,
+                            updatedAt: new Date().toISOString() };
+                        updEq.status = computeEquipmentStatus(updEq);
+                        await db.collection('equipment').doc(eqId).set(updEq);
+                    }
+                    await loadFSData();
+                    closeRentalModal();
+                    showToast('Rental saved', 'success');
+                } catch (e) { console.error(e);
+                    showToast('Save failed: ' + e.message, 'error'); }
+            }
+            window.saveRental = saveRental;
+
+            function openReturnModal(rentalId) {
+                const r = allRentals.find(x => x.id === rentalId);
+                if (!r) return;
+                document.getElementById('retDocId').value = r.id;
+                document.getElementById('retEquipId').value = r.equipmentId;
+                document.getElementById('retQuantity').value = r.quantity || 1;
+                document.getElementById('retOrigDeposit').value = r.deposit || 0;
+                document.getElementById('retActualDate').value = new Date().toISOString().split('T')[0];
+                document.getElementById('retCondition').value = 'Good';
+                document.getElementById('retLateCharges').value = 0;
+                document.getElementById('retDamageCharges').value = 0;
+                document.getElementById('retRefundDeposit').value = r.deposit || 0;
+                document.getElementById('retAdditional').value = 0;
+                document.getElementById('retRemarks').value = '';
+                document.getElementById('retDepositVal').textContent = (r.deposit || 0).toLocaleString('en-IN');
+                document.getElementById('retTotalPending').textContent = (r.pending || 0).toLocaleString('en-IN');
+                document.getElementById('retNetRefund').textContent = (r.deposit || 0).toLocaleString('en-IN');
+                document.getElementById('returnModal').classList.add('open');
+            }
+            window.openReturnModal = openReturnModal;
+            window.closeReturnModal = function() { document.getElementById('returnModal').classList.remove('open'); };
+
+            function calcReturnCharges() {
+                const late = parseFloat(document.getElementById('retLateCharges').value) || 0;
+                const damage = parseFloat(document.getElementById('retDamageCharges').value) || 0;
+                const additional = parseFloat(document.getElementById('retAdditional').value) || 0;
+                const deposit = parseFloat(document.getElementById('retOrigDeposit').value) || 0;
+                const pending = parseFloat(document.getElementById('retTotalPending').textContent.replace(/,/g, '')) || 0;
+                const netRefund = Math.max(0, deposit - late - damage);
+                document.getElementById('retRefundDeposit').value = netRefund;
+                document.getElementById('retNetRefund').textContent = netRefund.toLocaleString('en-IN');
+            }
+            window.calcReturnCharges = calcReturnCharges;
+
+            async function confirmReturn() {
+                const rid = document.getElementById('retDocId').value;
+                const eqId = document.getElementById('retEquipId').value;
+                const qty = parseInt(document.getElementById('retQuantity').value) || 1;
+                const r = allRentals.find(x => x.id === rid);
+                const eq = allEquipment.find(e => e.id === eqId);
+                if (!r || !eq) { showToast('Record not found', 'error'); return; }
+                const late = parseFloat(document.getElementById('retLateCharges').value) || 0;
+                const damage = parseFloat(document.getElementById('retDamageCharges').value) || 0;
+                const additional = parseFloat(document.getElementById('retAdditional').value) || 0;
+                const refund = parseFloat(document.getElementById('retRefundDeposit').value) || 0;
+                const totalExtra = late + damage + additional;
+                const newPending = Math.max(0, (parseFloat(r.pending) || 0) + totalExtra - refund);
+                const updRental = {
+                    ...r,
+                    actualReturn: document.getElementById('retActualDate').value,
+                    returnCondition: document.getElementById('retCondition').value,
+                    lateCharges: late,
+                    damageCharges: damage,
+                    additionalPayment: additional,
+                    refundDeposit: refund,
+                    status: 'Returned',
+                    paymentStatus: newPending <= 0 ? 'Paid' : 'Partially Paid',
+                    pending: newPending,
+                    paid: (parseFloat(r.paid) || 0) + (refund > 0 ? -refund : 0) + (totalExtra),
+                    returnRemarks: document.getElementById('retRemarks').value,
+                    updatedAt: new Date().toISOString()
+                };
+                try {
+                    if (fbReady) { await db.collection('rentalTransactions').doc(rid).set(updRental); }
+                    const newAvail = (parseInt(eq.availableStock) || 0) + qty;
+                    const newRented = Math.max(0, (parseInt(eq.rentedStock) || 0) - qty);
+                    const updEq = { ...eq, availableStock: newAvail, rentedStock: newRented, updatedAt: new Date()
+                            .toISOString() };
+                    updEq.status = computeEquipmentStatus(updEq);
+                    if (fbReady) { await db.collection('equipment').doc(eqId).set(updEq); }
+                    await loadFSData();
+                    closeReturnModal();
+                    showToast('Equipment returned successfully!', 'success');
+                } catch (e) { console.error(e);
+                    showToast('Return failed: ' + e.message, 'error'); }
+            }
+            window.confirmReturn = confirmReturn;
+
+            function openPaymentModal(rentalId) {
+                const r = allRentals.find(x => x.id === rentalId);
+                if (!r) return;
+                document.getElementById('payDocId').value = r.id;
+                document.getElementById('payAmount').value = '';
+                document.getElementById('payMethod').value = 'Cash';
+                document.getElementById('payDate').value = new Date().toISOString().split('T')[0];
+                document.getElementById('payRemarks').value = '';
+                document.getElementById('payTotalRent').textContent = (r.totalRent || r.rentAmount || 0).toLocaleString(
+                    'en-IN');
+                document.getElementById('payAlreadyPaid').textContent = (r.paid || 0).toLocaleString('en-IN');
+                document.getElementById('payPending').textContent = (r.pending || 0).toLocaleString('en-IN');
+                document.getElementById('paymentModal').classList.add('open');
+            }
+            window.openPaymentModal = openPaymentModal;
+            window.closePaymentModal = function() { document.getElementById('paymentModal').classList.remove('open'); };
+
+            async function confirmPayment() {
+                const rid = document.getElementById('payDocId').value;
+                const amt = parseFloat(document.getElementById('payAmount').value) || 0;
+                if (amt <= 0) { showToast('Enter valid amount', 'error'); return; }
+                const r = allRentals.find(x => x.id === rid);
+                if (!r) { showToast('Rental not found', 'error'); return; }
+                const newPaid = (parseFloat(r.paid) || 0) + amt;
+                const newPending = Math.max(0, (parseFloat(r.pending) || 0) - amt);
+                const newPaymentStatus = newPending <= 0 ? 'Paid' : 'Partially Paid';
+                const ph = r.paymentHistory || [];
+                ph.push({ amount: amt, method: document.getElementById('payMethod').value, date: document.getElementById(
+                        'payDate').value, remarks: document.getElementById('payRemarks').value });
+                const updRental = { ...r, paid: newPaid, pending: newPending, paymentStatus: newPaymentStatus,
+                    paymentHistory: ph, updatedAt: new Date().toISOString() };
+                try {
+                    if (fbReady) { await db.collection('rentalTransactions').doc(rid).set(updRental); }
+                    await loadFSData();
+                    closePaymentModal();
+                    showToast('Payment recorded!', 'success');
+                } catch (e) { console.error(e);
+                    showToast('Payment failed: ' + e.message, 'error'); }
+            }
+            window.confirmPayment = confirmPayment;
+
+            function viewRentalDetail(id) {
+                const r = allRentals.find(x => x.id === id);
+                if (!r) return;
+                const sb = r.status === 'Active' ? 'badge-active' : r.status === 'Returned' ? 'badge-returned' : r.status ===
+                    'Overdue' ? 'badge-overdue' : r.status === 'Booked' ? 'badge-booked' : 'badge-cancelled';
+                const pb = r.paymentStatus === 'Paid' ? 'badge-paid' : r.paymentStatus === 'Partially Paid' ? 'badge-partial' :
+                    'badge-pending';
+                const ph = r.paymentHistory || [];
+                const content = document.getElementById('equipDetailContent');
+                content.innerHTML = `
+            <h2>📋 Rental: ${r.rentalId||'-'} <span class="badge ${sb}">${r.status||'?'}</span> <span class="badge ${pb}">${r.paymentStatus||'?'}</span></h2>
+            <div class="form-row form-row-3" style="margin-bottom:8px;"><div><strong>Equipment:</strong> ${r.equipmentName||'-'} (${r.equipmentCode||''})</div><div><strong>Qty:</strong> ${r.quantity||1}</div><div><strong>Rent Type:</strong> ${r.rentType||'-'}</div></div>
+            <div class="form-row form-row-3" style="margin-bottom:8px;"><div><strong>Customer:</strong> ${r.customerName||'-'}</div><div><strong>Phone:</strong> ${r.phone||'-'}</div><div><strong>Alt:</strong> ${r.altPhone||'-'}</div></div>
+            <div class="form-row form-row-3" style="margin-bottom:8px;"><div><strong>Address:</strong> ${r.address||'-'}</div><div><strong>ID:</strong> ${r.idType||''} - ${r.idNumber||''}</div></div>
+            <div class="form-row form-row-4" style="margin-bottom:8px;"><div><strong>Start:</strong> ${r.startDate||'-'}</div><div><strong>Expected Return:</strong> ${r.expectedReturn||'-'}</div><div><strong>Actual Return:</strong> ${r.actualReturn||'-'}</div><div><strong>Condition:</strong> ${r.returnCondition||'-'}</div></div>
+            <div class="form-row form-row-4" style="margin-bottom:8px;"><div><strong>Rent:</strong> ₹${r.rentAmount||0}</div><div><strong>Deposit:</strong> ₹${r.deposit||0}</div><div><strong>Paid:</strong> ₹${r.paid||0}</div><div><strong>Pending:</strong> ₹${r.pending||0}</div></div>
+            <div class="form-row form-row-4" style="margin-bottom:8px;"><div><strong>Delivery:</strong> ${r.deliveryRequired||'No'} (₹${r.deliveryCharge||0})</div><div><strong>Pickup:</strong> ${r.pickupRequired||'No'} (₹${r.pickupCharge||0})</div><div><strong>Late Charges:</strong> ₹${r.lateCharges||0}</div><div><strong>Damage:</strong> ₹${r.damageCharges||0}</div></div>
+            <h4 style="margin-top:10px;">Payment History</h4>
+            <div class="table-wrap"><table><thead><tr><th>Date</th><th>Amount</th><th>Method</th><th>Remarks</th></tr></thead><tbody>${ph.length?ph.map(p=>`<tr><td>${p.date||'-'}</td><td>₹${p.amount||0}</td><td>${p.method||'-'}</td><td>${p.remarks||'-'}</td></tr>`).join(''):'<tr><td colspan="4" class="empty-state">No payments recorded</td></tr>'}</tbody></table></div>
+            <div class="modal-actions"><button class="btn btn-outline" onclick="closeEquipDetail()">Close</button><button class="btn btn-gold" onclick="closeEquipDetail();openPaymentModal('${r.id}')">💰 Add Payment</button>${r.status==='Active'||r.status==='Overdue'?`<button class="btn btn-success" onclick="closeEquipDetail();openReturnModal('${r.id}')">🔄 Return</button>`:''}</div>`;
+                document.getElementById('equipDetailModal').classList.add('open');
+            }
+            window.viewRentalDetail = viewRentalDetail;
+
+            function printRentalInvoice(id) {
+                const r = allRentals.find(x => x.id === id);
+                if (!r) return;
+                const w = window.open('', '_blank', 'width=800,height=600');
+                w.document.write(`
+            <html><head><title>Rental Invoice - ${r.rentalId||''}</title>
+            <style>body{font-family:Arial,sans-serif;padding:30px;color:#1a1a1a;}h2{color:#0d1135;}table{width:100%;border-collapse:collapse;margin:12px 0;}td,th{padding:8px;border:1px solid #ddd;text-align:left;}th{background:#f5f5f5;}.total{font-weight:700;font-size:1.1em;}@media print{body{padding:0;}}</style></head>
+            <body>
+            <h2>KALOPSIA - Rental Invoice</h2>
+            <p><strong>Rental ID:</strong> ${r.rentalId||'-'}</p>
+            <p><strong>Date:</strong> ${r.startDate||'-'}</p>
+            <table><tr><th>Equipment</th><td>${r.equipmentName||'-'} (${r.equipmentCode||''})</td><th>Quantity</th><td>${r.quantity||1}</td></tr>
+            <tr><th>Customer</th><td>${r.customerName||'-'}</td><th>Phone</th><td>${r.phone||'-'}</td></tr>
+            <tr><th>Rent Type</th><td>${r.rentType||'-'}</td><th>Rent Amount</th><td>₹${r.rentAmount||0}</td></tr>
+            <tr><th>Deposit</th><td>₹${r.deposit||0}</td><th>Paid</th><td>₹${r.paid||0}</td></tr>
+            <tr><th>Pending</th><td>₹${r.pending||0}</td><th>Status</th><td>${r.status||'-'} / ${r.paymentStatus||'-'}</td></tr></table>
+            <p class="total">Total Pending: ₹${r.pending||0}</p>
+            <p style="margin-top:20px;font-size:.8em;">KALOPSIA - All Essential Services Under One Roof<br>Chullikkara, Kerala – 671532 | 9497321453 | kalopsia0404@gmail.com</p>
+            </body></html>`);
+                w.document.close();
+                setTimeout(() => w.print(), 300);
+            }
+            window.printRentalInvoice = printRentalInvoice;
+
+            window.deleteRental = async function(id) {
+                if (!confirm('Delete this rental transaction?')) return;
+                const r = allRentals.find(x => x.id === id);
+                if (r && (r.status === 'Active' || r.status === 'Booked') && r.equipmentId) {
+                    const eq = allEquipment.find(e => e.id === r.equipmentId);
+                    if (eq && fbReady) {
+                        const newAvail = (parseInt(eq.availableStock) || 0) + (parseInt(r.quantity) || 1);
+                        const newRented = Math.max(0, (parseInt(eq.rentedStock) || 0) - (parseInt(r.quantity) || 1));
+                        const updEq = { ...eq, availableStock: newAvail, rentedStock: newRented, updatedAt: new Date()
+                                .toISOString() };
+                        updEq.status = computeEquipmentStatus(updEq);
+                        await db.collection('equipment').doc(r.equipmentId).set(updEq);
+                    }
+                }
+                if (fbReady) { await db.collection('rentalTransactions').doc(id).delete();
+                    await loadFSData(); } else { allRentals = allRentals.filter(r => r.id !== id);
+                    renderAll(); }
+                showToast('Rental deleted', 'info');
+            };
+
+            document.addEventListener('DOMContentLoaded', () => {
+                document.querySelectorAll('#a4Preview [data-key]').forEach(el => { const k = el.getAttribute(
+                        'data-key'); if (k && !enDefaults[k]) enDefaults[k] = el.textContent.trim(); });
                 initSigPads();
                 initApp();
             });
-            window.navigate = navigate; window.toggleSidebar = toggleSidebar; window.toggleMalayalam = toggleMalayalam;
+            window.navigate = navigate;
+            window.toggleSidebar = toggleSidebar;
+            window.toggleMalayalam = toggleMalayalam;
         })();
     </script>
 </body>
